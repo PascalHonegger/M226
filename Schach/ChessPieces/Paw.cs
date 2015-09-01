@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chess.ChessPieces
 {
-    class Knight : ChessPiece
+    class Paw : ChessPiece
     {
-        public Knight(int row, int column, bool isWhite) : base(row, column, isWhite)
+        public Paw(int row, int column, bool isWhite) : base(row, column, isWhite)
         {
         }
 

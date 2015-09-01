@@ -83,7 +83,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPiece.cs" />
+    <Compile Include="ChessPieces\King.cs" />
+    <Compile Include="ChessPieces\knight.cs" />
+    <Compile Include="ChessPieces\Paw.cs" />
+    <Compile Include="ChessPieces\Queen.cs" />
+    <Compile Include="ChessPieces\rook.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

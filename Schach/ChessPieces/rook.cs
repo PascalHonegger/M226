@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.ChessPieces 
+namespace Chess.ChessPieces
 {
     class Rook : ChessPiece
     {
-        protected override bool CanEat()
+        public Rook(int row, int column, bool isWhite) : base(row, column, isWhite)
         {
-            throw new NotImplementedException();
         }
 
         protected override bool CanMoveThere(int row, int column)
@@ -18,17 +17,7 @@ namespace Chess.ChessPieces
             throw new NotImplementedException();
         }
 
-        protected override void Eat()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void GetEaten()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool TryEat(int rown, int column)
+        protected override bool CanEat(int row, int column)
         {
             throw new NotImplementedException();
         }

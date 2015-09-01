@@ -22,7 +22,7 @@
             <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1" Background="Green">
+        <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
