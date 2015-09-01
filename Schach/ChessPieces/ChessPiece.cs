@@ -22,6 +22,7 @@
         protected abstract void Eat();
         protected abstract bool CanEat();
         protected abstract bool TryEat(int rown, int column);
+        
 
         protected bool isWhite()
         {
