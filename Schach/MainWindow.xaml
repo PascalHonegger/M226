@@ -22,7 +22,7 @@
             <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1" Background="White">
+        <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1" Background="Green">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -75,6 +75,10 @@
             <Canvas Grid.Row="4" Grid.Column="7" Background="Black"/>
             <Canvas Grid.Row="2" Grid.Column="7" Background="Black"/>
             <Canvas Grid.Row="0" Grid.Column="7" Background="Black"/>
+            <Canvas Grid.Row="1" Grid.Column="7" Background="White"/>
+            <Canvas Grid.Row="3" Grid.Column="7" Background="White"/>
+            <Canvas Grid.Row="5" Grid.Column="7" Background="White"/>
+            <Canvas Grid.Row="7" Grid.Column="7" Background="White"/>
         </Grid>
 
     </Grid>
