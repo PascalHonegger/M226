@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="LeSchach" Height="800" Width="800" MinWidth="800" MinHeight="800">
+        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -13,14 +13,14 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
+            <RowDefinition/>
             <RowDefinition Height="500"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -108,6 +108,7 @@
             <Canvas Grid.Row="4" Grid.Column="0" Background="White"/>
             <Canvas Grid.Row="6" Grid.Column="0" Background="White"/>
         </Grid>
+        <Canvas x:Name="Graveyard" Grid.Column="2" Grid.Row="1" Background="Gray"/>
 
     </Grid>
 </Window>
