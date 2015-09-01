@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
+        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700" Background="{x:Null}">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="White" Offset="0"/>
                 <GradientStop Color="#FFFF0707" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
@@ -109,6 +109,9 @@
             <Canvas Grid.Row="6" Grid.Column="0" Background="White"/>
         </Grid>
         <Canvas x:Name="Graveyard" Grid.Column="2" Grid.Row="1" Background="Gray"/>
+        <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0"/>
+        <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0"/>
+        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Click="StartButton_Click"/>
 
     </Grid>
 </Window>

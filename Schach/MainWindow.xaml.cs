@@ -11,5 +11,12 @@ namespace Chess
         {
             InitializeComponent();
         }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            BlackTime.Text = "00:01";
+
+            WhiteTime.Text = "00:05";
+        }
     }
 }
