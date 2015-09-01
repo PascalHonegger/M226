@@ -84,6 +84,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ChessPieces\ChessPiece.cs" />
+    <Compile Include="ChessPieces\Bishop.cs" />
+    <Compile Include="ChessPieces\Rook.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
     <Compile Include="MainWindow.xaml.cs">
