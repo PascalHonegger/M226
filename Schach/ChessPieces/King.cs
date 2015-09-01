@@ -2,13 +2,8 @@
 
 namespace Chess.ChessPieces
 {
-    class Pawn : ChessPiece
+    class King : ChessPiece
     {
-        public Pawn(int row, int column)
-        {
-            // TODO spawn a Pawn with a good texture at the desired location!
-        }
-
         protected override bool CanMoveThere(int row, int column)
         {
             throw new NotImplementedException();
