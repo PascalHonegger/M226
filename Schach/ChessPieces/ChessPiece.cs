@@ -2,7 +2,7 @@
 {
     abstract class ChessPiece
     {
-        protected bool isWhite;
+        protected bool colorIsWhite;
 
         protected bool TryMoveThere(int row, int column)
         {
@@ -22,5 +22,15 @@
         protected abstract void Eat();
         protected abstract bool CanEat();
         protected abstract bool TryEat(int rown, int column);
+
+        protected bool isWhite()
+        {
+            return colorIsWhite;
+        }
+
+        protected bool isBlack()
+        {
+            return !colorIsWhite;
+        }
     }
 }
