@@ -1,4 +1,4 @@
-﻿namespace Schach.Classes
+﻿namespace Chess.Classes
 {
     public class Pawn : IChessPiece
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Schach
+namespace Chess
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
