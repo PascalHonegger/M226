@@ -84,16 +84,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ChessPieces\ChessPiece.cs" />
-    <Compile Include="ChessPieces\Knight.cs" />
-    <Compile Include="ChessPieces\King.cs" />
-    <Compile Include="ChessPieces\Queen.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

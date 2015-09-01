@@ -2,7 +2,22 @@
 {
     abstract class ChessPiece
     {
-        protected bool colorIsWhite;
+        protected bool ColorIsWhite;
+
+        protected bool IsWhite()
+        {
+            return ColorIsWhite;
+        }
+
+        protected bool IsBlack()
+        {
+            return !ColorIsWhite;
+        }
+
+        protected ChessPiece(int row, int column, bool isWhite)
+        {
+            ColorIsWhite = isWhite;
+        }
 
         protected bool TryMoveThere(int row, int column)
         {
@@ -18,20 +33,23 @@
         {
             // TODO Move the Piece!
         }
-        protected abstract void GetEaten();
-        protected abstract void Eat();
-        protected abstract bool CanEat();
-        protected abstract bool TryEat(int rown, int column);
-        
 
-        protected bool isWhite()
+        protected bool TryEat(int row, int column)
         {
-            return colorIsWhite;
+            if (!CanEat(row, column)) return false;
+
+            Eat(row, column);
+
+            return true;
         }
 
-        protected bool isBlack()
+        protected abstract bool CanEat(int row, int column);
+
+        protected void Eat(int row, int column)
         {
-            return !colorIsWhite;
+            // TODO Remove the Piece from the Field!
+
+            MoveThere(row, column);
         }
     }
 }
