@@ -4,114 +4,114 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700" Background="{x:Null}">
+        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="White" Offset="0"/>
-                <GradientStop Color="#FFFF0707" Offset="1"/>
+                <GradientStop Color="White" Offset="0" />
+                <GradientStop Color="#FFFF0707" Offset="1" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="500"/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition Height="500" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="500" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Canvas Grid.Row="7" Grid.Column="0" Background="Black"/>
-            <Canvas Grid.Row="5" Grid.Column="0" Background="Black"/>
-            <Canvas Grid.Row="3" Grid.Column="0" Background="Black"/>
-            <Canvas Grid.Row="1" Grid.Column="0" Background="Black"/>
-            <Canvas Grid.Row="6" Grid.Column="1" Background="Black"/>
-            <Canvas Grid.Row="4" Grid.Column="1" Background="Black"/>
-            <Canvas Grid.Row="2" Grid.Column="1" Background="Black"/>
-            <Canvas Grid.Row="0" Grid.Column="1" Background="Black"/>
-            <Canvas Grid.Row="7" Grid.Column="2" Background="Black"/>
-            <Canvas Grid.Row="5" Grid.Column="2" Background="Black"/>
-            <Canvas Grid.Row="3" Grid.Column="2" Background="Black"/>
-            <Canvas Grid.Row="1" Grid.Column="2" Background="Black"/>
-            <Canvas Grid.Row="6" Grid.Column="3" Background="Black"/>
-            <Canvas Grid.Row="4" Grid.Column="3" Background="Black"/>
-            <Canvas Grid.Row="2" Grid.Column="3" Background="Black"/>
-            <Canvas Grid.Row="0" Grid.Column="3" Background="Black"/>
-            <Canvas Grid.Row="7" Grid.Column="4" Background="Black"/>
-            <Canvas Grid.Row="5" Grid.Column="4" Background="Black"/>
-            <Canvas Grid.Row="3" Grid.Column="4" Background="Black"/>
-            <Canvas Grid.Row="1" Grid.Column="4" Background="Black"/>
-            <Canvas Grid.Row="6" Grid.Column="5" Background="Black"/>
-            <Canvas Grid.Row="4" Grid.Column="5" Background="Black"/>
-            <Canvas Grid.Row="2" Grid.Column="5" Background="Black"/>
-            <Canvas Grid.Row="0" Grid.Column="5" Background="Black"/>
-            <Canvas Grid.Row="7" Grid.Column="6" Background="Black"/>
-            <Canvas Grid.Row="5" Grid.Column="6" Background="Black"/>
-            <Canvas Grid.Row="3" Grid.Column="6" Background="Black"/>
-            <Canvas Grid.Row="1" Grid.Column="6" Background="Black"/>
-            <Canvas Grid.Row="6" Grid.Column="7" Background="Black"/>
-            <Canvas Grid.Row="4" Grid.Column="7" Background="Black"/>
-            <Canvas Grid.Row="2" Grid.Column="7" Background="Black"/>
-            <Canvas Grid.Row="0" Grid.Column="7" Background="Black"/>
-            <Canvas Grid.Row="1" Grid.Column="7" Background="White"/>
-            <Canvas Grid.Row="3" Grid.Column="7" Background="White"/>
-            <Canvas Grid.Row="5" Grid.Column="7" Background="White"/>
-            <Canvas Grid.Row="7" Grid.Column="7" Background="White"/>
-            <Canvas Grid.Row="0" Grid.Column="6" Background="White"/>
-            <Canvas Grid.Row="2" Grid.Column="6" Background="White"/>
-            <Canvas Grid.Row="4" Grid.Column="6" Background="White"/>
-            <Canvas Grid.Row="6" Grid.Column="6" Background="White"/>
-            <Canvas Grid.Row="1" Grid.Column="5" Background="White"/>
-            <Canvas Grid.Row="3" Grid.Column="5" Background="White"/>
-            <Canvas Grid.Row="5" Grid.Column="5" Background="White"/>
-            <Canvas Grid.Row="7" Grid.Column="5" Background="White"/>
-            <Canvas Grid.Row="0" Grid.Column="4" Background="White"/>
-            <Canvas Grid.Row="2" Grid.Column="4" Background="White"/>
-            <Canvas Grid.Row="4" Grid.Column="4" Background="White"/>
-            <Canvas Grid.Row="6" Grid.Column="4" Background="White"/>
-            <Canvas Grid.Row="1" Grid.Column="3" Background="White"/>
-            <Canvas Grid.Row="3" Grid.Column="3" Background="White"/>
-            <Canvas Grid.Row="5" Grid.Column="3" Background="White"/>
-            <Canvas Grid.Row="7" Grid.Column="3" Background="White"/>
-            <Canvas Grid.Row="0" Grid.Column="2" Background="White"/>
-            <Canvas Grid.Row="2" Grid.Column="2" Background="White"/>
-            <Canvas Grid.Row="4" Grid.Column="2" Background="White"/>
-            <Canvas Grid.Row="6" Grid.Column="2" Background="White"/>
-            <Canvas Grid.Row="1" Grid.Column="1" Background="White"/>
-            <Canvas Grid.Row="3" Grid.Column="1" Background="White"/>
-            <Canvas Grid.Row="5" Grid.Column="1" Background="White"/>
-            <Canvas Grid.Row="7" Grid.Column="1" Background="White"/>
-            <Canvas Grid.Row="0" Grid.Column="0" Background="White"/>
-            <Canvas Grid.Row="2" Grid.Column="0" Background="White"/>
-            <Canvas Grid.Row="4" Grid.Column="0" Background="White"/>
-            <Canvas Grid.Row="6" Grid.Column="0" Background="White"/>
+            <Canvas Grid.Row="7" Grid.Column="0" Background="Black" />
+            <Canvas Grid.Row="5" Grid.Column="0" Background="Black" />
+            <Canvas Grid.Row="3" Grid.Column="0" Background="Black" />
+            <Canvas Grid.Row="1" Grid.Column="0" Background="Black" />
+            <Canvas Grid.Row="6" Grid.Column="1" Background="Black" />
+            <Canvas Grid.Row="4" Grid.Column="1" Background="Black" />
+            <Canvas Grid.Row="2" Grid.Column="1" Background="Black" />
+            <Canvas Grid.Row="0" Grid.Column="1" Background="Black" />
+            <Canvas Grid.Row="7" Grid.Column="2" Background="Black" />
+            <Canvas Grid.Row="5" Grid.Column="2" Background="Black" />
+            <Canvas Grid.Row="3" Grid.Column="2" Background="Black" />
+            <Canvas Grid.Row="1" Grid.Column="2" Background="Black" />
+            <Canvas Grid.Row="6" Grid.Column="3" Background="Black" />
+            <Canvas Grid.Row="4" Grid.Column="3" Background="Black" />
+            <Canvas Grid.Row="2" Grid.Column="3" Background="Black" />
+            <Canvas Grid.Row="0" Grid.Column="3" Background="Black" />
+            <Canvas Grid.Row="7" Grid.Column="4" Background="Black" />
+            <Canvas Grid.Row="5" Grid.Column="4" Background="Black" />
+            <Canvas Grid.Row="3" Grid.Column="4" Background="Black" />
+            <Canvas Grid.Row="1" Grid.Column="4" Background="Black" />
+            <Canvas Grid.Row="6" Grid.Column="5" Background="Black" />
+            <Canvas Grid.Row="4" Grid.Column="5" Background="Black" />
+            <Canvas Grid.Row="2" Grid.Column="5" Background="Black" />
+            <Canvas Grid.Row="0" Grid.Column="5" Background="Black" />
+            <Canvas Grid.Row="7" Grid.Column="6" Background="Black" />
+            <Canvas Grid.Row="5" Grid.Column="6" Background="Black" />
+            <Canvas Grid.Row="3" Grid.Column="6" Background="Black" />
+            <Canvas Grid.Row="1" Grid.Column="6" Background="Black" />
+            <Canvas Grid.Row="6" Grid.Column="7" Background="Black" />
+            <Canvas Grid.Row="4" Grid.Column="7" Background="Black" />
+            <Canvas Grid.Row="2" Grid.Column="7" Background="Black" />
+            <Canvas Grid.Row="0" Grid.Column="7" Background="Black" />
+            <Canvas Grid.Row="1" Grid.Column="7" Background="White" />
+            <Canvas Grid.Row="3" Grid.Column="7" Background="White" />
+            <Canvas Grid.Row="5" Grid.Column="7" Background="White" />
+            <Canvas Grid.Row="7" Grid.Column="7" Background="White" />
+            <Canvas Grid.Row="0" Grid.Column="6" Background="White" />
+            <Canvas Grid.Row="2" Grid.Column="6" Background="White" />
+            <Canvas Grid.Row="4" Grid.Column="6" Background="White" />
+            <Canvas Grid.Row="6" Grid.Column="6" Background="White" />
+            <Canvas Grid.Row="1" Grid.Column="5" Background="White" />
+            <Canvas Grid.Row="3" Grid.Column="5" Background="White" />
+            <Canvas Grid.Row="5" Grid.Column="5" Background="White" />
+            <Canvas Grid.Row="7" Grid.Column="5" Background="White" />
+            <Canvas Grid.Row="0" Grid.Column="4" Background="White" />
+            <Canvas Grid.Row="2" Grid.Column="4" Background="White" />
+            <Canvas Grid.Row="4" Grid.Column="4" Background="White" />
+            <Canvas Grid.Row="6" Grid.Column="4" Background="White" />
+            <Canvas Grid.Row="1" Grid.Column="3" Background="White" />
+            <Canvas Grid.Row="3" Grid.Column="3" Background="White" />
+            <Canvas Grid.Row="5" Grid.Column="3" Background="White" />
+            <Canvas Grid.Row="7" Grid.Column="3" Background="White" />
+            <Canvas Grid.Row="0" Grid.Column="2" Background="White" />
+            <Canvas Grid.Row="2" Grid.Column="2" Background="White" />
+            <Canvas Grid.Row="4" Grid.Column="2" Background="White" />
+            <Canvas Grid.Row="6" Grid.Column="2" Background="White" />
+            <Canvas Grid.Row="1" Grid.Column="1" Background="White" />
+            <Canvas Grid.Row="3" Grid.Column="1" Background="White" />
+            <Canvas Grid.Row="5" Grid.Column="1" Background="White" />
+            <Canvas Grid.Row="7" Grid.Column="1" Background="White" />
+            <Canvas Grid.Row="0" Grid.Column="0" Background="White" />
+            <Canvas Grid.Row="2" Grid.Column="0" Background="White" />
+            <Canvas Grid.Row="4" Grid.Column="0" Background="White" />
+            <Canvas Grid.Row="6" Grid.Column="0" Background="White" />
         </Grid>
-        <Canvas x:Name="Graveyard" Grid.Column="2" Grid.Row="1" Background="Gray"/>
-        <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0"/>
-        <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0"/>
-        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Click="StartButton_Click"/>
+        <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
+        <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />
+        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Grid.Column="0" Click="StartButton_Click" />
+        <Image x:Name="image" Grid.Column="2" Grid.Row="1" Source="C:\Users\A610222\Source\Repos\M226\Schach\Resources\GraveYard.png" Stretch="Fill"/>
 
     </Grid>
 </Window>
