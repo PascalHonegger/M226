@@ -7,11 +7,15 @@ namespace Chess.BoardPieces
 {
     class ChessPieceHandler : IEnumerable<ChessPiece>
     {
-        List<ChessPiece> _livingChessPieces = new List<ChessPiece>();
+        private List<ChessPiece> _livingChessPieces;
 
         public ChessPieceHandler()
         {
-            _livingChessPieces.Add(new Bishop(1, 1, true));
+            _livingChessPieces = new List<ChessPiece>
+            {
+                new Bishop(0, 0, true),
+                new Bishop(1, 0, true)
+            };
             var blackBishop1 = new ContentControl();
         }
 
