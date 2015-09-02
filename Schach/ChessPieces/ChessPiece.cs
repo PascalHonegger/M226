@@ -1,25 +1,29 @@
-﻿namespace Chess.ChessPieces
+﻿using System.Windows.Controls;
+
+namespace Chess.ChessPieces
 {
     abstract class ChessPiece
     {
-        protected bool ColorIsWhite;
-
-        protected bool IsWhite()
+        private readonly bool _colorIsWhite;
+        private ContentControl _piece;
+        
+        public bool IsWhite()
         {
-            return ColorIsWhite;
+            return _colorIsWhite;
         }
 
-        protected bool IsBlack()
+        public bool IsBlack()
         {
-            return !ColorIsWhite;
+            return !_colorIsWhite;
         }
 
-        protected ChessPiece(int row, int column, bool isWhite)
+        protected ChessPiece(int row, int column, bool isWhite, ContentControl piece)
         {
-            ColorIsWhite = isWhite;
+            _colorIsWhite = isWhite;
+            _piece = piece;
         }
 
-        protected bool TryMoveThere(int row, int column)
+        public bool TryMoveThere(int row, int column)
         {
             if (!CanMoveThere(row, column)) return false;
             
@@ -27,11 +31,12 @@
 
             return true;
         }
-        protected abstract bool CanMoveThere(int row, int column);
+        public abstract bool CanMoveThere(int row, int column);
 
         protected void MoveThere(int row, int column)
         {
             // TODO Move the Piece!
+            // _piece.animate();
         }
 
         protected bool TryEat(int row, int column)
@@ -48,7 +53,6 @@
         protected void Eat(int row, int column)
         {
             // TODO Remove the Piece from the Field!
-
             MoveThere(row, column);
         }
     }
