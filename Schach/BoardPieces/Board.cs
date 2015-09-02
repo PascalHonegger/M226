@@ -5,14 +5,11 @@ namespace Chess.BoardPieces
 {
     internal class Board
     {
-        public ChessPieceHandler ChessPieceList;
+        public ChessPieceHandler ChessPieceList = new ChessPieceHandler();
 
         public ChessPiece GetChessPiece(int row, int column)
         {
             return ChessPieceList.First(piece => piece.Row == row && piece.Column == column);
-
-            /*new Canvas().Children.Cast<ContentControl>()
-                    .First(child => Grid.GetRow(child) == row && Grid.GetColumn(child) == column); */
         }
 
         public void StartGame()

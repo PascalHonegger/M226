@@ -14,7 +14,13 @@ namespace Chess.BoardPieces
             _livingChessPieces = new List<ChessPiece>
             {
                 new Bishop(0, 0, true),
-                new Bishop(1, 0, true)
+                new Bishop(1, 0, true),
+                new Bishop(2, 0, true),
+                new Bishop(3, 0, true),
+                new Bishop(4, 0, true),
+                new Bishop(5, 0, true),
+                new Bishop(6, 0, true),
+                new Bishop(7, 0, true)
             };
             var blackBishop1 = new ContentControl();
         }
