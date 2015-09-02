@@ -1,11 +1,12 @@
-﻿using System.Windows.Controls;
-
-namespace Chess.ChessPieces
+﻿namespace Chess.ChessPieces
 {
     abstract class ChessPiece
     {
         private readonly bool _colorIsWhite;
-        private ContentControl _piece;
+
+        public int Row { get; private set; }
+
+        public int Column { get; private set; }
         
         public bool IsWhite()
         {
@@ -17,10 +18,11 @@ namespace Chess.ChessPieces
             return !_colorIsWhite;
         }
 
-        protected ChessPiece(int row, int column, bool isWhite, ContentControl piece)
+        protected ChessPiece(int row, int column, bool isWhite)
         {
             _colorIsWhite = isWhite;
-            _piece = piece;
+            Column = column;
+            Row = row;
         }
 
         public bool TryMoveThere(int row, int column)
@@ -31,7 +33,8 @@ namespace Chess.ChessPieces
 
             return true;
         }
-        public abstract bool CanMoveThere(int row, int column);
+
+        protected abstract bool CanMoveThere(int row, int column);
 
         protected void MoveThere(int row, int column)
         {

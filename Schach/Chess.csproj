@@ -65,7 +65,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -98,13 +98,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoardPieces\Board.cs" />
+    <Compile Include="BoardPieces\ChessPieceHandler.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\knight.cs" />
     <Compile Include="ChessPieces\Paw.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
-    <Compile Include="ChessPieces\rook.cs" />
+    <Compile Include="ChessPieces\Rook.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
