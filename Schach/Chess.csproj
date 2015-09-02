@@ -126,6 +126,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Chess_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
@@ -153,10 +154,9 @@
     <Folder Include="BoardPieces\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GraveYardImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GraveYard.png" />
+    <Content Include="Resources\GraveYard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -111,7 +111,7 @@
         <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
         <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />
         <Button x:Name="StartButton" Content="Start" Grid.Row="2" Grid.Column="0" Click="StartButton_Click" />
-        <Image x:Name="image" Grid.Column="2" Grid.Row="1" Source="C:\Users\A610222\Source\Repos\M226\Schach\Resources\GraveYard.png" Stretch="Fill"/>
+        <Image x:Name="image" Grid.Column="2" Grid.Row="1" Source="/Resources/GraveYard.png" />
 
     </Grid>
 </Window>
