@@ -8,7 +8,7 @@ namespace Chess.ChessPieces
         {
         }
 
-        protected override bool CanMoveThere(int row, int column)
+        protected override bool CanMoveTo(int row, int column)
         {
             throw new NotImplementedException();
         }

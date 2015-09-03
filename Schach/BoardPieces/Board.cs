@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 using Chess.ChessPieces;
 
 namespace Chess.BoardPieces
@@ -9,15 +7,6 @@ namespace Chess.BoardPieces
     internal class Board
     {
         public List<ChessPiece> ChessPieceList = new List<ChessPiece>();
-
-        public ChessBoardCellViewModel A8;
-        public ChessBoardCellViewModel B8;
-        public ChessBoardCellViewModel C8;
-        public ChessBoardCellViewModel D8;
-        public ChessBoardCellViewModel E8;
-        public ChessBoardCellViewModel F8;
-        public ChessBoardCellViewModel G8;
-        public ChessBoardCellViewModel H8;
 
         public ChessPiece GetChessPiece(int row, int column)
         {
@@ -71,12 +60,6 @@ namespace Chess.BoardPieces
             ChessPieceList.Add(new Bishop(5, 7, true));
             ChessPieceList.Add(new Knight(6, 7, true));
             ChessPieceList.Add(new Rook(7, 7, true));
-        }
-
-        public bool PlaceTaken(int row, int column, bool isWhite)
-        {
-            return GetChessPiece(row, column) == null || GetChessPiece(row, column).IsWhite() && isWhite ||
-                   GetChessPiece(row, column).IsBlack() && !isWhite;
         }
     }
 }

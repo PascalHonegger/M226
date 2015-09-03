@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess.BoardPieces"
         mc:Ignorable="d"
-        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700" >
+        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
     <Window.DataContext>
-        <local:Board/>
+        <local:Board />
     </Window.DataContext>
     <Grid>
         <Grid.Background>
@@ -47,11 +47,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Canvas Grid.Row="7" Grid.Column="0" >
-                <Canvas.Background>
-                    <ImageBrush ImageSource="BoardPieces/Board.cs."/>
-                </Canvas.Background>
-            </Canvas>
+            <ContentControl Grid.Row="7" Grid.Column="0" Background="Black"/> 
             <Canvas Grid.Row="5" Grid.Column="0" Background="Black" />
             <Canvas Grid.Row="3" Grid.Column="0" Background="Black" />
             <Canvas Grid.Row="1" Grid.Column="0" Background="Black" />

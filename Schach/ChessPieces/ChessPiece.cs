@@ -27,14 +27,16 @@
 
         public bool TryMoveThere(int row, int column)
         {
-            if (!CanMoveThere(row, column)) return false;
+            if (!PossiblePath(row, column)) return false;
             
             MoveThere(row, column);
 
             return true;
         }
 
-        protected abstract bool CanMoveThere(int row, int column);
+        protected abstract bool PossiblePath(int row, int column);
+
+        protected abstract bool CanMoveTo(int row, int column);
 
         protected void MoveThere(int row, int column)
         {
