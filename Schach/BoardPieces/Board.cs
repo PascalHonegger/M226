@@ -15,6 +15,7 @@ namespace Chess.BoardPieces
         public void StartGame()
         {
             ChessPieceList = new ChessPieceHandler();
+            
             // TODO Add all ChessPiece-Creation.
             // TODO Make all Pieces Visible.
         }

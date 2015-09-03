@@ -1,6 +1,6 @@
 ﻿namespace Chess.ChessPieces
 {
-    abstract class ChessPiece
+    abstract class ChessPiece : IChessPiece
     {
         private readonly bool _colorIsWhite;
 

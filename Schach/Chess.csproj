@@ -101,6 +101,7 @@
     <Compile Include="BoardPieces\ChessPieceHandler.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPiece.cs" />
+    <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\knight.cs" />
     <Compile Include="ChessPieces\Paw.cs" />
