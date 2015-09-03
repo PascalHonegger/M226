@@ -5,10 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess.BoardPieces"
         mc:Ignorable="d"
-        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
-    <Window.Resources>
-        <local:Board x:Key="Board" />
-    </Window.Resources>
+        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700" >
     <Window.DataContext>
         <local:Board/>
     </Window.DataContext>
@@ -31,26 +28,30 @@
         </Grid.ColumnDefinitions>
         <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Canvas Grid.Row="7" Grid.Column="0" Background="Black" />
+            <Canvas Grid.Row="7" Grid.Column="0" >
+                <Canvas.Background>
+                    <ImageBrush ImageSource="BoardPieces/Board.cs."/>
+                </Canvas.Background>
+            </Canvas>
             <Canvas Grid.Row="5" Grid.Column="0" Background="Black" />
             <Canvas Grid.Row="3" Grid.Column="0" Background="Black" />
             <Canvas Grid.Row="1" Grid.Column="0" Background="Black" />
@@ -117,8 +118,7 @@
         </Grid>
         <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
         <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />
-        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Grid.Column="0" Click="StartButton_Click" />
-        <Image x:Name="image" Grid.Column="2" Grid.Row="1" Source="/Resources/GraveYard.png" Stretch="Fill" />
+        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Grid.Column="0" />
 
     </Grid>
 </Window>

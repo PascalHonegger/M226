@@ -2,9 +2,9 @@
 
 namespace Chess.ChessPieces
 {
-    class Paw : ChessPiece
+    class Pawn : ChessPiece
     {
-        public Paw(int row, int column, bool isWhite) : base(row, column, isWhite)
+        public Pawn(int row, int column, bool isWhite) : base(row, column, isWhite)
         {
         }
 

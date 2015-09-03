@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using Chess.BoardPieces;
 
 namespace Chess
@@ -11,11 +12,6 @@ namespace Chess
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Board().StartGame();
         }
     }
 }

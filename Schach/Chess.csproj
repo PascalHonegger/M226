@@ -16,7 +16,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Pascal\Desktop\</PublishUrl>
+    <PublishUrl>C:\Users\A610222\Desktop\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,7 +26,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -98,13 +98,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoardPieces\Board.cs" />
-    <Compile Include="BoardPieces\ChessPieceHandler.cs" />
+    <Compile Include="BoardPieces\ChessBoardCellViewModel.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPiece.cs" />
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\knight.cs" />
-    <Compile Include="ChessPieces\Paw.cs" />
+    <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
     <Compile Include="ChessPieces\Rook.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -154,9 +154,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\GraveYard.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Resources\45px-Chess_bdt45.svg.png" />
+    <Resource Include="Resources\45px-Chess_kdt45.svg.png" />
+    <Resource Include="Resources\45px-Chess_ndt45.svg.png" />
+    <Resource Include="Resources\45px-Chess_nlt45.svg.png" />
+    <Resource Include="Resources\45px-Chess_qdt45.svg.png" />
+    <Resource Include="Resources\45px-Chess_qlt45.svg.png" />
+    <Resource Include="Resources\45px-Chess_rdt45.svg.png" />
+    <Resource Include="Resources\Chess_blt45.svg.png" />
+    <Resource Include="Resources\Chess_klt45.svg.png" />
+    <Resource Include="Resources\Chess_pdt45.svg.png" />
+    <Resource Include="Resources\Chess_plt45.svg.png" />
+    <Resource Include="Resources\Chess_rlt45.svg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
