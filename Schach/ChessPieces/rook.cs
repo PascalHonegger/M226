@@ -4,11 +4,11 @@ namespace Chess.ChessPieces
 {
     class Rook : ChessPiece
     {
-        public Rook(int row, int column, bool isWhite) : base(isWhite)
+        public Rook(bool isWhite) : base(isWhite)
         {
         }
 
-        protected override bool PossiblePath(int row, int column)
+        protected override bool PossiblePath(Path path)
         {
             throw new NotImplementedException();
         }
@@ -18,7 +18,7 @@ namespace Chess.ChessPieces
             throw new NotImplementedException();
         }
 
-        protected override bool CanEat(int row, int column)
+        protected override bool CanEat(Path path)
         {
             throw new NotImplementedException();
         }

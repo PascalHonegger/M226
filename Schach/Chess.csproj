@@ -90,7 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BoardPieces\CellControl.xaml">
+    <Page Include="BoardPieces\Cells\CellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,15 +103,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoardPieces\Board.cs" />
-    <Compile Include="BoardPieces\CellControl.xaml.cs">
+    <Compile Include="BoardPieces\Cells\CellControl.xaml.cs">
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BoardPieces\CellViewModel.cs" />
+    <Compile Include="BoardPieces\Cells\CellViewModel.cs" />
+    <Compile Include="BoardPieces\Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPiece.cs" />
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Knight.cs" />
+    <Compile Include="ChessPieces\Path.cs" />
     <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
     <Compile Include="ChessPieces\Rook.cs" />
@@ -161,9 +163,13 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\45px-Chess_bdt45.svg.png" />
+    <Resource Include="Resources\chessboard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\45px-Chess_bdt45.svg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\45px-Chess_kdt45.svg.png" />
     <Resource Include="Resources\45px-Chess_ndt45.svg.png" />
     <Resource Include="Resources\45px-Chess_nlt45.svg.png" />

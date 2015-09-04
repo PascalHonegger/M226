@@ -1,10 +1,13 @@
-﻿namespace Chess.ChessPieces
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Documents;
+
+namespace Chess.ChessPieces
 {
     interface IChessPiece
     {
         bool IsBlack();
         bool IsWhite();
-        bool TryMoveThere(int row, int column);
-        bool TryJumpThere(int row, int column);
+        List<Path> PathList { get; }
     }
 }

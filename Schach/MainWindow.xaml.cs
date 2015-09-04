@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Chess.BoardPieces;
+using Chess.BoardPieces.Cells;
 
 namespace Chess
 {

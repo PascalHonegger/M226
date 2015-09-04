@@ -1,75 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using Chess.BoardPieces.Cells;
 using Chess.ChessPieces;
 
 namespace Chess.BoardPieces
 {
-    internal class Board
+    public class Board
     {
-        public List<ChessPiece> ChessPieceList = new List<ChessPiece>();
-
+        public int DimensionsChessBoard { get; } = 500;
         public Board()
         {
-            A1 = new CellViewModel();
-            A2 = new CellViewModel();
+            A8 = new CellViewModel(new Rook(false), null, null, B8, B7, A7, null, null, null);
+            B8 = new CellViewModel(new Knight(false), null, null, C8, C7, B7, A7, A8, null);
         }
 
-        public CellViewModel A1 { get; private set;  }
-        public CellViewModel A2 { get; private set; }
-
-        public ChessPiece GetChessPiece(int row, int column)
-        {
-            return ChessPieceList.First(piece => piece.Row == row && piece.Column == column);
-        }
+        public CellViewModel A8 { get; private set;  }
+        public CellViewModel B8 { get; private set; }
+        public CellViewModel C8 { get; private set; }
+        public CellViewModel D8 { get; private set; }
+        public CellViewModel E8 { get; private set; }
+        public CellViewModel F8 { get; private set; }
+        public CellViewModel G8 { get; private set; }
+        public CellViewModel H8 { get; private set; }
+        public CellViewModel A7 { get; private set; }
+        public CellViewModel B7 { get; private set; }
+        public CellViewModel C7 { get; private set; }
+        public CellViewModel D7 { get; private set; }
+        public CellViewModel E7 { get; private set; }
+        public CellViewModel F7 { get; private set; }
+        public CellViewModel G7 { get; private set; }
+        public CellViewModel H7 { get; private set; }
 
         public void StartGame()
         {
-            FillChessPieceList();
 
             // TODO Add all ChessPiece-Creation.
             // TODO Make all Pieces Visible.
-        }
-
-        private void FillChessPieceList()
-        {
-            // Black Column 1
-            ChessPieceList.Add(new Rook(0, 0, false));
-            ChessPieceList.Add(new Knight(1, 0, false));
-            ChessPieceList.Add(new Bishop(2, 0, false));
-            ChessPieceList.Add(new Queen(3, 0, false));
-            ChessPieceList.Add(new King(4, 0, false));
-            ChessPieceList.Add(new Bishop(5, 0, false));
-            ChessPieceList.Add(new Knight(6, 0, false));
-            ChessPieceList.Add(new Rook(7, 0, false));
-            // Black Column 2
-            ChessPieceList.Add(new Pawn(0, 1, false));
-            ChessPieceList.Add(new Pawn(1, 1, false));
-            ChessPieceList.Add(new Pawn(2, 1, false));
-            ChessPieceList.Add(new Pawn(3, 1, false));
-            ChessPieceList.Add(new Pawn(4, 1, false));
-            ChessPieceList.Add(new Pawn(5, 1, false));
-            ChessPieceList.Add(new Pawn(6, 1, false));
-            ChessPieceList.Add(new Pawn(7, 1, false));
-
-            // White Column 6
-            ChessPieceList.Add(new Pawn(0, 1, true));
-            ChessPieceList.Add(new Pawn(1, 1, true));
-            ChessPieceList.Add(new Pawn(2, 1, true));
-            ChessPieceList.Add(new Pawn(3, 1, true));
-            ChessPieceList.Add(new Pawn(4, 1, true));
-            ChessPieceList.Add(new Pawn(5, 1, true));
-            ChessPieceList.Add(new Pawn(6, 1, true));
-            ChessPieceList.Add(new Pawn(7, 1, true));
-            // White Column 7
-            ChessPieceList.Add(new Rook(0, 7, true));
-            ChessPieceList.Add(new Knight(1, 7, true));
-            ChessPieceList.Add(new Bishop(2, 7, true));
-            ChessPieceList.Add(new Queen(3, 7, true));
-            ChessPieceList.Add(new King(4, 7, true));
-            ChessPieceList.Add(new Bishop(5, 7, true));
-            ChessPieceList.Add(new Knight(6, 7, true));
-            ChessPieceList.Add(new Rook(7, 7, true));
         }
 
         public void ResetChessBoard()

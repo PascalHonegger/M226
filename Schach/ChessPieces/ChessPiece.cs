@@ -1,33 +1,36 @@
-﻿using System.Windows.Media;
+﻿using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Chess.ChessPieces
 {
     public abstract class ChessPiece : IChessPiece
     {
         private readonly bool _colorIsWhite;
-        private readonly ImageSource _texture;
+        public ImageSource Texture { get; set; }
 
         public bool IsWhite()
         {
             return _colorIsWhite;
         }
 
+        public List<Path> PathList { get; }
+
         public bool IsBlack()
         {
             return !_colorIsWhite;
         }
 
-        protected ChessPiece(bool isWhite, ImageSource texture)
+        protected ChessPiece(bool isWhite)
         {
             _colorIsWhite = isWhite;
-            _texture = texture;
+            PathList = new List<Path>();
         }
 
-        public bool TryMoveThere(int row, int column)
+        public bool TryMoveThere(Path path)
         {
-            if (!PossiblePath(row, column)) return false;
+            if (!PossiblePath(path)) return false;
             
-            MoveThere(row, column);
+            MoveThere(path);
 
             return true;
         }
@@ -37,31 +40,30 @@ namespace Chess.ChessPieces
             throw new System.NotImplementedException();
         }
 
-        protected abstract bool PossiblePath(int row, int column);
+        protected abstract bool PossiblePath(Path path);
 
         protected abstract bool CanMoveTo(int row, int column);
 
-        protected void MoveThere(int row, int column)
+        protected void MoveThere(Path path)
         {
             // TODO Move the Piece!
             // _piece.animate();
         }
 
-        protected bool TryEat(int row, int column)
+        protected bool TryEat(Path path)
         {
-            if (!CanEat(row, column)) return false;
+            if (!CanEat(path)) return false;
 
-            Eat(row, column);
+            Eat(path);
 
             return true;
         }
 
-        protected abstract bool CanEat(int row, int column);
+        protected abstract bool CanEat(Path path);
 
-        protected void Eat(int row, int column)
+        protected void Eat(Path path)
         {
             // TODO Remove the Piece from the Field!
-            MoveThere(row, column);
         }
     }
 }

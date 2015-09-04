@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
+using Chess.BoardPieces;
 
 namespace Chess.ChessPieces
 {
     class Pawn : ChessPiece
     {
-        public Pawn(int row, int column, bool isWhite) : base(isWhite)
+        public Pawn(bool isWhite) : base(isWhite)
         {
         }
 
-        protected override bool PossiblePath(int row, int column)
+        protected override bool PossiblePath(Path path)
         {
             throw new NotImplementedException();
         }
@@ -18,7 +22,7 @@ namespace Chess.ChessPieces
             throw new NotImplementedException();
         }
 
-        protected override bool CanEat(int row, int column)
+        protected override bool CanEat(Path path)
         {
             throw new NotImplementedException();
         }
