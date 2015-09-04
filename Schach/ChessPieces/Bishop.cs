@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Media.Imaging;
 
 namespace Chess.ChessPieces
@@ -7,7 +8,10 @@ namespace Chess.ChessPieces
     {
         public Bishop(bool isWhite) : base(isWhite)
         {
-            Texture = isWhite ? new BitmapImage(new Uri("Resources/WhiteBishop.png")) : new BitmapImage(new Uri("C:\\Users\\A610222\\Source\\Repos\\M226\\Schach\\Resources\\BlackBishop.png"));
+            //Chess.Properties.Resources.blackbishop;
+            /*var uriSource = new Uri("Resources/BlackKing.png", UriKind.Relative);
+            var b = new BitmapImage(uriSource);
+            Texture = isWhite ? null : b.StreamSource;*/
         }
 
         protected override bool PossiblePath(Path path)

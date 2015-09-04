@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance cells:CellViewModel }">
     <Grid>
-        <Image Source="{Binding Image}" />
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding Image}"/>
+        </Grid.Background>
     </Grid>
 </UserControl>
