@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Chess.Annotations;
@@ -18,7 +19,6 @@ namespace Chess.BoardPieces.Cells
         public CellViewModel(ChessPieceBase currentChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
             CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
         {
-            _currentChessPiece = currentChessPiece;
             _movements.Add(Movement.Direction.Top, top);
             _movements.Add(Movement.Direction.TopRight, topright);
             _movements.Add(Movement.Direction.Right, right);
@@ -28,8 +28,20 @@ namespace Chess.BoardPieces.Cells
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
 
-            if (currentChessPiece == null) return;
-            Image = _currentChessPiece.Texture;
+            CurrentPieceBase = currentChessPiece;
+        }
+
+        public ChessPieceBase CurrentPieceBase
+        {
+            get
+            {
+                return _currentChessPiece;
+            }
+            set
+            {
+                _currentChessPiece = value;
+                Image = _currentChessPiece?.Texture;
+            }
         }
 
         public ImageSource Image
