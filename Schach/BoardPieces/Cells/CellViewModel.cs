@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Chess.Annotations;
 using Chess.ChessPieces;
 
@@ -10,11 +11,11 @@ namespace Chess.BoardPieces.Cells
     public class CellViewModel : INotifyPropertyChanged
     {
         private SolidColorBrush _bgc;
-        private ChessPiece _currentChessPiece;
+        private ChessPieceBase _currentChessPiece;
         private ImageSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
 
-        public CellViewModel(ChessPiece currentChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
+        public CellViewModel(ChessPieceBase currentChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
             CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
         {
             _currentChessPiece = currentChessPiece;
@@ -26,6 +27,8 @@ namespace Chess.BoardPieces.Cells
             _movements.Add(Movement.Direction.BottomLeft, bottomleft);
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
+
+            if (currentChessPiece == null) return;
             Image = _currentChessPiece.Texture;
         }
 
@@ -45,7 +48,7 @@ namespace Chess.BoardPieces.Cells
             get { return _bgc; }
             set
             {
-                if (_bgc == value) return;
+                if (Equals(_bgc, value)) return;
                 _bgc = value;
                 OnPropertyChanged(nameof(Bgc));
             }

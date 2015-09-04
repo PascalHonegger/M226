@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Chess.ChessPieces
 {
-    public abstract class ChessPiece : IChessPiece
+    public abstract class ChessPieceBase : IChessPiece
     {
         private readonly bool _colorIsWhite;
 
@@ -21,7 +21,7 @@ namespace Chess.ChessPieces
             return !_colorIsWhite;
         }
 
-        protected ChessPiece(bool isWhite)
+        protected ChessPieceBase(bool isWhite)
         {
             _colorIsWhite = isWhite;
             PathList = new List<Path>();

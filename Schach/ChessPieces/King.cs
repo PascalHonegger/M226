@@ -2,7 +2,7 @@
 
 namespace Chess.ChessPieces
 {
-    class King : ChessPiece
+    class King : ChessPieceBase
     {
         public King(bool isWhite) : base(isWhite)
         {

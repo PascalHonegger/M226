@@ -16,12 +16,12 @@
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="{Binding DimensionsChessBoard}" />
+            <RowDefinition Height="500" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="{Binding DimensionsChessBoard}" />
+            <ColumnDefinition Width="500" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid x:Name="ChessBoard" Grid.Column="1" Grid.Row="1">
@@ -48,18 +48,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <cells:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding A8}"  >
-                <cells:CellControl.Background>
-                    <ImageBrush ImageSource="{Binding Texture}" />
-                </cells:CellControl.Background>
-            </cells:CellControl>
+            <cells:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding A8}" Background="{Binding Bgc}"/>
             <cells:CellControl Grid.Column="1" Grid.Row="0" DataContext="{Binding B8}" Background="{Binding Bgc}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="0" />
-            <cells:CellControl Grid.Column="3" Grid.Row="0" />
-            <cells:CellControl Grid.Column="4" Grid.Row="0" />
-            <cells:CellControl Grid.Column="5" Grid.Row="0" />
-            <cells:CellControl Grid.Column="6" Grid.Row="0" />
-            <cells:CellControl Grid.Column="7" Grid.Row="0" />
+            <cells:CellControl Grid.Column="2" Grid.Row="0" DataContext="{Binding C8}" Background="{Binding Bgc}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="0" DataContext="{Binding D8}" Background="{Binding Bgc}" />
+            <cells:CellControl Grid.Column="4" Grid.Row="0" DataContext="{Binding E8}" Background="{Binding Bgc}" />
+            <cells:CellControl Grid.Column="5" Grid.Row="0" DataContext="{Binding F8}" Background="{Binding Bgc}" />
+            <cells:CellControl Grid.Column="6" Grid.Row="0" DataContext="{Binding G8}" Background="{Binding Bgc}" />
+            <cells:CellControl Grid.Column="7" Grid.Row="0" DataContext="{Binding H8}" Background="{Binding Bgc}" />
             <cells:CellControl Grid.Column="0" Grid.Row="1" />
             <cells:CellControl Grid.Column="1" Grid.Row="1" />
             <cells:CellControl Grid.Column="2" Grid.Row="1" />
@@ -76,6 +72,22 @@
             <cells:CellControl Grid.Column="5" Grid.Row="2" />
             <cells:CellControl Grid.Column="6" Grid.Row="2" />
             <cells:CellControl Grid.Column="7" Grid.Row="2" />
+            <cells:CellControl Grid.Column="0" Grid.Row="3" />
+            <cells:CellControl Grid.Column="1" Grid.Row="3" />
+            <cells:CellControl Grid.Column="2" Grid.Row="3" />
+            <cells:CellControl Grid.Column="3" Grid.Row="3" />
+            <cells:CellControl Grid.Column="4" Grid.Row="3" />
+            <cells:CellControl Grid.Column="5" Grid.Row="3" />
+            <cells:CellControl Grid.Column="6" Grid.Row="3" />
+            <cells:CellControl Grid.Column="7" Grid.Row="3" />
+            <cells:CellControl Grid.Column="0" Grid.Row="4" />
+            <cells:CellControl Grid.Column="1" Grid.Row="4" />
+            <cells:CellControl Grid.Column="2" Grid.Row="4" />
+            <cells:CellControl Grid.Column="3" Grid.Row="4" />
+            <cells:CellControl Grid.Column="4" Grid.Row="4" />
+            <cells:CellControl Grid.Column="5" Grid.Row="4" />
+            <cells:CellControl Grid.Column="6" Grid.Row="4" />
+            <cells:CellControl Grid.Column="7" Grid.Row="4" />
         </Grid>
         <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
         <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />

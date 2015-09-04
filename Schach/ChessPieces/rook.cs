@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Windows.Media.Imaging;
 
 namespace Chess.ChessPieces
 {
-    class Rook : ChessPiece
+    class Rook : ChessPieceBase
     {
         public Rook(bool isWhite) : base(isWhite)
         {
+            Texture = new BitmapImage(new Uri("C:\\Git\\M226\\Schach\\Resources\\BlackBishop.png"));
         }
 
         protected override bool PossiblePath(Path path)
