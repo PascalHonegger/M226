@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using Chess.BoardPieces;
 using Chess.BoardPieces.Cells;
 
@@ -20,10 +17,7 @@ namespace Chess
         // Temporary
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (CellControl c in ChessBoard.Children)
-            {
-                c.SetToDefaultColor();
-            }
+            new Board();
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Chess.Annotations;
 using Chess.ChessPieces;
 
@@ -15,7 +11,7 @@ namespace Chess.BoardPieces.Cells
     {
         private SolidColorBrush _bgc;
         private ChessPiece _currentChessPiece;
-        private Image _bgi;
+        private ImageSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
 
         public CellViewModel(ChessPiece currentChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
@@ -30,16 +26,16 @@ namespace Chess.BoardPieces.Cells
             _movements.Add(Movement.Direction.BottomLeft, bottomleft);
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
-
+            Image = _currentChessPiece.Texture;
         }
 
         public ImageSource Image
         {
-            get { return Image; }
+            get { return _image; }
             private set
             {
-                if (Equals(Image, value)) return;
-                Image = value;
+                if (Equals(_image, value)) return;
+                _image = value;
                 OnPropertyChanged(nameof(Image));
             }
         }
@@ -52,17 +48,6 @@ namespace Chess.BoardPieces.Cells
                 if (_bgc == value) return;
                 _bgc = value;
                 OnPropertyChanged(nameof(Bgc));
-            }
-        }
-
-        public Image Bgi
-        {
-            get {return _bgi; }
-
-            set {
-                if (_bgi == value) return;
-                _bgi = value;
-                OnPropertyChanged(nameof(Bgi));
             }
         }
 

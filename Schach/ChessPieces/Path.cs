@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace Chess.ChessPieces
 {
@@ -6,7 +7,7 @@ namespace Chess.ChessPieces
     {
         public IEnumerator GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool IsRecursive { get; set; }

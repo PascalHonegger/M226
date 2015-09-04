@@ -167,20 +167,24 @@
     <Resource Include="Resources\chessboard.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\45px-Chess_bdt45.svg.png">
+    <Resource Include="Resources\BlackBishop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\45px-Chess_kdt45.svg.png" />
-    <Resource Include="Resources\45px-Chess_ndt45.svg.png" />
-    <Resource Include="Resources\45px-Chess_nlt45.svg.png" />
-    <Resource Include="Resources\45px-Chess_qdt45.svg.png" />
-    <Resource Include="Resources\45px-Chess_qlt45.svg.png" />
-    <Resource Include="Resources\45px-Chess_rdt45.svg.png" />
-    <Resource Include="Resources\Chess_blt45.svg.png" />
-    <Resource Include="Resources\Chess_klt45.svg.png" />
-    <Resource Include="Resources\Chess_pdt45.svg.png" />
-    <Resource Include="Resources\Chess_plt45.svg.png" />
-    <Resource Include="Resources\Chess_rlt45.svg.png" />
+    <Resource Include="Resources\BlackKing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\BlackKnight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\WhiteKnight.png" />
+    <Resource Include="Resources\BlackQueen.png" />
+    <Resource Include="Resources\WhiteQueen.png" />
+    <Resource Include="Resources\BlackRook.png" />
+    <Resource Include="Resources\WhiteBishop.png" />
+    <Resource Include="Resources\WhiteKing.png" />
+    <Resource Include="Resources\BlackPawn.png" />
+    <Resource Include="Resources\WhitePawn.png" />
+    <Resource Include="Resources\WhiteRook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Chess.BoardPieces.Cells
 {
@@ -15,7 +14,7 @@ namespace Chess.BoardPieces.Cells
         public CellViewModel CellDataContext => DataContext as CellViewModel;
         public void SetToDefaultColor()
         {
-            Background = CellDataContext == null ? Brushes.Red : CellDataContext.Bgc;
+            new Board();
         }
     }
 }

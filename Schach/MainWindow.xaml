@@ -48,12 +48,12 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <cells:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding A1}"  >
+            <cells:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding A8}"  >
                 <cells:CellControl.Background>
-                    <ImageBrush ImageSource="Resources/Chess_blt45.svg.png" />
+                    <ImageBrush ImageSource="{Binding Texture}" />
                 </cells:CellControl.Background>
             </cells:CellControl>
-            <cells:CellControl Grid.Column="1" Grid.Row="0" DataContext="{Binding A2}" Background="{Binding Bgc}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="0" DataContext="{Binding B8}" Background="{Binding Bgc}"/>
             <cells:CellControl Grid.Column="2" Grid.Row="0" />
             <cells:CellControl Grid.Column="3" Grid.Row="0" />
             <cells:CellControl Grid.Column="4" Grid.Row="0" />

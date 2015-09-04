@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Forms.VisualStyles;
-using Chess.BoardPieces;
 
 namespace Chess.ChessPieces
 {

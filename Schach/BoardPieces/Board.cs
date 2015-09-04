@@ -10,6 +10,7 @@ namespace Chess.BoardPieces
         {
             A8 = new CellViewModel(new Rook(false), null, null, B8, B7, A7, null, null, null);
             B8 = new CellViewModel(new Knight(false), null, null, C8, C7, B7, A7, A8, null);
+            C8 =  new CellViewModel(new Bishop(false), null, null, D8, D7, C7, B7, B8, null);
         }
 
         public CellViewModel A8 { get; private set;  }

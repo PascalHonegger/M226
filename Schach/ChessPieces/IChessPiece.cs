@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Documents;
+﻿using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Chess.ChessPieces
 {
@@ -9,5 +8,6 @@ namespace Chess.ChessPieces
         bool IsBlack();
         bool IsWhite();
         List<Path> PathList { get; }
+        ImageSource Texture { get;}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace Chess.ChessPieces
@@ -6,12 +7,12 @@ namespace Chess.ChessPieces
     public abstract class ChessPiece : IChessPiece
     {
         private readonly bool _colorIsWhite;
-        public ImageSource Texture { get; set; }
 
         public bool IsWhite()
         {
             return _colorIsWhite;
         }
+        public ImageSource Texture { get; set; }
 
         public List<Path> PathList { get; }
 
@@ -37,7 +38,7 @@ namespace Chess.ChessPieces
 
         public bool TryJumpThere(int row, int column)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected abstract bool PossiblePath(Path path);
