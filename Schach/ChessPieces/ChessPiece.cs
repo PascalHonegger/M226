@@ -1,13 +1,12 @@
-﻿namespace Chess.ChessPieces
+﻿using System.Windows.Media;
+
+namespace Chess.ChessPieces
 {
     public abstract class ChessPiece : IChessPiece
     {
         private readonly bool _colorIsWhite;
+        private readonly ImageSource _texture;
 
-        public int Row { get; private set; }
-
-        public int Column { get; private set; }
-        
         public bool IsWhite()
         {
             return _colorIsWhite;
@@ -18,11 +17,10 @@
             return !_colorIsWhite;
         }
 
-        protected ChessPiece(int row, int column, bool isWhite)
+        protected ChessPiece(bool isWhite, ImageSource texture)
         {
             _colorIsWhite = isWhite;
-            Column = column;
-            Row = row;
+            _texture = texture;
         }
 
         public bool TryMoveThere(int row, int column)
@@ -32,6 +30,11 @@
             MoveThere(row, column);
 
             return true;
+        }
+
+        public bool TryJumpThere(int row, int column)
+        {
+            throw new System.NotImplementedException();
         }
 
         protected abstract bool PossiblePath(int row, int column);

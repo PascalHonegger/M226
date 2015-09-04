@@ -4,7 +4,7 @@ namespace Chess.ChessPieces
 {
     class Bishop : ChessPiece
     {
-        public Bishop(int row, int column, bool isWhite) : base(row, column, isWhite)
+        public Bishop(int row, int column, bool isWhite) : base(isWhite)
         {
         }
 
