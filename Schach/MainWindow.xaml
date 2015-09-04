@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Chess.BoardPieces"
+        xmlns:boardPieces="clr-namespace:Chess.BoardPieces"
         mc:Ignorable="d"
         Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
     <Window.DataContext>
-        <local:Board />
+        <boardPieces:Board />
     </Window.DataContext>
     <Grid>
         <Grid.Background>
@@ -47,74 +47,34 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <ContentControl Grid.Row="7" Grid.Column="0" Background="Black"/> 
-            <Canvas Grid.Row="5" Grid.Column="0" Background="Black" />
-            <Canvas Grid.Row="3" Grid.Column="0" Background="Black" />
-            <Canvas Grid.Row="1" Grid.Column="0" Background="Black" />
-            <Canvas Grid.Row="6" Grid.Column="1" Background="Black" />
-            <Canvas Grid.Row="4" Grid.Column="1" Background="Black" />
-            <Canvas Grid.Row="2" Grid.Column="1" Background="Black" />
-            <Canvas Grid.Row="0" Grid.Column="1" Background="Black" />
-            <Canvas Grid.Row="7" Grid.Column="2" Background="Black" />
-            <Canvas Grid.Row="5" Grid.Column="2" Background="Black" />
-            <Canvas Grid.Row="3" Grid.Column="2" Background="Black" />
-            <Canvas Grid.Row="1" Grid.Column="2" Background="Black" />
-            <Canvas Grid.Row="6" Grid.Column="3" Background="Black" />
-            <Canvas Grid.Row="4" Grid.Column="3" Background="Black" />
-            <Canvas Grid.Row="2" Grid.Column="3" Background="Black" />
-            <Canvas Grid.Row="0" Grid.Column="3" Background="Black" />
-            <Canvas Grid.Row="7" Grid.Column="4" Background="Black" />
-            <Canvas Grid.Row="5" Grid.Column="4" Background="Black" />
-            <Canvas Grid.Row="3" Grid.Column="4" Background="Black" />
-            <Canvas Grid.Row="1" Grid.Column="4" Background="Black" />
-            <Canvas Grid.Row="6" Grid.Column="5" Background="Black" />
-            <Canvas Grid.Row="4" Grid.Column="5" Background="Black" />
-            <Canvas Grid.Row="2" Grid.Column="5" Background="Black" />
-            <Canvas Grid.Row="0" Grid.Column="5" Background="Black" />
-            <Canvas Grid.Row="7" Grid.Column="6" Background="Black" />
-            <Canvas Grid.Row="5" Grid.Column="6" Background="Black" />
-            <Canvas Grid.Row="3" Grid.Column="6" Background="Black" />
-            <Canvas Grid.Row="1" Grid.Column="6" Background="Black" />
-            <Canvas Grid.Row="6" Grid.Column="7" Background="Black" />
-            <Canvas Grid.Row="4" Grid.Column="7" Background="Black" />
-            <Canvas Grid.Row="2" Grid.Column="7" Background="Black" />
-            <Canvas Grid.Row="0" Grid.Column="7" Background="Black" />
-            <Canvas Grid.Row="1" Grid.Column="7" Background="White" />
-            <Canvas Grid.Row="3" Grid.Column="7" Background="White" />
-            <Canvas Grid.Row="5" Grid.Column="7" Background="White" />
-            <Canvas Grid.Row="7" Grid.Column="7" Background="White" />
-            <Canvas Grid.Row="0" Grid.Column="6" Background="White" />
-            <Canvas Grid.Row="2" Grid.Column="6" Background="White" />
-            <Canvas Grid.Row="4" Grid.Column="6" Background="White" />
-            <Canvas Grid.Row="6" Grid.Column="6" Background="White" />
-            <Canvas Grid.Row="1" Grid.Column="5" Background="White" />
-            <Canvas Grid.Row="3" Grid.Column="5" Background="White" />
-            <Canvas Grid.Row="5" Grid.Column="5" Background="White" />
-            <Canvas Grid.Row="7" Grid.Column="5" Background="White" />
-            <Canvas Grid.Row="0" Grid.Column="4" Background="White" />
-            <Canvas Grid.Row="2" Grid.Column="4" Background="White" />
-            <Canvas Grid.Row="4" Grid.Column="4" Background="White" />
-            <Canvas Grid.Row="6" Grid.Column="4" Background="White" />
-            <Canvas Grid.Row="1" Grid.Column="3" Background="White" />
-            <Canvas Grid.Row="3" Grid.Column="3" Background="White" />
-            <Canvas Grid.Row="5" Grid.Column="3" Background="White" />
-            <Canvas Grid.Row="7" Grid.Column="3" Background="White" />
-            <Canvas Grid.Row="0" Grid.Column="2" Background="White" />
-            <Canvas Grid.Row="2" Grid.Column="2" Background="White" />
-            <Canvas Grid.Row="4" Grid.Column="2" Background="White" />
-            <Canvas Grid.Row="6" Grid.Column="2" Background="White" />
-            <Canvas Grid.Row="1" Grid.Column="1" Background="White" />
-            <Canvas Grid.Row="3" Grid.Column="1" Background="White" />
-            <Canvas Grid.Row="5" Grid.Column="1" Background="White" />
-            <Canvas Grid.Row="7" Grid.Column="1" Background="White" />
-            <Canvas Grid.Row="0" Grid.Column="0" Background="White" />
-            <Canvas Grid.Row="2" Grid.Column="0" Background="White" />
-            <Canvas Grid.Row="4" Grid.Column="0" Background="White" />
-            <Canvas Grid.Row="6" Grid.Column="0" Background="White" />
+            <boardPieces:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding A1}" Background="{Binding Bgc}"/>
+            <boardPieces:CellControl Grid.Column="1" Grid.Row="0" DataContext="{Binding A2}" Background="{Binding Bgc}"/>
+            <boardPieces:CellControl Grid.Column="2" Grid.Row="0" />
+            <boardPieces:CellControl Grid.Column="3" Grid.Row="0" />
+            <boardPieces:CellControl Grid.Column="4" Grid.Row="0" />
+            <boardPieces:CellControl Grid.Column="5" Grid.Row="0" />
+            <boardPieces:CellControl Grid.Column="6" Grid.Row="0" />
+            <boardPieces:CellControl Grid.Column="7" Grid.Row="0" />
+            <boardPieces:CellControl Grid.Column="0" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="1" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="2" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="3" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="4" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="5" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="6" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="7" Grid.Row="1" />
+            <boardPieces:CellControl Grid.Column="0" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="1" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="2" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="3" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="4" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="5" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="6" Grid.Row="2" />
+            <boardPieces:CellControl Grid.Column="7" Grid.Row="2" />
         </Grid>
         <TextBlock x:Name="WhiteTime" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
         <TextBlock x:Name="BlackTime" TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />
-        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Grid.Column="0" />
+        <Button x:Name="StartButton" Content="Start" Grid.Row="2" Grid.Column="0" Click="StartButton_Click" />
 
     </Grid>
 </Window>

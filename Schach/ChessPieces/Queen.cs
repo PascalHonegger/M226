@@ -8,6 +8,11 @@ namespace Chess.ChessPieces
         {
         }
 
+        protected override bool PossiblePath(int row, int column)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override bool CanMoveTo(int row, int column)
         {
             throw new NotImplementedException();

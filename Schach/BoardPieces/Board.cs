@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Chess.ChessPieces;
 
@@ -7,6 +8,15 @@ namespace Chess.BoardPieces
     internal class Board
     {
         public List<ChessPiece> ChessPieceList = new List<ChessPiece>();
+
+        public Board()
+        {
+            A1 = new CellViewModel();
+            A2 = new CellViewModel();
+        }
+
+        public CellViewModel A1 { get; private set;  }
+        public CellViewModel A2 { get; private set; }
 
         public ChessPiece GetChessPiece(int row, int column)
         {
@@ -60,6 +70,11 @@ namespace Chess.BoardPieces
             ChessPieceList.Add(new Bishop(5, 7, true));
             ChessPieceList.Add(new Knight(6, 7, true));
             ChessPieceList.Add(new Rook(7, 7, true));
+        }
+
+        public void ResetChessBoard()
+        {
+            
         }
     }
 }
