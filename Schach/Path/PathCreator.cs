@@ -8,5 +8,9 @@ namespace Chess.Path
 {
     class PathCreator
     {
+        public PathCreator AddToPath(ChessPieces.Path path)
+        {
+            return this;
+        }
     }
 }
