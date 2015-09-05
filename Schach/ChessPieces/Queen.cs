@@ -7,20 +7,5 @@ namespace Chess.ChessPieces
         public Queen(bool isWhite) : base(isWhite)
         {
         }
-
-        protected override bool PossiblePath(Path.Path path)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool CanMoveTo(int row, int column)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool CanEat(Path.Path path)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
