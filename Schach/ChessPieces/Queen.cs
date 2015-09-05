@@ -8,7 +8,7 @@ namespace Chess.ChessPieces
         {
         }
 
-        protected override bool PossiblePath(Path path)
+        protected override bool PossiblePath(Path.Path path)
         {
             throw new NotImplementedException();
         }
@@ -18,7 +18,7 @@ namespace Chess.ChessPieces
             throw new NotImplementedException();
         }
 
-        protected override bool CanEat(Path path)
+        protected override bool CanEat(Path.Path path)
         {
             throw new NotImplementedException();
         }

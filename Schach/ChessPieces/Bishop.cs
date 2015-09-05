@@ -10,7 +10,7 @@ namespace Chess.ChessPieces
             // TODO Texture = isWhite ? new BitmapImage(new Uri("Resources/WhiteBishop.png")) : new BitmapImage(new Uri("C:\\Users\\A610222\\Source\\Repos\\M226\\Schach\\Resources\\BlackBishop.png"));
         }
 
-        protected override bool PossiblePath(Path path)
+        protected override bool PossiblePath(Path.Path path)
         {
             throw new NotImplementedException();
         }
@@ -20,7 +20,7 @@ namespace Chess.ChessPieces
             throw new NotImplementedException();
         }
 
-        protected override bool CanEat(Path path)
+        protected override bool CanEat(Path.Path path)
         {
             throw new NotImplementedException();
         }

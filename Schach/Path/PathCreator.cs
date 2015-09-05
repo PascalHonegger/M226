@@ -5,7 +5,7 @@ namespace Chess.Path
 {
     class PathCreator
     {
-        private bool IsRecursive;
+        private bool _isRecursive;
         private List<Movement.Direction> _movementList;
 
         public PathCreator()
@@ -21,13 +21,13 @@ namespace Chess.Path
 
         public PathCreator SetIsRecursive(bool isRecursive)
         {
-            IsRecursive = isRecursive;
+            _isRecursive = isRecursive;
             return this;
         }
 
-        public ChessPieces.Path Build()
+        public Path Build()
         {
-            var path = new ChessPieces.Path(_movementList) {IsRecursive = IsRecursive};
+            var path = new Path(_movementList) {IsRecursive = _isRecursive};
             return path;
         }
     }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Chess.BoardPieces.Cells;
 
-namespace Chess.ChessPieces
+namespace Chess.Path
 {
     public class Path : IEnumerable
     {

@@ -7,7 +7,7 @@ namespace Chess.ChessPieces
     {
         bool IsBlack();
         bool IsWhite();
-        List<Path> PathList { get; }
+        List<Path.Path> PathList { get; }
         ImageSource Texture { get;}
     }
 }

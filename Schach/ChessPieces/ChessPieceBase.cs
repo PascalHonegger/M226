@@ -14,7 +14,7 @@ namespace Chess.ChessPieces
         }
         public ImageSource Texture { get; set; }
 
-        public List<Path> PathList { get; }
+        public List<Path.Path> PathList { get; }
 
         public bool IsBlack()
         {
@@ -24,10 +24,10 @@ namespace Chess.ChessPieces
         protected ChessPieceBase(bool isWhite)
         {
             _colorIsWhite = isWhite;
-            PathList = new List<Path>();
+            PathList = new List<Path.Path>();
         }
 
-        public bool TryMoveThere(Path path)
+        public bool TryMoveThere(Path.Path path)
         {
             if (!PossiblePath(path)) return false;
             
@@ -41,17 +41,17 @@ namespace Chess.ChessPieces
             throw new NotImplementedException();
         }
 
-        protected abstract bool PossiblePath(Path path);
+        protected abstract bool PossiblePath(Path.Path path);
 
         protected abstract bool CanMoveTo(int row, int column);
 
-        protected void MoveThere(Path path)
+        protected void MoveThere(Path.Path path)
         {
             // TODO Move the Piece!
             // _piece.animate();
         }
 
-        protected bool TryEat(Path path)
+        protected bool TryEat(Path.Path path)
         {
             if (!CanEat(path)) return false;
 
@@ -60,9 +60,9 @@ namespace Chess.ChessPieces
             return true;
         }
 
-        protected abstract bool CanEat(Path path);
+        protected abstract bool CanEat(Path.Path path);
 
-        protected void Eat(Path path)
+        protected void Eat(Path.Path path)
         {
             // TODO Remove the Piece from the Field!
         }
