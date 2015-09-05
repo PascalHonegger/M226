@@ -26,7 +26,6 @@ namespace Chess.BoardPieces
             G7 = new CellViewModel(new Pawn(false), G8, H8, H7, H6, G6, F6, F7, F8);
             H7 = new CellViewModel(new Pawn(false), H8, null, null, null, H6, G6, G7, G8);
 
-            // TODO Fill this correctly!
             A6 = new CellViewModel(null, null, null, B8, B7, A7, null, null, null);
             B6 = new CellViewModel(null, null, null, C8, C7, B7, A7, A8, null);
             C6 = new CellViewModel(null, null, null, D8, D7, C7, B7, B8, null);
@@ -149,14 +148,13 @@ namespace Chess.BoardPieces
 
         public void StartGame()
         {
-
-            // TODO Add all ChessPieceBase-Creation.
-            // TODO Make all Pieces Visible.
+            // TODO Enalble Click-Events
+            // TODO Start White-Timer
         }
 
         public void ResetChessBoard()
         {
-            
+            new Board();
         }
     }
 }

@@ -1,16 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Chess.BoardPieces.Cells;
 
 namespace Chess.Path
 {
     class PathCreator
     {
-        public PathCreator AddToPath(ChessPieces.Path path)
+        private bool IsRecursive;
+        private List<Movement.Direction> movementList;
+        public PathCreator AddToPath(Movement.Direction step)
         {
+            movementList.Add(step);
             return this;
+        }
+
+        public PathCreator SetIsRecursive(bool isRecursive)
+        {
+            IsRecursive = isRecursive;
+            return this;
+        }
+
+        public ChessPieces.Path Build()
+        {
+            var path = new ChessPieces.Path(movementList) {IsRecursive = IsRecursive};
+            return path;
         }
     }
 }

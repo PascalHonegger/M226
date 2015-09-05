@@ -7,7 +7,7 @@ namespace Chess.ChessPieces
 {
     public class Path : IEnumerable
     {
-        private List<Movement.Direction> _path;
+        private readonly List<Movement.Direction> _path;
 
         public Path(List<Movement.Direction> path)
         {
