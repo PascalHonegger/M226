@@ -16,8 +16,8 @@ namespace Chess.BoardPieces
             A8 = new CellViewModel(new Rook(false), null, null, B8, B7, A7, null, null, null);
             B8 = new CellViewModel(new Knight(false), null, null, C8, C7, B7, A7, A8, null);
             C8 = new CellViewModel(new Bishop(false), null, null, D8, D7, C7, B7, B8, null);
-            D8 = new CellViewModel(new King(false), null, null, E8, E7, D7, C7, C8, null);
-            E8 = new CellViewModel(new Queen(false), null, null, F8, F7, E7, D7, D7, null);
+            D8 = new CellViewModel(new Queen(false), null, null, E8, E7, D7, C7, C8, null);
+            E8 = new CellViewModel(new King(false), null, null, F8, F7, E7, D7, D7, null);
             F8 = new CellViewModel(new Bishop(false), null, null, G8, G7, F7, E7, E8, null);
             G8 = new CellViewModel(new Knight(false), null, null, H8, H7, G7, F7, F8, null);
             H8 = new CellViewModel(new Rook(false), null, null, null, null, H7, G7, G8, null);
@@ -79,8 +79,8 @@ namespace Chess.BoardPieces
             A1 = new CellViewModel(new Rook(true), A2, B2, B1, null, null, null, null, null);
             B1 = new CellViewModel(new Knight(true), B2, C2, C1, null, null, null, A1, A2);
             C1 = new CellViewModel(new Bishop(true), C2, D2, D1, null, null, null, B1, B2);
-            D1 = new CellViewModel(new King(true), D2, E2, E1, null, null, null, C1, C2);
-            E1 = new CellViewModel(new Queen(true), E2, F2, F1, null, null, null, D2, D3);
+            D1 = new CellViewModel(new Queen(true), D2, E2, E1, null, null, null, C1, C2);
+            E1 = new CellViewModel(new King(true), E2, F2, F1, null, null, null, D2, D3);
             F1 = new CellViewModel(new Bishop(true), F2, G2, G1, null, null, null, E2, E3);
             G1 = new CellViewModel(new Knight(true), G2, H2, H1, null, null, null, F2, F3);
             H1 = new CellViewModel(new Rook(true), H2, null, null, null, null, null, G2, G3);
