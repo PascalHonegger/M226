@@ -40,6 +40,7 @@ namespace Chess.BoardPieces.Cells
             set
             {
                 _currentChessChessPiece = value;
+                // TODO Use Default Texutre, if _currentChessPiece is empty!
                 Image = _currentChessChessPiece.Texture;
             }
         }
