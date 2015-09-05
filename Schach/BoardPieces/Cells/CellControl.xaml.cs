@@ -11,10 +11,5 @@ namespace Chess.BoardPieces.Cells
         {
             InitializeComponent();
         }
-        public CellViewModel CellDataContext => DataContext as CellViewModel;
-        public void SetToDefaultColor()
-        {
-            new Board();
-        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Chess.ChessPieces
+﻿namespace Chess.ChessPieces
 {
     class Knight : ChessPieceBase
     {

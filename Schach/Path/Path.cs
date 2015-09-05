@@ -13,6 +13,16 @@ namespace Chess.Path
             _path = path;
         }
 
+        public void StepTaken()
+        {
+            _path.RemoveAt(0);
+        }
+
+        public List<Movement.Direction> Get()
+        {
+            return _path;
+        }
+
         public IEnumerator GetEnumerator()
         {
             return _path.GetEnumerator();

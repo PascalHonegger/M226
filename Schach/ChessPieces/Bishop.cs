@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Media.Imaging;
-
-namespace Chess.ChessPieces
+﻿namespace Chess.ChessPieces
 {
     class Bishop : ChessPieceBase
     {

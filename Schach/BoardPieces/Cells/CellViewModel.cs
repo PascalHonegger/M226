@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Chess.Annotations;
 using Chess.ChessPieces;
 
 namespace Chess.BoardPieces.Cells
 {
-    public class CellViewModel : INotifyPropertyChanged
+    public sealed class CellViewModel : INotifyPropertyChanged
     {
         private SolidColorBrush _bgc;
         private ChessPieceBase _currentChessChessPiece;
@@ -31,7 +31,29 @@ namespace Chess.BoardPieces.Cells
             CurrentChessPiece = currentChessChessPiece;
         }
 
-        public ChessPieceBase CurrentChessPiece
+        public void Colorize(Path.Path path, bool isWhite)
+        {
+            if (path.IsRecursive)
+            {
+                // _movements.TryGetValue(Movement.Direction.Bottom, );
+            }
+            else
+            {
+                path.StepTaken();
+            }
+
+            if (CurrentChessPiece == null)
+            {
+                Bgc = Brushes.Green;
+            }
+            else if (CurrentChessPiece.IsWhite() != isWhite)
+            {
+                Bgc = Brushes.Orange;
+            }
+
+        }
+
+        private ChessPieceBase CurrentChessPiece
         {
             get
             {
@@ -70,7 +92,7 @@ namespace Chess.BoardPieces.Cells
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
