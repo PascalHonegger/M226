@@ -63,23 +63,23 @@ namespace Chess.BoardPieces
             G3 = new CellViewModel(null, null, null, H8, H7, G7, F7, F8, null);
             H3 = new CellViewModel(null, null, null, null, null, H7, G7, G8, null);
 
-            A2 = new CellViewModel(new Pawn(false), A8, B8, B7, B6, A6, null, null, null);
-            B2 = new CellViewModel(new Pawn(false), B8, C8, C7, C6, B6, A6, A7, A8);
-            C2 = new CellViewModel(new Pawn(false), C8, D8, D7, D6, C6, B6, B7, B8);
-            D2 = new CellViewModel(new Pawn(false), D8, E8, E7, E6, D6, C6, C7, C8);
-            E2 = new CellViewModel(new Pawn(false), E8, F8, F7, F6, E6, D6, D6, D8);
-            F2 = new CellViewModel(new Pawn(false), F8, G8, G7, G6, F6, E6, E7, E8);
-            G2 = new CellViewModel(new Pawn(false), G8, H8, H7, H6, G6, F6, F7, F8);
-            H2 = new CellViewModel(new Pawn(false), H8, null, null, null, H6, G6, G7, G8);
+            A2 = new CellViewModel(new Pawn(true), A3, B3, B2, B1, A1, null, null, null);
+            B2 = new CellViewModel(new Pawn(true), B3, C3, C2, C1, B1, A1, A2, A3);
+            C2 = new CellViewModel(new Pawn(true), C3, D3, D2, D1, C1, B1, B2, B3);
+            D2 = new CellViewModel(new Pawn(true), D3, E3, E2, E1, D1, C1, C2, C3);
+            E2 = new CellViewModel(new Pawn(true), E3, F3, F2, F1, E1, D1, D2, D3);
+            F2 = new CellViewModel(new Pawn(true), F3, G3, G2, G1, F1, E1, E2, E3);
+            G2 = new CellViewModel(new Pawn(true), G3, H3, H2, H1, G1, F1, F2, F3);
+            H2 = new CellViewModel(new Pawn(true), H3, null, null, null, H1, G1, G2, G3);
 
-            A1 = new CellViewModel(new Rook(false), null, null, B8, B7, A7, null, null, null);
-            B1 = new CellViewModel(new Knight(false), null, null, C8, C7, B7, A7, A8, null);
-            C1 = new CellViewModel(new Bishop(false), null, null, D8, D7, C7, B7, B8, null);
-            D1 = new CellViewModel(new King(false), null, null, E8, E7, D7, C7, C8, null);
-            E1 = new CellViewModel(new Queen(false), null, null, F8, F7, E7, D7, D7, null);
-            F1 = new CellViewModel(new Bishop(false), null, null, G8, G7, F7, E7, E8, null);
-            G1 = new CellViewModel(new Knight(false), null, null, H8, H7, G7, F7, F8, null);
-            H1 = new CellViewModel(new Rook(false), null, null, null, null, H7, G7, G8, null);
+            A1 = new CellViewModel(new Rook(true), A2, B2, B1, null, null, null, null, null);
+            B1 = new CellViewModel(new Knight(true), B2, C2, C1, null, null, null, A1, A2);
+            C1 = new CellViewModel(new Bishop(true), C2, D2, D1, null, null, null, B1, B2);
+            D1 = new CellViewModel(new King(true), D2, E2, E1, null, null, null, C1, C2);
+            E1 = new CellViewModel(new Queen(true), E2, F2, F1, null, null, null, D2, D3);
+            F1 = new CellViewModel(new Bishop(true), F2, G2, G1, null, null, null, E2, E3);
+            G1 = new CellViewModel(new Knight(true), G2, H2, H1, null, null, null, F2, F3);
+            H1 = new CellViewModel(new Rook(true), H2, null, null, null, null, null, G2, G3);
         }
 
         public CellViewModel A8 { get; }

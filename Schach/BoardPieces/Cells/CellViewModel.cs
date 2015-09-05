@@ -12,11 +12,11 @@ namespace Chess.BoardPieces.Cells
     public class CellViewModel : INotifyPropertyChanged
     {
         private SolidColorBrush _bgc;
-        private ChessPieceBase _currentChessPiece;
+        private ChessPieceBase _currentChessChessPiece;
         private ImageSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
 
-        public CellViewModel(ChessPieceBase currentChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
+        public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
             CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
         {
             _movements.Add(Movement.Direction.Top, top);
@@ -28,19 +28,19 @@ namespace Chess.BoardPieces.Cells
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
 
-            CurrentPieceBase = currentChessPiece;
+            CurrentChessPiece = currentChessChessPiece;
         }
 
-        public ChessPieceBase CurrentPieceBase
+        public ChessPieceBase CurrentChessPiece
         {
             get
             {
-                return _currentChessPiece;
+                return _currentChessChessPiece;
             }
             set
             {
-                _currentChessPiece = value;
-                Image = _currentChessPiece.Texture;
+                _currentChessChessPiece = value;
+                Image = _currentChessChessPiece.Texture;
             }
         }
 
