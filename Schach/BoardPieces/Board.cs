@@ -27,23 +27,23 @@ namespace Chess.BoardPieces
             H7 = new CellViewModel(new Pawn(false), H8, null, null, null, H6, G6, G7, G8);
 
             // TODO Fill this correctly!
-            A6 = new CellViewModel(null, null, null, B8, B7, A7, null, null, null);
-            B6 = new CellViewModel(null, null, null, C8, C7, B7, A7, A8, null);
-            C6 = new CellViewModel(null, null, null, D8, D7, C7, B7, B8, null);
-            D6 = new CellViewModel(null, null, null, E8, E7, D7, C7, C8, null);
-            E6 = new CellViewModel(null, null, null, F8, F7, E7, D7, D7, null);
-            F6 = new CellViewModel(null, null, null, G8, G7, F7, E7, E8, null);
-            G6 = new CellViewModel(null, null, null, H8, H7, G7, F7, F8, null);
-            H6 = new CellViewModel(null, null, null, null, null, H7, G7, G8, null);
+            A6 = new CellViewModel(null, A7, B7, B6, B5, A5, null, null, null);
+            B6 = new CellViewModel(null, B7, C7, C6, C5, B5, A5, A6, A7);
+            C6 = new CellViewModel(null, C7, D7, D6, D5, C5, B5, B6, B7);
+            D6 = new CellViewModel(null, D7, E7, E6, E5, D5, C5, C6, C7);
+            E6 = new CellViewModel(null, E7, F7, F6, F5, E5, D5, D6, D7);
+            F6 = new CellViewModel(null, F7, G7, G6, G5, F5, E5, E6, E7);
+            G6 = new CellViewModel(null, G7, H7, H6, H5, G5, F5, F6, F7);
+            H6 = new CellViewModel(null, H7, null, null, null, H5, G5, G6, G7);
 
-            A5 = new CellViewModel(null, null, null, B8, B7, A7, null, null, null);
-            B5 = new CellViewModel(null, null, null, C8, C7, B7, A7, A8, null);
-            C5 = new CellViewModel(null, null, null, D8, D7, C7, B7, B8, null);
-            D5 = new CellViewModel(null, null, null, E8, E7, D7, C7, C8, null);
-            E5 = new CellViewModel(null, null, null, F8, F7, E7, D7, D7, null);
-            F5 = new CellViewModel(null, null, null, G8, G7, F7, E7, E8, null);
-            G5 = new CellViewModel(null, null, null, H8, H7, G7, F7, F8, null);
-            H5 = new CellViewModel(null, null, null, null, null, H7, G7, G8, null);
+            A5 = new CellViewModel(null, A6, B6, B5, B4, A4, null, null, null);
+            B5 = new CellViewModel(null, B6, C6, C5, C4, B4, A4, A5, A6);
+            C5 = new CellViewModel(null, C6, D6, D5, D4, C4, B4, B5, B6);
+            D5 = new CellViewModel(null, D6, E6, E5, E4, D4, C4, C5, C6);
+            E5 = new CellViewModel(null, E6, F6, F5, F4, E4, D4, D5, D6);
+            F5 = new CellViewModel(null, F6, G6, G5, G4, F4, E4, E5, E6);
+            G5 = new CellViewModel(null, G6, H6, H5, H4, G4, F4, F5, F6);
+            H5 = new CellViewModel(null, H6, null, null, null, H4, G4, G5, G6);
 
             A4 = new CellViewModel(null, null, null, B8, B7, A7, null, null, null);
             B4 = new CellViewModel(null, null, null, C8, C7, B7, A7, A8, null);
