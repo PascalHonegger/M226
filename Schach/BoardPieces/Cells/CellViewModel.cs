@@ -40,7 +40,7 @@ namespace Chess.BoardPieces.Cells
             set
             {
                 _currentChessPiece = value;
-                Image = _currentChessPiece?.Texture;
+                Image = _currentChessPiece.Texture;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Chess.BoardPieces.Cells
             get { return _image; }
             private set
             {
-                if (Equals(_image, value)) return;
+                if (Equals(_image, value) || value == null) return;
                 _image = value;
                 OnPropertyChanged(nameof(Image));
             }
