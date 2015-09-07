@@ -8,6 +8,17 @@ namespace Chess.Path
     {
         private readonly List<Movement.Direction> _path;
 
+        private Movement.Direction Step
+        {
+            get
+            {
+                if (IsRecursive) return _path[0];
+                var path = _path[0];
+                _path.RemoveAt(0);
+                return path;
+            }
+        }
+
         public Path()
         {
             _path = new List<Movement.Direction>();
@@ -18,13 +29,9 @@ namespace Chess.Path
             _path.Add(step);
         }
 
-        public void StepTaken()
-        {
-            _path.RemoveAt(0);
-        }
-
         IEnumerator<Movement.Direction> IEnumerable<Movement.Direction>.GetEnumerator()
         {
+            // TODO Fix this!
             foreach (Movement.Direction direction in _path)
             {
                 // Lets check for end of list (its bad code since we used arrays)
@@ -45,6 +52,5 @@ namespace Chess.Path
         }
 
         public bool IsRecursive { get; set; }
-
     }
 }
