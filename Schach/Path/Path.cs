@@ -31,19 +31,7 @@ namespace Chess.Path
 
         IEnumerator<Movement.Direction> IEnumerable<Movement.Direction>.GetEnumerator()
         {
-            // TODO Fix this!
-            foreach (Movement.Direction direction in _path)
-            {
-                // Lets check for end of list (its bad code since we used arrays)
-                if (_path == null) // this wont work is T is not a nullable type
-                {
-                    break;
-                }
-
-                // Return the current element and then on next function call 
-                // resume from next element rather than starting all over again;
-                yield return _path;
-            }
+            return _path.GetEnumerator();
         }
 
         public IEnumerator GetEnumerator()

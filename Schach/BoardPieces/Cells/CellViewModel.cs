@@ -33,15 +33,6 @@ namespace Chess.BoardPieces.Cells
 
         public void Colorize(Path.Path path, bool isWhite)
         {
-            if (path.IsRecursive)
-            {
-                // _movements.TryGetValue(Movement.Direction.Bottom, );
-            }
-            else
-            {
-                path.StepTaken();
-            }
-
             if (CurrentChessPiece == null)
             {
                 Bgc = Brushes.Green;
@@ -49,6 +40,11 @@ namespace Chess.BoardPieces.Cells
             else if (CurrentChessPiece.IsWhite() != isWhite)
             {
                 Bgc = Brushes.Orange;
+            }
+
+            if (path == null)
+            {
+                // _movements[Movement.Direction.Top];
             }
 
         }
