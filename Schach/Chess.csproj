@@ -107,6 +107,7 @@
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardPieces\Cells\CellViewModel.cs" />
+    <Compile Include="BoardPieces\Cells\ToBitMapSourceExtension.cs" />
     <Compile Include="BoardPieces\Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPieceBase.cs" />

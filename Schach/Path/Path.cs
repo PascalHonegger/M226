@@ -8,15 +8,12 @@ namespace Chess.Path
     {
         private readonly List<Movement.Direction> _path;
 
-        private Movement.Direction Step
+        public Movement.Direction GetStep()
         {
-            get
-            {
-                if (IsRecursive) return _path[0];
-                var path = _path[0];
-                _path.RemoveAt(0);
-                return path;
-            }
+            if (IsRecursive) return _path[0];
+            var path = _path[0];
+            _path.RemoveAt(0);
+            return path;
         }
 
         public Path()
@@ -39,6 +36,6 @@ namespace Chess.Path
             return _path.GetEnumerator();
         }
 
-        public bool IsRecursive { get; set; }
+        public bool IsRecursive { private get; set; }
     }
 }

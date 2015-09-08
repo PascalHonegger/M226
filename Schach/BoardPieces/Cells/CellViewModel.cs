@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Chess.Annotations;
 using Chess.ChessPieces;
 
@@ -13,7 +12,7 @@ namespace Chess.BoardPieces.Cells
     {
         private SolidColorBrush _bgc;
         private ChessPieceBase _currentChessChessPiece;
-        private ImageSource _image;
+        private BitmapSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
 
         public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
@@ -59,11 +58,18 @@ namespace Chess.BoardPieces.Cells
             {
                 _currentChessChessPiece = value;
                 // TODO Use Default Texutre, if _currentChessPiece is empty!
-                Image = _currentChessChessPiece.Texture;
+                if (_currentChessChessPiece == null)
+                {
+                    Image = null;
+                }
+                else
+                {
+                    Image = _currentChessChessPiece.Texture;
+                }
             }
         }
 
-        public ImageSource Image
+        public BitmapSource Image
         {
             get { return _image; }
             private set
