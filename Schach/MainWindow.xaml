@@ -56,22 +56,22 @@
             <cells:CellControl Grid.Column="5" Grid.Row="0" DataContext="{Binding F8}"/>
             <cells:CellControl Grid.Column="6" Grid.Row="0" DataContext="{Binding G8}"/>
             <cells:CellControl Grid.Column="7" Grid.Row="0" DataContext="{Binding H8}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="1" />
-            <cells:CellControl Grid.Column="1" Grid.Row="1" />
-            <cells:CellControl Grid.Column="2" Grid.Row="1" />
-            <cells:CellControl Grid.Column="3" Grid.Row="1" />
-            <cells:CellControl Grid.Column="4" Grid.Row="1" />
-            <cells:CellControl Grid.Column="5" Grid.Row="1" />
-            <cells:CellControl Grid.Column="6" Grid.Row="1" />
-            <cells:CellControl Grid.Column="7" Grid.Row="1" />
-            <cells:CellControl Grid.Column="0" Grid.Row="2" />
-            <cells:CellControl Grid.Column="1" Grid.Row="2" />
-            <cells:CellControl Grid.Column="2" Grid.Row="2" />
-            <cells:CellControl Grid.Column="3" Grid.Row="2" />
-            <cells:CellControl Grid.Column="4" Grid.Row="2" />
-            <cells:CellControl Grid.Column="5" Grid.Row="2" />
-            <cells:CellControl Grid.Column="6" Grid.Row="2" />
-            <cells:CellControl Grid.Column="7" Grid.Row="2" />
+            <cells:CellControl Grid.Column="0" Grid.Row="1" DataContext="{Binding A7}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="1" DataContext="{Binding B7}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="1" DataContext="{Binding C7}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="1" DataContext="{Binding D7}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="1" DataContext="{Binding E7}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="1" DataContext="{Binding F7}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="1" DataContext="{Binding G7}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="1" DataContext="{Binding H7}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="2" DataContext="{Binding A6}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="2" DataContext="{Binding B6}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="2" DataContext="{Binding C6}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="2" DataContext="{Binding D6}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="2" DataContext="{Binding E6}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="2" DataContext="{Binding F6}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="2" DataContext="{Binding G6}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="2" DataContext="{Binding H6}"/>
             <cells:CellControl Grid.Column="0" Grid.Row="3" />
             <cells:CellControl Grid.Column="1" Grid.Row="3" />
             <cells:CellControl Grid.Column="2" Grid.Row="3" />
