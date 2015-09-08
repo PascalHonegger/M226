@@ -60,11 +60,12 @@ namespace Chess.BoardPieces.Cells
                 // TODO Use Default Texutre, if _currentChessPiece is empty!
                 if (_currentChessChessPiece == null)
                 {
-                    Image = null;
+                    //TODO Image = DEFUALTDEXTURE
                 }
                 else
                 {
                     Image = _currentChessChessPiece.Texture;
+                    Bgc = Brushes.Red;
                 }
             }
         }
