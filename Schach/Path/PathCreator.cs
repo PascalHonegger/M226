@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Chess.BoardPieces.Cells;
+﻿using Chess.BoardPieces.Cells;
 
 namespace Chess.Path
 {
     class PathCreator
     {
-        private bool _isRecursive;
-        private Path _movementList;
+        private readonly Path _movementList;
 
         public PathCreator()
         {
@@ -21,7 +19,7 @@ namespace Chess.Path
 
         public PathCreator SetIsRecursive(bool isRecursive)
         {
-            _isRecursive = isRecursive;
+            _movementList.IsRecursive = isRecursive;
             return this;
         }
 

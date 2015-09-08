@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Chess.ChessPieces
 {
@@ -16,7 +17,7 @@ namespace Chess.ChessPieces
             return !_colorIsWhite;
         }
 
-        public ImageSource Texture { get; set; }
+        public BitmapSource Texture { get; set; }
 
         public List<Path.Path> PathList { get; }
 
