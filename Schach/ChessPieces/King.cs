@@ -1,11 +1,14 @@
-﻿namespace Chess.ChessPieces
+﻿using Chess.BoardPieces.Cells;
+
+namespace Chess.ChessPieces
 {
     class King : ChessPieceBase
     {
         public King(bool isWhite) : base(isWhite)
         {
-            // TODO Implement PathConfigurator
-            // PathList.Add(new PathConfigurator().AddToPath(direction).AddToPath().isrecursive()).create();
+            Texture = isWhite
+                ? Properties.Resources.WhiteKing.ToBitmapSource()
+                : Properties.Resources.BlackKing.ToBitmapSource();
         }
     }
 }

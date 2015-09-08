@@ -30,6 +30,4 @@ namespace Chess.ChessPieces
 }
 
 
-//Texture = isWhite 
-               // ? Properties.Resources.WhiteBishop.ToBitmapSource()
-            //    : Properties.Resources.BlackBishop.ToBitmapSource();
+
