@@ -11,8 +11,8 @@ namespace Chess.ChessPieces
         public Bishop(bool isWhite) : base(isWhite)
         {
             Texture = isWhite
-                ? new BitmapImage(new Uri("Resources/WhiteBishop.png"))
-                : new BitmapImage(new Uri("C:\\Users\\A610222\\Source\\Repos\\M226\\Schach\\Resources\\BlackBishop.png"));
+                ? Properties.Resources.WhiteBishop.ToBitmapSource()
+                : Properties.Resources.BlackBishop.ToBitmapSource();
 
             var path = new PathCreator().AddToPath(Movement.Direction.TopLeft).SetIsRecursive(true).Build();
             PathList.Add(path);
