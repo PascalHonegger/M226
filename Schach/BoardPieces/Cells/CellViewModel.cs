@@ -30,7 +30,7 @@ namespace Chess.BoardPieces.Cells
             CurrentChessPiece = currentChessChessPiece;
         }
 
-        public void Colorize(Path.Path path, bool isWhite)
+        public void Move(Path.Path path, bool isWhite)
         {
             if (CurrentChessPiece == null)
             {
@@ -40,12 +40,26 @@ namespace Chess.BoardPieces.Cells
             {
                 Bgc = Brushes.Orange;
             }
+            if(path.GetStep() != Movement.Direction.None) _movements[path.GetNextStep()].Move(path, isWhite);
+        }
 
-            if (path == null)
+        public void Jump(Path.Path path, bool isWhite)
+        {
+            if (path.GetStep() == Movement.Direction.None)
             {
-                // _movements[Movement.Direction.Top];
+                if (CurrentChessPiece == null)
+                {
+                    Bgc = Brushes.Green;
+                }
+                else if (CurrentChessPiece.IsWhite() != isWhite)
+                {
+                    Bgc = Brushes.Orange;
+                }
             }
-
+            else
+            {
+                _movements[path.GetNextStep()].Jump(path, isWhite);
+            }
         }
 
         private ChessPieceBase CurrentChessPiece
@@ -57,10 +71,10 @@ namespace Chess.BoardPieces.Cells
             set
             {
                 _currentChessChessPiece = value;
-                // TODO Use Default Texutre, if _currentChessPiece is empty!
+
                 if (_currentChessChessPiece == null)
                 {
-                    //TODO Image = DEFUALTDEXTURE
+                    Image = null;
                 }
                 else
                 {

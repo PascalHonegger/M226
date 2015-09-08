@@ -4,6 +4,7 @@ namespace Chess.BoardPieces.Cells
     {
         public enum Direction
         {
+            None,
             Top,
             TopRight,
             Right,

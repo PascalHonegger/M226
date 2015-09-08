@@ -1,4 +1,5 @@
-﻿using Chess.BoardPieces.Cells;
+﻿using System.Windows.Input;
+using Chess.BoardPieces.Cells;
 using Chess.ChessPieces;
 
 namespace Chess.BoardPieces
@@ -151,8 +152,18 @@ namespace Chess.BoardPieces
         public CellViewModel G1 { get; set; }
         public CellViewModel H1 { get; set; }
 
-        public void StartGame()
+        private ICommand _startGame = new RoutedCommand();
+        public ICommand StartGame
         {
+            get
+            {
+                // TODO Ask Törbén
+                if (_startGame == null)
+                {
+                    _startGame = new RoutedCommand();
+                }
+                return _startGame;
+            }
             // TODO Enalble Click-Events
             // TODO Start White-Timer
         }

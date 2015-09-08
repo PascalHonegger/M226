@@ -12,11 +12,5 @@ namespace Chess
         {
             InitializeComponent();
         }
-
-        // Temporary
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Board();
-        }
     }
 }
