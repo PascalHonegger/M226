@@ -15,10 +15,8 @@ namespace Chess.Path
 
         public Movement.Direction GetNextStep()
         {
-            if (IsRecursive) return _path[0];
-            var path = _path[0];
-            _path.RemoveAt(0);
-            return path;
+            if (!IsRecursive) _path.RemoveAt(0);
+            return _path[0];
         }
 
         public Path()

@@ -36,7 +36,7 @@ namespace Chess.BoardPieces.Cells
             {
                 Bgc = Brushes.Green;
             }
-            else if (CurrentChessPiece.IsWhite() != isWhite)
+            else if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
             {
                 Bgc = Brushes.Orange;
             }
@@ -51,7 +51,7 @@ namespace Chess.BoardPieces.Cells
                 {
                     Bgc = Brushes.Green;
                 }
-                else if (CurrentChessPiece.IsWhite() != isWhite)
+                else if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
                 {
                     Bgc = Brushes.Orange;
                 }
@@ -59,6 +59,38 @@ namespace Chess.BoardPieces.Cells
             else
             {
                 _movements[path.GetNextStep()].Jump(path, isWhite);
+            }
+        }
+
+        public void Move(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
+        {
+            if (CurrentChessPiece != null) return;
+
+            if (path.GetStep() == Movement.Direction.None || path.IsRecursive)
+            {
+                CurrentChessPiece = modelToMoveHere.CurrentChessPiece;
+                modelToMoveHere.CurrentChessPiece = null;
+            }
+            else
+            {
+                _movements[path.GetNextStep()].Move(path, isWhite, modelToMoveHere);
+            }
+        }
+
+        public void Jump(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
+        {
+            if (CurrentChessPiece.IsWhite() == isWhite || CurrentChessPiece.IsBlack() != isWhite)
+            {
+                return;
+            }
+            if (path.GetStep() != Movement.Direction.None)
+            {
+                _movements[path.GetNextStep()].Move(path, isWhite, modelToMoveHere);
+            }
+            else
+            {
+                CurrentChessPiece = modelToMoveHere.CurrentChessPiece;
+                modelToMoveHere.CurrentChessPiece = null;
             }
         }
 
@@ -79,7 +111,7 @@ namespace Chess.BoardPieces.Cells
                 else
                 {
                     Image = _currentChessChessPiece.Texture;
-                    Bgc = Brushes.Red;
+                    Bgc = null;
                 }
             }
         }
