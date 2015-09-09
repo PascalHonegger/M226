@@ -7,7 +7,7 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-    public class Board : INotifyPropertyChanged
+    public sealed class Board : INotifyPropertyChanged
     {
         private ObservableCollection<CellViewModel> _graveYard;
         public ObservableCollection<CellViewModel> GraveYard => _graveYard ?? (_graveYard = new ObservableCollection<CellViewModel>());
@@ -157,37 +157,21 @@ namespace Chess
         public CellViewModel G1 { get; set; }
         public CellViewModel H1 { get; set; }
 
-        /*private ICommand _startGame = new RoutedCommand();
-        public ICommand StartGame
-        {
-            get
-            {
-                // TODO Ask Törbén
-                if (_startGame == null)
-                {
-                    _startGame = new RoutedCommand();
-                }
-                return _startGame;
-            }
-            // TODO Enalble Click-Events
-            // TODO Start White-Timer
-        }*/
-
         public void ResetChessBoard()
         {
             CreateDefaultChessBoard();
         }
 
-        public void AddToGraveYard(CellViewModel bla)
+        private void AddToGraveYard(CellViewModel cellViewModel)
         {
-            if (bla.CurrentChessPiece == null) return;
-            GraveYard.Add(new CellViewModel(bla.CurrentChessPiece));
+            if (cellViewModel.CurrentChessPiece == null) return;
+            GraveYard.Add(new CellViewModel(cellViewModel.CurrentChessPiece));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

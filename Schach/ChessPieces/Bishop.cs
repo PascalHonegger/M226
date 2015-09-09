@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime;
-using System.Windows.Media.Imaging;
-using Chess.Cells;
+﻿using Chess.Cells;
 using Chess.Path;
 
 namespace Chess.ChessPieces

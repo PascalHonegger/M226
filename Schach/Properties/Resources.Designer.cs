@@ -123,9 +123,9 @@ namespace Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chessboard {
+        public static System.Drawing.Bitmap blank {
             get {
-                object obj = ResourceManager.GetObject("chessboard", resourceCulture);
+                object obj = ResourceManager.GetObject("blank", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace Chess.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Empty {
+        public static System.Drawing.Bitmap chessboard {
             get {
-                object obj = ResourceManager.GetObject("Empty", resourceCulture);
+                object obj = ResourceManager.GetObject("chessboard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

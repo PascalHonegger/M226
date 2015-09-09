@@ -110,7 +110,7 @@ namespace Chess.Cells
             {
                 _currentChessChessPiece = value;
 
-                Image = _currentChessChessPiece?.Texture ?? Properties.Resources.Empty.ToBitmapSource();
+                Image = _currentChessChessPiece?.Texture ?? Properties.Resources.blank.ToBitmapSource();
             }
         }
 
