@@ -111,9 +111,60 @@
             <cells:CellControl Grid.Column="7" Grid.Row="7" DataContext="{Binding H1}"/>
 
         </Grid>
-        <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
+        <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" ></TextBlock>
         <TextBlock TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />
         <Button Content="Start" Grid.Row="2" Grid.Column="0" Click="Button_Click" />
+        <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,9.6,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Le Verlauf" VerticalAlignment="Top" Height="480" Width="127"/>
+        <Grid Grid.Column="2" HorizontalAlignment="Left" Height="200" Margin="20.8,26.6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <cells:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding A8}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="0" DataContext="{Binding B8}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="0" DataContext="{Binding C8}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="0" DataContext="{Binding D8}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="1" DataContext="{Binding E8}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="1" DataContext="{Binding F8}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="1" DataContext="{Binding G8}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="1" DataContext="{Binding H8}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="2" DataContext="{Binding A7}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="2" DataContext="{Binding B7}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="2" DataContext="{Binding C7}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="2" DataContext="{Binding D7}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="3" DataContext="{Binding E7}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="3" DataContext="{Binding F7}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="3" DataContext="{Binding G7}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="3" DataContext="{Binding H7}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="4" DataContext="{Binding A2}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="4" DataContext="{Binding B2}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="4" DataContext="{Binding C2}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="4" DataContext="{Binding D2}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="5" DataContext="{Binding E2}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="5" DataContext="{Binding F2}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="5" DataContext="{Binding G2}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="5" DataContext="{Binding H2}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="6" DataContext="{Binding A1}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="6" DataContext="{Binding B1}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="6" DataContext="{Binding C1}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="6" DataContext="{Binding D1}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="7" DataContext="{Binding E1}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="7" DataContext="{Binding F1}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="7" DataContext="{Binding G1}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="7" DataContext="{Binding H1}"/>
+        </Grid>
 
     </Grid>
 </Window>

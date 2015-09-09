@@ -8,6 +8,8 @@ namespace Chess.ChessPieces
     {
         private readonly bool _colorIsWhite;
 
+   //     public List</*KAIH ANIG WAS FÜR EN SATANTYP*/> graveList  { get; };
+
         public bool IsWhite()
         {
             return _colorIsWhite;
