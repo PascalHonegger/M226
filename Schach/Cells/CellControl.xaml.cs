@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
-using Chess.BoardPieces.Cells;
 using Color = System.Windows.Media.Color;
 
 namespace Chess.Cells
@@ -10,7 +9,7 @@ namespace Chess.Cells
     /// </summary>
     public partial class CellControl : UserControl
     {
-        private CellViewModel myDataCellViewModel => DataContext as CellViewModel;
+        private CellViewModel MyDataCellViewModel => DataContext as CellViewModel;
 
 
         public CellControl()
@@ -20,7 +19,8 @@ namespace Chess.Cells
 
         private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            myDataCellViewModel.Bgc = new SolidColorBrush(Color.FromArgb(75, 55, 55, 202));
+            MyDataCellViewModel.Eat();
+            //myDataCellViewModel.Bgc = new SolidColorBrush(Color.FromArgb(75, 55, 55, 202));
         }
     }
 }

@@ -22,11 +22,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="500" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="150*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.Background>
-                <ImageBrush ImageSource="Resources/176eef7.jpg"/>
+                <ImageBrush ImageSource="Resources/chessboard.jpg"/>
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -117,59 +117,22 @@
         <Button Content="Start" Grid.Row="2" Grid.Column="0" Click="Button_Click" />
         <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,9.6,0,0" Grid.Row="1" Grid.Column="0"
                    TextWrapping="Wrap" Text="Le Verlauf" VerticalAlignment="Top" Height="480" Width="127"/>
-        <Grid Grid.Column="2" HorizontalAlignment="Left" Height="200" Grid.Row="1" VerticalAlignment="Top" Margin="10,10,0,0" Width="100">
-            <Grid.Background>
-                <ImageBrush ImageSource="Resources/chessboard.jpg" Stretch="UniformToFill"/>
-            </Grid.Background>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <cells:CellControl Grid.Column="0" Grid.Row="0" DataContext="{Binding blackRookOne}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="0" DataContext="{Binding blackKnightOne}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="0" DataContext="{Binding blackBishopOne}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="0" DataContext="{Binding blackQueenOne}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="1" DataContext="{Binding blackRookTwo}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="1" DataContext="{Binding blackKnightTwo}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="1" DataContext="{Binding blackBishopTwo}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="1" DataContext="{Binding H8}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="2" DataContext="{Binding blackPawnOne}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="2" DataContext="{Binding blackPawnTwo}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="2" DataContext="{Binding blackPawnThree}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="2" DataContext="{Binding blackPawnFour}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="3" DataContext="{Binding blackPawnFive}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="3" DataContext="{Binding blackPawnSix}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="3" DataContext="{Binding blackPawnSeven}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="3" DataContext="{Binding blackPawnEight}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="4" DataContext="{Binding whitePawnOne}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="4" DataContext="{Binding whitePawnTwo}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="4" DataContext="{Binding whitePawnThree}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="4" DataContext="{Binding whitePawnFour}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="5" DataContext="{Binding whitePawnFive}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="5" DataContext="{Binding whitePawnSix}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="5" DataContext="{Binding whitePawnSeven}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="5" DataContext="{Binding whitePawnEight}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="6" DataContext="{Binding whiteRookOne}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="6" DataContext="{Binding whiteKnightOne}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="6" DataContext="{Binding whiteBishopOne}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="6" DataContext="{Binding whiteQueenOne}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="7" DataContext="{Binding whiteRookTwo}"/>
-            <cells:CellControl Grid.Column="1" Grid.Row="7" DataContext="{Binding whiteKnightTwo}"/>
-            <cells:CellControl Grid.Column="2" Grid.Row="7" DataContext="{Binding whiteBishopTwo}"/>
-            <cells:CellControl Grid.Column="3" Grid.Row="7" DataContext="{Binding H1}"/>
-        </Grid>
+
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" >
+            <ItemsControl ItemsSource="{Binding GraveYard}" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemWidth="50"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="cells:CellViewModel">
+                        <Image Source="{Binding Image}"/>
+                    </DataTemplate>    
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
 
     </Grid>
 </Window>

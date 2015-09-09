@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Runtime;
 using System.Windows.Media.Imaging;
-using Chess.BoardPieces.Cells;
 using Chess.Cells;
 using Chess.Path;
-using Chess.GraveYard;
 
 namespace Chess.ChessPieces
 {

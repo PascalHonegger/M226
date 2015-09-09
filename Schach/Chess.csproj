@@ -114,10 +114,6 @@
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Knight.cs" />
-    <Compile Include="GraveYard\GraveYard.cs" />
-    <Compile Include="GraveYard\GraveOrder.cs" />
-    <Compile Include="GraveYard\GraveMaster.cs" />
-    <Compile Include="GraveYard\GraveYardViewModel.cs" />
     <Compile Include="Path\Path.cs" />
     <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
@@ -207,12 +203,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\BlackBishop.png" />
+    <Resource Include="Resources\Empty.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\176eef7.jpg" />
+    <Resource Include="Resources\BlackBishop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

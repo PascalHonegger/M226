@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Chess.BoardPieces.Cells;
 using Chess.Cells;
 
 namespace Chess.Path

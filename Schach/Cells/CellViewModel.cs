@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Chess.Annotations;
-using Chess.Cells;
 using Chess.ChessPieces;
 
-namespace Chess.BoardPieces.Cells
+namespace Chess.Cells
 {
-    public sealed class CellViewModel : INotifyPropertyChanged
+    public class CellViewModel : INotifyPropertyChanged
     {
         private SolidColorBrush _bgc;
         private ChessPieceBase _currentChessChessPiece;
         private BitmapSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
+        private Action<CellViewModel> _addToGraveyardAction;
 
-        public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
-            CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
+        public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright, CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft, Action<CellViewModel> addToGraveyardAction)
         {
             _movements.Add(Movement.Direction.Top, top);
             _movements.Add(Movement.Direction.TopRight, topright);
@@ -27,8 +27,13 @@ namespace Chess.BoardPieces.Cells
             _movements.Add(Movement.Direction.BottomLeft, bottomleft);
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
-
+            _addToGraveyardAction = addToGraveyardAction;
             CurrentChessPiece = currentChessChessPiece;
+        }
+
+        public CellViewModel(ChessPieceBase chessPiece)
+        {
+            CurrentChessPiece = chessPiece;
         }
 
         public void Move(Path.Path path, bool isWhite)
@@ -95,17 +100,17 @@ namespace Chess.BoardPieces.Cells
             }
         }
 
-        private ChessPieceBase CurrentChessPiece
+        public ChessPieceBase CurrentChessPiece
         {
             get
             {
                 return _currentChessChessPiece;
             }
-            set
+            private set
             {
                 _currentChessChessPiece = value;
 
-                Image = _currentChessChessPiece?.Texture;
+                Image = _currentChessChessPiece?.Texture ?? Properties.Resources.Empty.ToBitmapSource();
             }
         }
 
@@ -129,6 +134,12 @@ namespace Chess.BoardPieces.Cells
                 _bgc = value;
                 OnPropertyChanged(nameof(Bgc));
             }
+        }
+
+        public void Eat()
+        {
+            _addToGraveyardAction.Invoke(this);
+            CurrentChessPiece = null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using Chess.BoardPieces;
 
 namespace Chess
 {
