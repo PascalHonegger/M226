@@ -1,10 +1,13 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Chess.Annotations;
 using Chess.BoardPieces.Cells;
 using Chess.ChessPieces;
 
 namespace Chess.BoardPieces
 {
-    public class Board
+    public class Board : INotifyPropertyChanged
     {
         public int DimensionsChessBoard { get; } = 500;
         public Board()
@@ -152,7 +155,7 @@ namespace Chess.BoardPieces
         public CellViewModel G1 { get; set; }
         public CellViewModel H1 { get; set; }
 
-        private ICommand _startGame = new RoutedCommand();
+        /*private ICommand _startGame = new RoutedCommand();
         public ICommand StartGame
         {
             get
@@ -166,11 +169,19 @@ namespace Chess.BoardPieces
             }
             // TODO Enalble Click-Events
             // TODO Start White-Timer
-        }
+        }*/
 
         public void ResetChessBoard()
         {
             CreateDefaultChessBoard();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

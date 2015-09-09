@@ -25,9 +25,6 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.Background>
-                <ImageBrush ImageSource="Resources/chessboard.jpg"/>
-            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -72,51 +69,51 @@
             <cells:CellControl Grid.Column="5" Grid.Row="2" DataContext="{Binding F6}"/>
             <cells:CellControl Grid.Column="6" Grid.Row="2" DataContext="{Binding G6}"/>
             <cells:CellControl Grid.Column="7" Grid.Row="2" DataContext="{Binding H6}"/>
-            <cells:CellControl Grid.Column="0" Grid.Row="3" />
-            <cells:CellControl Grid.Column="1" Grid.Row="3" />
-            <cells:CellControl Grid.Column="2" Grid.Row="3" />
-            <cells:CellControl Grid.Column="3" Grid.Row="3" />
-            <cells:CellControl Grid.Column="4" Grid.Row="3" />
-            <cells:CellControl Grid.Column="5" Grid.Row="3" />
-            <cells:CellControl Grid.Column="6" Grid.Row="3" />
-            <cells:CellControl Grid.Column="7" Grid.Row="3" />
-            <cells:CellControl Grid.Column="0" Grid.Row="4" />
-            <cells:CellControl Grid.Column="1" Grid.Row="4" />
-            <cells:CellControl Grid.Column="2" Grid.Row="4" />
-            <cells:CellControl Grid.Column="3" Grid.Row="4" />
-            <cells:CellControl Grid.Column="4" Grid.Row="4" />
-            <cells:CellControl Grid.Column="5" Grid.Row="4" />
-            <cells:CellControl Grid.Column="6" Grid.Row="4" />
-            <cells:CellControl Grid.Column="7" Grid.Row="4" />
-            <cells:CellControl Grid.Column="0" Grid.Row="5" />
-            <cells:CellControl Grid.Column="1" Grid.Row="5" />
-            <cells:CellControl Grid.Column="2" Grid.Row="5" />
-            <cells:CellControl Grid.Column="3" Grid.Row="5" />
-            <cells:CellControl Grid.Column="4" Grid.Row="5" />
-            <cells:CellControl Grid.Column="5" Grid.Row="5" />
-            <cells:CellControl Grid.Column="6" Grid.Row="5" />
-            <cells:CellControl Grid.Column="7" Grid.Row="5" />
-            <cells:CellControl Grid.Column="0" Grid.Row="6" />
-            <cells:CellControl Grid.Column="1" Grid.Row="6" />
-            <cells:CellControl Grid.Column="2" Grid.Row="6" />
-            <cells:CellControl Grid.Column="3" Grid.Row="6" />
-            <cells:CellControl Grid.Column="4" Grid.Row="6" />
-            <cells:CellControl Grid.Column="5" Grid.Row="6" />
-            <cells:CellControl Grid.Column="6" Grid.Row="6" />
-            <cells:CellControl Grid.Column="7" Grid.Row="6" />
-            <cells:CellControl Grid.Column="0" Grid.Row="7" />
-            <cells:CellControl Grid.Column="1" Grid.Row="7" />
-            <cells:CellControl Grid.Column="2" Grid.Row="7" />
-            <cells:CellControl Grid.Column="3" Grid.Row="7" />
-            <cells:CellControl Grid.Column="4" Grid.Row="7" />
-            <cells:CellControl Grid.Column="5" Grid.Row="7" />
-            <cells:CellControl Grid.Column="6" Grid.Row="7" />
-            <cells:CellControl Grid.Column="7" Grid.Row="7" />
+            <cells:CellControl Grid.Column="0" Grid.Row="3" DataContext="{Binding A5}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="3" DataContext="{Binding B5}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="3" DataContext="{Binding C5}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="3" DataContext="{Binding D5}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="3" DataContext="{Binding E5}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="3" DataContext="{Binding F5}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="3" DataContext="{Binding G5}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="3" DataContext="{Binding H5}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="4" DataContext="{Binding A4}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="4" DataContext="{Binding B4}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="4" DataContext="{Binding C4}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="4" DataContext="{Binding D4}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="4" DataContext="{Binding E4}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="4" DataContext="{Binding F4}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="4" DataContext="{Binding G4}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="4" DataContext="{Binding H4}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="5" DataContext="{Binding A3}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="5" DataContext="{Binding B3}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="5" DataContext="{Binding C3}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="5" DataContext="{Binding D3}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="5" DataContext="{Binding E3}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="5" DataContext="{Binding F3}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="5" DataContext="{Binding G3}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="5" DataContext="{Binding H3}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="6" DataContext="{Binding A2}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="6" DataContext="{Binding B2}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="6" DataContext="{Binding C2}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="6" DataContext="{Binding D2}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="6" DataContext="{Binding E2}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="6" DataContext="{Binding F2}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="6" DataContext="{Binding G2}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="6" DataContext="{Binding H2}"/>
+            <cells:CellControl Grid.Column="0" Grid.Row="7" DataContext="{Binding A1}"/>
+            <cells:CellControl Grid.Column="1" Grid.Row="7" DataContext="{Binding B1}"/>
+            <cells:CellControl Grid.Column="2" Grid.Row="7" DataContext="{Binding C1}"/>
+            <cells:CellControl Grid.Column="3" Grid.Row="7" DataContext="{Binding D1}"/>
+            <cells:CellControl Grid.Column="4" Grid.Row="7" DataContext="{Binding E1}"/>
+            <cells:CellControl Grid.Column="5" Grid.Row="7" DataContext="{Binding F1}"/>
+            <cells:CellControl Grid.Column="6" Grid.Row="7" DataContext="{Binding G1}"/>
+            <cells:CellControl Grid.Column="7" Grid.Row="7" DataContext="{Binding H1}"/>
 
         </Grid>
         <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" />
         <TextBlock TextWrapping="Wrap" Grid.Column="2" Grid.Row="0" />
-        <Button Content="Start" Grid.Row="2" Grid.Column="0" Click="{Binding Path=StartGame}" />
+        <Button Content="Start" Grid.Row="2" Grid.Column="0" Click="Button_Click" />
 
     </Grid>
 </Window>

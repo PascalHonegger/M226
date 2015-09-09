@@ -8,9 +8,17 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Board _board;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _board = new Board();
+            DataContext = _board;
         }
     }
 }

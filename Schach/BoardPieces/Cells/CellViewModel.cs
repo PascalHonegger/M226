@@ -111,7 +111,6 @@ namespace Chess.BoardPieces.Cells
                 else
                 {
                     Image = _currentChessChessPiece.Texture;
-                    Bgc = null;
                 }
             }
         }
