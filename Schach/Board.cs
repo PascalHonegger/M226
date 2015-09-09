@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Chess.Annotations;
 using Chess.BoardPieces.Cells;
 using Chess.ChessPieces;
 
-namespace Chess.BoardPieces
+namespace Chess
 {
     public class Board : INotifyPropertyChanged
     {

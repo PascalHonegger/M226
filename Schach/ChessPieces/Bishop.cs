@@ -2,6 +2,7 @@
 using System.Runtime;
 using System.Windows.Media.Imaging;
 using Chess.BoardPieces.Cells;
+using Chess.Cells;
 using Chess.Path;
 
 namespace Chess.ChessPieces

@@ -1,9 +1,9 @@
-﻿using System.Drawing;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
+using Chess.BoardPieces.Cells;
 using Color = System.Windows.Media.Color;
 
-namespace Chess.BoardPieces.Cells
+namespace Chess.Cells
 {
     /// <summary>
     /// Interaction logic for CellControl.xaml

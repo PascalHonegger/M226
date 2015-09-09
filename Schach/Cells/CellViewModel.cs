@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Chess.Annotations;
+using Chess.Cells;
 using Chess.ChessPieces;
 
 namespace Chess.BoardPieces.Cells
@@ -104,14 +105,7 @@ namespace Chess.BoardPieces.Cells
             {
                 _currentChessChessPiece = value;
 
-                if (_currentChessChessPiece == null)
-                {
-                    Image = null;
-                }
-                else
-                {
-                    Image = _currentChessChessPiece.Texture;
-                }
+                Image = _currentChessChessPiece?.Texture;
             }
         }
 

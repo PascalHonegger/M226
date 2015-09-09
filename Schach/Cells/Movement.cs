@@ -1,4 +1,4 @@
-namespace Chess.BoardPieces.Cells
+namespace Chess.Cells
 {
     public static class Movement
     {

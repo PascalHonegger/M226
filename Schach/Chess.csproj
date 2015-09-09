@@ -90,7 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BoardPieces\Cells\CellControl.xaml">
+    <Page Include="Cells\CellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -102,19 +102,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BoardPieces\Board.cs" />
-    <Compile Include="BoardPieces\Cells\CellControl.xaml.cs">
+    <Compile Include="Board.cs" />
+    <Compile Include="Cells\CellControl.xaml.cs">
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BoardPieces\Cells\CellViewModel.cs" />
-    <Compile Include="BoardPieces\Cells\ToBitMapSourceExtension.cs" />
-    <Compile Include="BoardPieces\Cells\Movement.cs" />
+    <Compile Include="Cells\CellViewModel.cs" />
+    <Compile Include="Cells\ToBitMapSourceExtension.cs" />
+    <Compile Include="Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPieceBase.cs" />
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Knight.cs" />
-    <Compile Include="GraveYard\GrabBelegung.cs" />
     <Compile Include="Path\Path.cs" />
     <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
@@ -206,6 +205,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\45px-Chess_bdt45.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GraveYard\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

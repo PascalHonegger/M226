@@ -8,7 +8,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32.SafeHandles;
 
-namespace Chess.BoardPieces.Cells
+namespace Chess.Cells
 {
     public static class ToBitMapSourceExtension
     {
