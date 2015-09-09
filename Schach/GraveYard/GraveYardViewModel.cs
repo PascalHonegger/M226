@@ -32,8 +32,11 @@ namespace Chess.GraveYard
             set
             {
                 _currentChessChessPiece = value;
-
-                Image = _currentChessChessPiece?.Texture;
+                if(_currentChessChessPiece.IsDead())
+                {
+                    Image = _currentChessChessPiece?.Texture;
+                }
+                
             }
         }
 
