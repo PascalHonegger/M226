@@ -26,7 +26,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.Background>
-                <ImageBrush ImageSource="Resources/chessboard.jpg"/>
+                <ImageBrush ImageSource="Resources/176eef7.jpg"/>
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
