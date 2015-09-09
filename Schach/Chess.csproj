@@ -204,10 +204,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\45px-Chess_bdt45.svg.png" />
+    <Folder Include="GraveYard\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GraveYard\" />
+    <Resource Include="Resources\BlackBishop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
