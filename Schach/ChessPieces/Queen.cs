@@ -12,29 +12,29 @@ namespace Chess.ChessPieces
                 : Properties.Resources.BlackQueen.ToBitmapSource();
 
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.Top).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.Top).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.Left).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.Left).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.Bottom).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.Bottom).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.Right).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.Right).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.TopLeft).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.TopLeft).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.TopRight).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.TopRight).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.BottomLeft).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.BottomLeft).SetIsRecursive(true).Create());
             PathList.Add(
-                    new PathCreator().AddToPath
-                    (Movement.Direction.BottomRight).SetIsRecursive(true).Build());
+                    new PathFactory().AddToPath
+                    (Movement.Direction.BottomRight).SetIsRecursive(true).Create());
         }
     }
 }
