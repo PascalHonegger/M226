@@ -114,6 +114,7 @@
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Knight.cs" />
+    <Compile Include="GraveYard\GrabBelegung.cs" />
     <Compile Include="Path\Path.cs" />
     <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
