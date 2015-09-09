@@ -114,6 +114,10 @@
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Knight.cs" />
+    <Compile Include="GraveYard\GraveYard.cs" />
+    <Compile Include="GraveYard\GraveOrder.cs" />
+    <Compile Include="GraveYard\GraveMaster.cs" />
+    <Compile Include="GraveYard\GraveYardViewModel.cs" />
     <Compile Include="Path\Path.cs" />
     <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
@@ -203,9 +207,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GraveYard\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\BlackBishop.png" />
   </ItemGroup>

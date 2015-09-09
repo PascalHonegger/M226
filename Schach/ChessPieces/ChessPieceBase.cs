@@ -35,6 +35,19 @@ namespace Chess.ChessPieces
 
         public List<Path.Path> PathList { get; }
 
+        public bool isDead
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         protected ChessPieceBase(bool isWhite)
         {
             _colorIsWhite = isWhite;

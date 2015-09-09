@@ -12,5 +12,6 @@ namespace Chess.ChessPieces
         bool IsAlvie();
         List<Path.Path> PathList { get; }
         BitmapSource Texture { get;}
+        bool isDead { get; set; }
     }
 }
