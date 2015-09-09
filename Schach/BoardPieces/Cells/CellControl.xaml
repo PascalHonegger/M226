@@ -5,10 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cells="clr-namespace:Chess.BoardPieces.Cells"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance cells:CellViewModel }">
-    <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="{Binding Image}"/>
-        </Grid.Background>
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance cells:CellViewModel}">
+    <Grid Background="Red">
+        <Image Source="/Chess;component/Resources/BlackBishop.png" />
     </Grid>
 </UserControl>

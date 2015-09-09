@@ -107,13 +107,14 @@
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardPieces\Cells\CellViewModel.cs" />
+    <Compile Include="BoardPieces\Cells\ToBitMapSourceExtension.cs" />
     <Compile Include="BoardPieces\Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
-    <Compile Include="ChessPieces\ChessPiece.cs" />
+    <Compile Include="ChessPieces\ChessPieceBase.cs" />
     <Compile Include="ChessPieces\IChessPiece.cs" />
     <Compile Include="ChessPieces\King.cs" />
     <Compile Include="ChessPieces\Knight.cs" />
-    <Compile Include="ChessPieces\Path.cs" />
+    <Compile Include="Path\Path.cs" />
     <Compile Include="ChessPieces\Pawn.cs" />
     <Compile Include="ChessPieces\Queen.cs" />
     <Compile Include="ChessPieces\Rook.cs" />
@@ -123,6 +124,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Path\PathCreator.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -164,7 +166,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\chessboard.jpg" />
+    <Resource Include="Resources\chessboard.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\BlackKing.png">
@@ -173,15 +177,31 @@
     <Resource Include="Resources\BlackKnight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\WhiteKnight.png" />
-    <Resource Include="Resources\BlackQueen.png" />
-    <Resource Include="Resources\WhiteQueen.png" />
-    <Resource Include="Resources\BlackRook.png" />
-    <Resource Include="Resources\WhiteBishop.png" />
+    <Resource Include="Resources\WhiteKnight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\BlackQueen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\WhiteQueen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\BlackRook.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\WhiteBishop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\WhiteKing.png" />
-    <Resource Include="Resources\BlackPawn.png" />
-    <Resource Include="Resources\WhitePawn.png" />
-    <Resource Include="Resources\WhiteRook.png" />
+    <Resource Include="Resources\BlackPawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\WhitePawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\WhiteRook.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\45px-Chess_bdt45.svg.png" />

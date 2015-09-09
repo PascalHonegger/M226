@@ -1,32 +1,33 @@
 ﻿using System;
-using System.Drawing;
+using System.Runtime;
 using System.Windows.Media.Imaging;
+using Chess.BoardPieces.Cells;
+using Chess.Path;
 
 namespace Chess.ChessPieces
 {
-    class Bishop : ChessPiece
+    class Bishop : ChessPieceBase
     {
         public Bishop(bool isWhite) : base(isWhite)
         {
-            //Chess.Properties.Resources.blackbishop;
-            /*var uriSource = new Uri("Resources/BlackKing.png", UriKind.Relative);
-            var b = new BitmapImage(uriSource);
-            Texture = isWhite ? null : b.StreamSource;*/
-        }
+            Texture = isWhite
+                ? Properties.Resources.WhiteBishop.ToBitmapSource()
+                : Properties.Resources.BlackBishop.ToBitmapSource();
 
-        protected override bool PossiblePath(Path path)
-        {
-            throw new NotImplementedException();
-        }
+            var path = new PathCreator().AddToPath(Movement.Direction.TopLeft).SetIsRecursive(true).Build();
+            PathList.Add(path);
 
-        protected override bool CanMoveTo(int row, int column)
-        {
-            throw new NotImplementedException();
-        }
+            path = new PathCreator().AddToPath(Movement.Direction.TopRight).SetIsRecursive(true).Build();
+            PathList.Add(path);
 
-        protected override bool CanEat(Path path)
-        {
-            throw new NotImplementedException();
+            path = new PathCreator().AddToPath(Movement.Direction.BottomLeft).SetIsRecursive(true).Build();
+            PathList.Add(path);
+
+            path = new PathCreator().AddToPath(Movement.Direction.BottomRight).SetIsRecursive(true).Build();
+            PathList.Add(path);
         }
     }
 }
+
+
+

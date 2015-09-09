@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using Chess.BoardPieces;
-using Chess.BoardPieces.Cells;
 
 namespace Chess
 {
@@ -12,12 +11,6 @@ namespace Chess
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        // Temporary
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Board();
         }
     }
 }

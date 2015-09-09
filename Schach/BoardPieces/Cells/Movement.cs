@@ -1,9 +1,10 @@
 namespace Chess.BoardPieces.Cells
 {
-    public class Movement
+    public static class Movement
     {
         public enum Direction
         {
+            None,
             Top,
             TopRight,
             Right,

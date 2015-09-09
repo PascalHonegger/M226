@@ -1,26 +1,14 @@
-﻿using System;
+﻿using Chess.BoardPieces.Cells;
 
 namespace Chess.ChessPieces
 {
-    class Queen : ChessPiece
+    class Queen : ChessPieceBase
     {
         public Queen(bool isWhite) : base(isWhite)
         {
-        }
-
-        protected override bool PossiblePath(Path path)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool CanMoveTo(int row, int column)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool CanEat(Path path)
-        {
-            throw new NotImplementedException();
+            Texture = isWhite
+                ? Properties.Resources.WhiteQueen.ToBitmapSource()
+                : Properties.Resources.BlackQueen.ToBitmapSource();
         }
     }
 }
