@@ -2,28 +2,28 @@
 
 namespace Chess.Path
 {
-    class PathCreator
+    class PathFactory
     {
         private readonly Path _movementList;
 
-        public PathCreator()
+        public PathFactory()
         {
             _movementList = new Path();
         }
 
-        public PathCreator AddToPath(Movement.Direction step)
+        public PathFactory AddToPath(Movement.Direction step)
         {
             _movementList.Add(step);
             return this;
         }
 
-        public PathCreator SetIsRecursive(bool isRecursive)
+        public PathFactory SetIsRecursive(bool isRecursive)
         {
             _movementList.IsRecursive = isRecursive;
             return this;
         }
 
-        public Path Build()
+        public Path Create()
         {
             if (!_movementList.IsRecursive) _movementList.Add(Movement.Direction.None);
             return _movementList;
