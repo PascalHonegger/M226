@@ -106,7 +106,7 @@ namespace Chess.Cells
             {
                 return _currentChessChessPiece;
             }
-            private set
+            set
             {
                 _currentChessChessPiece = value;
 

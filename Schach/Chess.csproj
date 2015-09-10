@@ -16,7 +16,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\A610222\Desktop\</PublishUrl>
+    <PublishUrl>C:\Users\A610222\Desktop\Chess\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,7 +26,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -97,7 +97,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Test\TestClass.cs" />
+    <Compile Include="Test\CellViewModelEatTest.cs" />
+    <Compile Include="Test\CellViewModelTest.cs" />
     <Page Include="Cells\CellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,9 +215,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\BlackBishop.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="blank.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\blank.png" />

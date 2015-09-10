@@ -7,10 +7,10 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-    public sealed class Board : INotifyPropertyChanged
+    public sealed class Board
     {
-        private ObservableCollection<CellViewModel> _graveYard;
-        public ObservableCollection<CellViewModel> GraveYard => _graveYard ?? (_graveYard = new ObservableCollection<CellViewModel>());
+        private ObservableCollection<ChessPieceBase> _graveYard;
+        public ObservableCollection<ChessPieceBase> GraveYard => _graveYard ?? (_graveYard = new ObservableCollection<ChessPieceBase>());
 
         public Board()
         {
@@ -162,18 +162,10 @@ namespace Chess
             CreateDefaultChessBoard();
         }
 
-        private void AddToGraveYard(CellViewModel cellViewModel)
+        public void AddToGraveYard(CellViewModel cellViewModel)
         {
             if (cellViewModel.CurrentChessPiece == null) return;
-            GraveYard.Add(new CellViewModel(cellViewModel.CurrentChessPiece));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            GraveYard.Add(cellViewModel.CurrentChessPiece);
         }
     }
 }
