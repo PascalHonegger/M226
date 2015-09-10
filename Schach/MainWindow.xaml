@@ -6,25 +6,10 @@
         xmlns:chess="clr-namespace:Chess"
         xmlns:cells="clr-namespace:Chess.Cells"
         mc:Ignorable="d"
-        Title="LeSchach" Height="700" Width="800" MinWidth="800" MinHeight="700">
-    <Grid d:DataContext="{d:DesignInstance chess:Board}">
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="White" Offset="0" />
-                <GradientStop Color="#FFFF0707" Offset="1" />
-            </LinearGradientBrush>
-        </Grid.Background>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="500" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="500" />
-            <ColumnDefinition Width="150" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1" Grid.Row="1">
+        Title="SuperChess 2015 Gold Pre-Order Supreme-Deluxe Golden Season-Pass Edition! v1.0" Width="800" Height="800" MinWidth="800" MinHeight="800">
+    <DockPanel d:DataContext="{d:DesignInstance chess:Board}" LastChildFill="True">
+        <Button Content="Start" Click="Button_Click" Width="150" Height="100"/>
+        <Grid Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" Height="500">
             <Grid.Background>
                 <ImageBrush ImageSource="Resources/chessboard.jpg"/>
             </Grid.Background>
@@ -112,27 +97,20 @@
             <cells:CellControl Grid.Column="5" Grid.Row="7" DataContext="{Binding F1}"/>
             <cells:CellControl Grid.Column="6" Grid.Row="7" DataContext="{Binding G1}"/>
             <cells:CellControl Grid.Column="7" Grid.Row="7" DataContext="{Binding H1}"/>
-
         </Grid>
-        <Button Content="Start" Grid.Row="2" Grid.Column="0" Click="Button_Click" />
-        <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,9.6,0,0" Grid.Row="1" Grid.Column="0"
-                   TextWrapping="Wrap" Text="Le Verlauf" VerticalAlignment="Top" Height="480" Width="127"/>
-
-        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" >
+        <StackPanel Orientation="Vertical" Height="500" MinWidth="50" >
             <ItemsControl ItemsSource="{Binding GraveYard}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel ItemWidth="50"/>
+                        <WrapPanel ItemWidth="40"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="cells:CellViewModel">
                         <Image Source="{Binding Image}"/>
-                    </DataTemplate>    
+                    </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
-
-
-    </Grid>
+    </DockPanel>
 </Window>
