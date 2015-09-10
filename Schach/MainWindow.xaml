@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:chess="clr-namespace:Chess"
         xmlns:cells="clr-namespace:Chess.Cells"
+        xmlns:pieces="clr-namespace:Chess.ChessPieces"
         mc:Ignorable="d"
         Title="SuperChess 2015 Gold Pre-Order Supreme-Deluxe Golden Season-Pass Edition! v1.0" Width="800" Height="800" MinWidth="800" MinHeight="800">
     <DockPanel d:DataContext="{d:DesignInstance chess:Board}" LastChildFill="True">
@@ -106,8 +107,8 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="cells:CellViewModel">
-                        <Image Source="{Binding Image}"/>
+                    <DataTemplate DataType="pieces:ChessPieceBase">
+                        <Image Source="{Binding Texture}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
