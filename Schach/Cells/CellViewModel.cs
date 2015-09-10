@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -111,21 +112,13 @@ namespace Chess.Cells
 
         private bool FindPathTo(CellViewModel endModel)
         {
-            foreach (var path in CurrentChessPiece.PathList)
-            {
-                if (MoveTo(path, endModel))
-                {
-
-                    return true;
-                }
-            }
-            return false;
+            return CurrentChessPiece.PathList.Any(path => MoveTo(path, endModel));
         }
 
         private bool MoveTo(Path.Path path, CellViewModel endModel)
         {
-            if (this == endModel && CurrentChessPiece == null) return true;
-            return CurrentChessPiece == null && _movements[path.GetNextStep()].MoveTo(path, endModel);
+            if (CurrentChessPiece != null) return false;
+            return this == endModel || _movements[path.GetNextStep()].MoveTo(path, endModel);
         }
 
         public void Eat(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
