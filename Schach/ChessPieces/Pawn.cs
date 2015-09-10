@@ -12,7 +12,7 @@ namespace Chess.ChessPieces
                 : Properties.Resources.BlackPawn.ToBitmapSource();
 
 
-            if (!isWhite)
+            if (IsBlack())
             {
                 PathList.Add(
                     new PathFactory().AddToPath

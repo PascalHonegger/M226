@@ -82,76 +82,32 @@ namespace Chess.Cells
         #endregion
 
         #region Movement
-        public void Move(Path.Path path, CellViewModel modelToMoveHere)
+        public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
         {
-            if (CurrentChessPiece != null) return;
-            if (path.GetStep() != Movement.Direction.Final)
-            {
-                _movements[path.GetNextStep()]?.Move(path);
-            }
-            else
-            {
-                MoveModel(modelToMoveHere, this);
-            }
-        }
+            if (!startModel.FindPathTo(endModel)) return false;
 
-        private static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
-        {
-            if (startModel.FindPathTo(endModel))
-            {
-                endModel.MoveToGraveyard();
-                endModel.CurrentChessPiece = startModel.CurrentChessPiece;
-                startModel.CurrentChessPiece = null;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            endModel.MoveToGraveyard();
+            endModel.CurrentChessPiece = startModel.CurrentChessPiece;
+            startModel.CurrentChessPiece = null;
+            return true;
         }
 
         private bool FindPathTo(CellViewModel endModel)
         {
-            return CurrentChessPiece.PathList.Any(path => MoveTo(path, endModel));
+            return CurrentChessPiece != null && CurrentChessPiece.PathList.Any(path =>
+            {
+                var moveTo = _movements[path.GetNextStep()]?.MoveTo(path, endModel);
+                return moveTo != null && (bool) moveTo;
+            });
         }
 
         private bool MoveTo(Path.Path path, CellViewModel endModel)
         {
+            if (this == endModel) return true;
             if (CurrentChessPiece != null) return false;
-            return this == endModel || _movements[path.GetNextStep()].MoveTo(path, endModel);
+            return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveTo(path, endModel);
         }
 
-        public void Eat(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
-        {
-            if (CurrentChessPiece != null) return;
-
-            if (path.GetStep() == Movement.Direction.Final || path.IsRecursive)
-            {
-                CurrentChessPiece = modelToMoveHere.CurrentChessPiece;
-                modelToMoveHere.CurrentChessPiece = null;
-            }
-            else
-            {
-                _movements[path.GetNextStep()].Eat(path, isWhite, modelToMoveHere);
-            }
-        }
-
-        public void Jump(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
-        {
-            if (CurrentChessPiece.IsWhite() == isWhite || CurrentChessPiece.IsBlack() != isWhite)
-            {
-                return;
-            }
-            if (path.GetStep() != Movement.Direction.Final)
-            {
-                _movements[path.GetNextStep()].Move(path, modelToMoveHere);
-            }
-            else
-            {
-                CurrentChessPiece = modelToMoveHere.CurrentChessPiece;
-                modelToMoveHere.CurrentChessPiece = null;
-            }
-        } 
         #endregion
 
         public ChessPieceBase CurrentChessPiece

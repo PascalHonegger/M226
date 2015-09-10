@@ -1,4 +1,5 @@
-﻿using Chess;
+﻿using System.Linq;
+using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
 using NUnit.Framework;
@@ -38,28 +39,23 @@ namespace ChessTest
             {
                 D4 = {CurrentChessPiece = new Bishop(false)},
                 E5 = {CurrentChessPiece = new Pawn(false)},
-                F6 = {CurrentChessPiece = new Bishop(true)},
-                
+                F6 = {CurrentChessPiece = new Bishop(true)}
             };
-            var toEat = _board.D4;
-            var toBeEaten = _board.F6;
-            var chessPieceToBeEaten = toBeEaten.CurrentChessPiece;
+            var chessPieceToBeEaten = _board.F6.CurrentChessPiece;
+            var evilChessPiece = _board.D4.CurrentChessPiece;
             // Act
-            TestEat(toEat, toBeEaten);
-
-
+            TestEat(_board.D4, _board.F6);
 
             // Assert
-            Assert.IsNull(toEat.CurrentChessPiece);
-            Assert.AreEqual(toBeEaten.CurrentChessPiece, new Bishop(true));
-            Assert.False(_board.GraveYard.Contains(chessPieceToBeEaten));
+            Assert.IsNotNull(_board.E5.CurrentChessPiece);
+            Assert.AreEqual(_board.F6.CurrentChessPiece, chessPieceToBeEaten);
+            Assert.AreEqual(_board.D4.CurrentChessPiece, evilChessPiece);
+            Assert.AreEqual(_board.GraveYard.Count, 0);
         }
 
-        public void TestEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
+        private static void TestEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
         {
-            cellToBeEaten.MoveToGraveyard();
-            cellToBeEaten.CurrentChessPiece = cellToEat.CurrentChessPiece;
-            cellToEat.CurrentChessPiece = null;
+            CellViewModel.MoveModel(cellToEat, cellToBeEaten);
         }
     }
 }

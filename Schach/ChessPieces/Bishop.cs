@@ -22,20 +22,6 @@ namespace Chess.ChessPieces
 
             path = new PathFactory().AddToPath(Movement.Direction.BottomRight).SetIsRecursive(true).Create();
             PathList.Add(path);
-
-            
-     /*       if(isWhite)
-            {
-                   GraveList.Add(
-                    new GraveMaster().AddToGrave
-                    (GraveOrder.Place.WhiteBishopOne).Create());
-            }
-            else
-            {
-                GraveList.Add(
-                    new GraveMaster().AddToGrave
-                    (GraveOrder.Place.BlackBishopOne).Create());
-            }*/
         }
     }
 }
