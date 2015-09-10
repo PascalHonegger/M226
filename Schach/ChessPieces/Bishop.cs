@@ -3,7 +3,7 @@ using Chess.Path;
 
 namespace Chess.ChessPieces
 {
-    class Bishop : ChessPieceBase
+    public class Bishop : ChessPieceBase
     {
         public Bishop(bool isWhite) : base(isWhite)
         {
@@ -36,11 +36,6 @@ namespace Chess.ChessPieces
                     new GraveMaster().AddToGrave
                     (GraveOrder.Place.BlackBishopOne).Create());
             }*/
-        }
-        public void gotEaten()
-        {
-            //TODO Bool isDead = true
-            
         }
     }
 }

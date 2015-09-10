@@ -1,11 +1,12 @@
-﻿using Chess.Cells;
+﻿using Chess;
+using Chess.Cells;
 using Chess.ChessPieces;
 using NUnit.Framework;
 
-namespace Chess.Test
+namespace ChessTest
 {
     [TestFixture]
-    class CellViewModelEatTest
+    class CellViewModelEatTestClassTet
     {
         private Board _board;
 
