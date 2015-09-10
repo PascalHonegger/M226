@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,10 +13,13 @@ namespace Chess.Cells
     public class CellViewModel : INotifyPropertyChanged
     {
         private SolidColorBrush _bgc;
-        private ChessPieceBase _currentChessChessPiece;
+        private ChessPieceBase _currentChessPiece;
         private BitmapSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
         private readonly Action<CellViewModel> _addToGraveyardAction;
+        private static readonly SolidColorBrush Green = Brushes.Green;
+        private static readonly SolidColorBrush Red = Brushes.Red;
+        private static readonly SolidColorBrush Orange = Brushes.Orange;
 
         public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright, CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft, Action<CellViewModel> addToGraveyardAction)
         {
@@ -36,11 +40,24 @@ namespace Chess.Cells
             CurrentChessPiece = chessPiece;
         }
 
-        public void Move(Path.Path path, bool isWhite)
+        #region Coloring
+        public void Move(Path.Path path)
         {
             if (CurrentChessPiece != null) return;
-            Bgc = Brushes.Green;
-            if (path.GetStep() != Movement.Direction.Final) _movements[path.GetNextStep()].Move(path, isWhite);
+            Bgc = Green;
+            if (path.GetStep() != Movement.Direction.Final) _movements[path.GetNextStep()]?.Move(path);
+        }
+
+        public void Eat(Path.Path path, bool isWhite)
+        {
+            if (CurrentChessPiece == null && path.GetStep() != Movement.Direction.Final)
+            {
+                _movements[path.GetNextStep()]?.Move(path);
+            }
+            else if (CurrentChessPiece != null && (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite))
+            {
+                Bgc = Orange;
+            }
         }
 
         public void Jump(Path.Path path, bool isWhite)
@@ -49,28 +66,69 @@ namespace Chess.Cells
             {
                 if (CurrentChessPiece == null)
                 {
-                    Bgc = Brushes.Green;
+                    Bgc = Green;
                 }
                 else if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
                 {
-                    Bgc = Brushes.Orange;
+                    Bgc = Orange;
                 }
             }
             else
             {
-                _movements[path.GetNextStep()].Jump(path, isWhite);
+                _movements[path.GetNextStep()]?.Jump(path, isWhite);
             }
-        }
+        } 
+        #endregion
 
-        public void Eat(Path.Path path, bool isWhite)
+        #region Movement
+        public void Move(Path.Path path, CellViewModel modelToMoveHere)
         {
-            if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
+            if (CurrentChessPiece != null) return;
+            if (path.GetStep() != Movement.Direction.Final)
             {
-                Bgc = Brushes.Orange;
+                _movements[path.GetNextStep()]?.Move(path);
+            }
+            else
+            {
+                MoveModel(modelToMoveHere, this);
             }
         }
 
-        public void Move(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
+        private static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
+        {
+            if (startModel.FindPathTo(endModel))
+            {
+                endModel.MoveToGraveyard();
+                endModel.CurrentChessPiece = startModel.CurrentChessPiece;
+                startModel.CurrentChessPiece = null;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool FindPathTo(CellViewModel endModel)
+        {
+            foreach (var path in CurrentChessPiece.PathList)
+            {
+                if (MoveTo(path, endModel))
+                {
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool MoveTo(Path.Path path, CellViewModel endModel)
+        {
+            if (this == endModel && CurrentChessPiece == null) return true;
+            return CurrentChessPiece == null && _movements[path.GetNextStep()].MoveTo(path, endModel);
+        }
+
+        public void Eat(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
         {
             if (CurrentChessPiece != null) return;
 
@@ -81,7 +139,7 @@ namespace Chess.Cells
             }
             else
             {
-                _movements[path.GetNextStep()].Move(path, isWhite, modelToMoveHere);
+                _movements[path.GetNextStep()].Eat(path, isWhite, modelToMoveHere);
             }
         }
 
@@ -93,26 +151,27 @@ namespace Chess.Cells
             }
             if (path.GetStep() != Movement.Direction.Final)
             {
-                _movements[path.GetNextStep()].Move(path, isWhite, modelToMoveHere);
+                _movements[path.GetNextStep()].Move(path, modelToMoveHere);
             }
             else
             {
                 CurrentChessPiece = modelToMoveHere.CurrentChessPiece;
                 modelToMoveHere.CurrentChessPiece = null;
             }
-        }
+        } 
+        #endregion
 
         public ChessPieceBase CurrentChessPiece
         {
             get
             {
-                return _currentChessChessPiece;
+                return _currentChessPiece;
             }
             set
             {
-                _currentChessChessPiece = value;
+                _currentChessPiece = value;
 
-                Image = _currentChessChessPiece?.Texture ?? Properties.Resources.blank.ToBitmapSource();
+                Image = _currentChessPiece?.Texture ?? Properties.Resources.blank.ToBitmapSource();
             }
         }
 
@@ -138,7 +197,7 @@ namespace Chess.Cells
             }
         }
 
-        public void Eat()
+        public void MoveToGraveyard()
         {
             _addToGraveyardAction.Invoke(this);
             CurrentChessPiece = null;

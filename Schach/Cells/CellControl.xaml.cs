@@ -17,7 +17,7 @@ namespace Chess.Cells
 
         private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MyDataCellViewModel.Eat();
+            MyDataCellViewModel.MoveToGraveyard();
             //myDataCellViewModel.Bgc = new SolidColorBrush(Color.FromArgb(75, 55, 55, 202));
         }
     }

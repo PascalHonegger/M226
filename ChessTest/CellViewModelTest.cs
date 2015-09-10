@@ -14,7 +14,7 @@ namespace ChessTest
             var cellViewModelToBeEaten = new CellViewModel(new Pawn(true));
 
             // Act
-            cellViewModelToBeEaten.Eat();
+            cellViewModelToBeEaten.MoveToGraveyard();
 
             // Assert
             Assert.True(true);

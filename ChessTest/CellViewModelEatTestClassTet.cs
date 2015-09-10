@@ -57,7 +57,7 @@ namespace ChessTest
 
         public void TestEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
         {
-            cellToBeEaten.Eat();
+            cellToBeEaten.MoveToGraveyard();
             cellToBeEaten.CurrentChessPiece = cellToEat.CurrentChessPiece;
             cellToEat.CurrentChessPiece = null;
         }
