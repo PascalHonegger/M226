@@ -4,7 +4,6 @@ namespace Chess.Cells
     {
         public enum Direction
         {
-            None,
             Top,
             TopRight,
             Right,
@@ -12,7 +11,8 @@ namespace Chess.Cells
             Bottom,
             BottomLeft,
             Left,
-            TopLeft
+            TopLeft,
+            Final
         }
     }
 }

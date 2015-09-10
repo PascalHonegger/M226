@@ -2,10 +2,10 @@
 using Chess.ChessPieces;
 using NUnit.Framework;
 
-namespace Chess.Test
+namespace ChessTest
 {
     [TestFixture]
-    class CellViewModelTest
+    public class CellViewModelTest
     {
         [Test]
         public void TestEat()

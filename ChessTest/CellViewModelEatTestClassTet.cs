@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace ChessTest
 {
     [TestFixture]
-    class CellViewModelEatTestClassTet
+    public class CellViewModelEatTestClassTet
     {
         private Board _board;
 
@@ -19,14 +19,14 @@ namespace ChessTest
                 D4 = {CurrentChessPiece = new Bishop(false)},
                 F6 = {CurrentChessPiece = new Bishop(true)}
             };
-            var chessPieceToBeEaten = _board.D4.CurrentChessPiece;
-            
+            var chessPieceToBeEaten = _board.F6.CurrentChessPiece;
+            var evilChessPiece = _board.D4.CurrentChessPiece;
             // Act
             TestEat(_board.D4, _board.F6);
 
             // Assert
             Assert.IsNull(_board.D4.CurrentChessPiece);
-            Assert.AreEqual(_board.F6.CurrentChessPiece, new Bishop(true));
+            Assert.AreEqual(_board.F6.CurrentChessPiece, evilChessPiece);
             Assert.True(_board.GraveYard.Contains(chessPieceToBeEaten));
         }
 
@@ -57,7 +57,9 @@ namespace ChessTest
 
         public void TestEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
         {
-
+            cellToBeEaten.Eat();
+            cellToBeEaten.CurrentChessPiece = cellToEat.CurrentChessPiece;
+            cellToEat.CurrentChessPiece = null;
         }
     }
 }

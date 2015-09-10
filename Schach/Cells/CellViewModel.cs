@@ -15,7 +15,7 @@ namespace Chess.Cells
         private ChessPieceBase _currentChessChessPiece;
         private BitmapSource _image;
         private readonly Dictionary<Movement.Direction, CellViewModel> _movements = new Dictionary<Movement.Direction, CellViewModel>();
-        private Action<CellViewModel> _addToGraveyardAction;
+        private readonly Action<CellViewModel> _addToGraveyardAction;
 
         public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright, CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft, Action<CellViewModel> addToGraveyardAction)
         {
@@ -38,20 +38,14 @@ namespace Chess.Cells
 
         public void Move(Path.Path path, bool isWhite)
         {
-            if (CurrentChessPiece == null)
-            {
-                Bgc = Brushes.Green;
-            }
-            else if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
-            {
-                Bgc = Brushes.Orange;
-            }
-            if(path.GetStep() != Movement.Direction.None) _movements[path.GetNextStep()].Move(path, isWhite);
+            if (CurrentChessPiece != null) return;
+            Bgc = Brushes.Green;
+            if (path.GetStep() != Movement.Direction.Final) _movements[path.GetNextStep()].Move(path, isWhite);
         }
 
         public void Jump(Path.Path path, bool isWhite)
         {
-            if (path.GetStep() == Movement.Direction.None)
+            if (path.GetStep() == Movement.Direction.Final)
             {
                 if (CurrentChessPiece == null)
                 {
@@ -68,11 +62,19 @@ namespace Chess.Cells
             }
         }
 
+        public void Eat(Path.Path path, bool isWhite)
+        {
+            if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
+            {
+                Bgc = Brushes.Orange;
+            }
+        }
+
         public void Move(Path.Path path, bool isWhite, CellViewModel modelToMoveHere)
         {
             if (CurrentChessPiece != null) return;
 
-            if (path.GetStep() == Movement.Direction.None || path.IsRecursive)
+            if (path.GetStep() == Movement.Direction.Final || path.IsRecursive)
             {
                 CurrentChessPiece = modelToMoveHere.CurrentChessPiece;
                 modelToMoveHere.CurrentChessPiece = null;
@@ -89,7 +91,7 @@ namespace Chess.Cells
             {
                 return;
             }
-            if (path.GetStep() != Movement.Direction.None)
+            if (path.GetStep() != Movement.Direction.Final)
             {
                 _movements[path.GetNextStep()].Move(path, isWhite, modelToMoveHere);
             }
