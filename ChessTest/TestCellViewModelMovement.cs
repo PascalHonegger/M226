@@ -142,30 +142,30 @@ namespace ChessTest
             {
                 C5 = { CurrentChessPiece = new Rook(false) },
                 D5 = { CurrentChessPiece = new Rook(false) },
-                A1 = { CurrentChessPiece = new Rook(true) },
-                G8 = { CurrentChessPiece = new Rook(true) },
+                A3 = { CurrentChessPiece = new Rook(true) },
+                G6 = { CurrentChessPiece = new Rook(true) },
             };
 
             var c5 = _board.C5.CurrentChessPiece;
             var d5 = _board.D5.CurrentChessPiece;
-            var a1 = _board.A1.CurrentChessPiece;
-            var g8 = _board.G8.CurrentChessPiece;
+            var a3 = _board.A3.CurrentChessPiece;
+            var g6 = _board.G6.CurrentChessPiece;
 
             //Act
             TestMoveEat(_board.C5, _board.A5);
             TestMoveEat(_board.D5, _board.G5);
-            TestMoveEat(_board.A1, _board.A8);
-            TestMoveEat(_board.G8, _board.G1);
+            TestMoveEat(_board.A3, _board.A6);
+            TestMoveEat(_board.G6, _board.G3);
 
             //Assert
             Assert.IsNull(_board.C5.CurrentChessPiece);
             Assert.IsNull(_board.D5.CurrentChessPiece);
-            Assert.IsNull(_board.A1.CurrentChessPiece);
-            Assert.IsNull(_board.G8.CurrentChessPiece);
+            Assert.IsNull(_board.A3.CurrentChessPiece);
+            Assert.IsNull(_board.G6.CurrentChessPiece);
             Assert.AreEqual(_board.A5.CurrentChessPiece, c5);
             Assert.AreEqual(_board.G5.CurrentChessPiece, d5);
-            Assert.AreEqual(_board.A8.CurrentChessPiece, a1);
-            Assert.AreEqual(_board.G1.CurrentChessPiece, g8);
+            Assert.AreEqual(_board.A6.CurrentChessPiece, a3);
+            Assert.AreEqual(_board.G3.CurrentChessPiece, g6);
         }
 
         public static void TestMoveEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
