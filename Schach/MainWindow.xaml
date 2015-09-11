@@ -7,10 +7,13 @@
         xmlns:cells="clr-namespace:Chess.Cells"
         xmlns:pieces="clr-namespace:Chess.ChessPieces"
         mc:Ignorable="d"
-        Title="SuperChess 2015 Gold Pre-Order Supreme-Deluxe Golden Season-Pass Edition! v1.0" Width="800" Height="800" MinWidth="800" MinHeight="800">
+        Title="SuperChess 2015 Gold Pre-Order Supreme-Deluxe Golden Season-Pass Edition! v1.0" Width="800" Height="800" ResizeMode="NoResize">
     <DockPanel d:DataContext="{d:DesignInstance chess:Board}" LastChildFill="True">
+        <DockPanel.Background>
+            <ImageBrush ImageSource="Resources/table.png" Stretch="UniformToFill"/>
+        </DockPanel.Background>
         <Button Content="Start" Click="Button_Click" Width="150" Height="100"/>
-        <Grid Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" Height="500">
+        <Grid Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" Height="300" Margin="100,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.Background>
                 <ImageBrush ImageSource="Resources/chessboard.jpg"/>
             </Grid.Background>

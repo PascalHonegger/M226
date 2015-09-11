@@ -38,6 +38,7 @@ namespace Chess.Cells
             _movements.Add(Movement.Direction.BottomLeft, bottomleft);
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
+            _movements.Add(Movement.Direction.Final, null);
         }
 
         public CellViewModel(ChessPieceBase chessPiece)
@@ -104,11 +105,11 @@ namespace Chess.Cells
             {
                 return pawn.PathList.Any(path =>
                 {
-                    var canMoveTo = _movements[path.GetNextStep()]?.MoveTo(path, endModel);
+                    var canMoveTo = _movements[path.GetStep()]?.MoveTo(path, endModel);
                     return canMoveTo != null && (bool) canMoveTo;
                 }) || pawn.EatList.Any(path =>
                 {
-                    var canEatTo = _movements[path.GetNextStep()]?.EatTo(path, endModel);
+                    var canEatTo = _movements[path.GetStep()]?.EatTo(path, endModel);
                     return canEatTo != null && (bool) canEatTo;
                 });
             }
@@ -116,13 +117,13 @@ namespace Chess.Cells
             {
                 return CurrentChessPiece.PathList.Any(path =>
                 {
-                    var canJumpTo = _movements[path.GetNextStep()]?.JumpEatTo(path, endModel);
+                    var canJumpTo = _movements[path.GetStep()]?.JumpEatTo(path, endModel);
                     return canJumpTo != null && (bool) canJumpTo;
                 });
             }
             return CurrentChessPiece != null && CurrentChessPiece.PathList.Any(path =>
             {
-                var canMoveOrEat = _movements[path.GetNextStep()]?.MoveEatTo(path, endModel);
+                var canMoveOrEat = _movements[path.GetStep()]?.MoveEatTo(path, endModel);
                 return canMoveOrEat != null && (bool)canMoveOrEat;
             });
         }
