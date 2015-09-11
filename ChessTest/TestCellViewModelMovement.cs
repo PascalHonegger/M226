@@ -69,7 +69,7 @@ namespace ChessTest
             TestMoveEat(_board.D4, _board.F5);
 
             // Assert
-            Assert.IsNull(_board.F4.CurrentChessPiece);
+            Assert.IsNull(_board.F4.CurrentChessPiece, "TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
             Assert.IsNull(_board.E4.CurrentChessPiece);
             Assert.IsNull(_board.A4.CurrentChessPiece);
             Assert.IsNull(_board.D4.CurrentChessPiece);
