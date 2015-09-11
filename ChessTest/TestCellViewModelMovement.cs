@@ -79,6 +79,11 @@ namespace ChessTest
             Assert.AreEqual(_board.F5.CurrentChessPiece, d4);
         }
 
+        public void Rook()
+        {
+
+        }
+
         public static void TestEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
         {
             CellViewModel.MoveModel(cellToEat, cellToBeEaten);
