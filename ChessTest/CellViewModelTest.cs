@@ -23,7 +23,7 @@ namespace ChessTest
             var chessPieceToBeEaten = _board.F6.CurrentChessPiece;
             var evilChessPiece = _board.D4.CurrentChessPiece;
             // Act
-            TestCellViewModelMovement.TestEat(_board.D4, _board.F6);
+            TestCellViewModelMovement.TestMoveEat(_board.D4, _board.F6);
 
             // Assert
             Assert.IsNull(_board.D4.CurrentChessPiece);
@@ -44,7 +44,7 @@ namespace ChessTest
             var chessPieceToBeEaten = _board.F6.CurrentChessPiece;
             var evilChessPiece = _board.D4.CurrentChessPiece;
             // Act
-            TestCellViewModelMovement.TestEat(_board.D4, _board.F6);
+            TestCellViewModelMovement.TestMoveEat(_board.D4, _board.F6);
 
             // Assert
             Assert.IsNotNull(_board.E5.CurrentChessPiece);
@@ -66,7 +66,7 @@ namespace ChessTest
             var chessPieceToBeEaten = _board.F6.CurrentChessPiece;
             var evilChessPiece = _board.D4.CurrentChessPiece;
             // Act
-            TestCellViewModelMovement.TestEat(_board.D4, _board.F6);
+            TestCellViewModelMovement.TestMoveEat(_board.D4, _board.F6);
 
             // Assert
             Assert.IsNotNull(_board.E5.CurrentChessPiece);
