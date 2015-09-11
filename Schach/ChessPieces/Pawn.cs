@@ -1,16 +1,21 @@
-﻿using Chess.Cells;
+﻿using System.Collections.Generic;
+using System.Security.RightsManagement;
+using Chess.Cells;
 using Chess.Path;
 
 namespace Chess.ChessPieces
 {
     public class Pawn : ChessPieceBase
     {
+        public readonly List<Path.Path> EatList;
+
         public Pawn(bool isWhite) : base(isWhite)
         {
             Texture = isWhite
                 ? Properties.Resources.WhitePawn.ToBitmapSource()
                 : Properties.Resources.BlackPawn.ToBitmapSource();
 
+            EatList = new List<Path.Path>();
 
             if (IsBlack())
             {
@@ -18,11 +23,11 @@ namespace Chess.ChessPieces
                     new PathFactory().AddToPath
                     (Movement.Direction.Bottom).SetIsRecursive(false).Create());
 
-                PathList.Add(
+                EatList.Add(
                    new PathFactory().AddToPath
                     (Movement.Direction.BottomLeft).SetIsRecursive(false).Create());
 
-                PathList.Add(
+                EatList.Add(
                     new PathFactory().AddToPath
                     (Movement.Direction.BottomRight).SetIsRecursive(false).Create());
             }
@@ -32,11 +37,11 @@ namespace Chess.ChessPieces
                     new PathFactory().AddToPath
                     (Movement.Direction.Top).SetIsRecursive(false).Create());
 
-                PathList.Add(
+                EatList.Add(
                     new PathFactory().AddToPath
                     (Movement.Direction.TopLeft).SetIsRecursive(false).Create());
 
-                PathList.Add(
+                EatList.Add(
                     new PathFactory().AddToPath
                     (Movement.Direction.TopRight).SetIsRecursive(false).Create());
             }

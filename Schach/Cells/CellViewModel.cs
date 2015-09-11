@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace Chess.Cells
         private static readonly SolidColorBrush Red = Brushes.Red;
         private static readonly SolidColorBrush Orange = Brushes.Orange;
 
-        public CellViewModel(ChessPieceBase currentChessChessPiece, CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright, CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft, Action<CellViewModel> addToGraveyardAction)
+        public CellViewModel(ref ChessPieceBase currentChessChessPiece, ref CellViewModel top, ref CellViewModel topright, ref CellViewModel right, ref CellViewModel bottomright, ref CellViewModel bottom, ref CellViewModel bottomleft, ref CellViewModel left, ref CellViewModel topleft, Action<CellViewModel> addToGraveyardAction)
         {
             _movements.Add(Movement.Direction.Top, top);
             _movements.Add(Movement.Direction.TopRight, topright);
@@ -42,18 +41,18 @@ namespace Chess.Cells
         }
 
         #region Coloring
-        public void Move(Path.Path path)
+        public void ColorizeMove(Path.Path path)
         {
             if (CurrentChessPiece != null) return;
             Bgc = Green;
-            if (path.GetStep() != Movement.Direction.Final) _movements[path.GetNextStep()]?.Move(path);
+            if (path.GetStep() != Movement.Direction.Final) _movements[path.GetNextStep()]?.ColorizeMove(path);
         }
 
-        public void Eat(Path.Path path, bool isWhite)
+        public void ColorizeEat(Path.Path path, bool isWhite)
         {
             if (CurrentChessPiece == null && path.GetStep() != Movement.Direction.Final)
             {
-                _movements[path.GetNextStep()]?.Move(path);
+                _movements[path.GetNextStep()]?.ColorizeMove(path);
             }
             else if (CurrentChessPiece != null && (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite))
             {
@@ -61,7 +60,7 @@ namespace Chess.Cells
             }
         }
 
-        public void Jump(Path.Path path, bool isWhite)
+        public void ColorizeJump(Path.Path path, bool isWhite)
         {
             if (path.GetStep() == Movement.Direction.Final)
             {
@@ -76,7 +75,7 @@ namespace Chess.Cells
             }
             else
             {
-                _movements[path.GetNextStep()]?.Jump(path, isWhite);
+                _movements[path.GetNextStep()]?.ColorizeJump(path, isWhite);
             }
         } 
         #endregion
@@ -94,18 +93,59 @@ namespace Chess.Cells
 
         private bool FindPathTo(CellViewModel endModel)
         {
+            if (CurrentChessPiece == null) return false;
+            var pawn = CurrentChessPiece as Pawn;
+            if (pawn != null)
+            {
+                return pawn.PathList.Any(path =>
+                {
+                    var canMoveTo = _movements[path.GetNextStep()]?.MoveTo(path, endModel);
+                    return canMoveTo != null && (bool) canMoveTo;
+                }) || pawn.EatList.Any(path =>
+                {
+                    var canEatTo = _movements[path.GetNextStep()]?.EatTo(path, endModel);
+                    return canEatTo != null && (bool) canEatTo;
+                });
+            }
+            if (CurrentChessPiece is Knight)
+            {
+                return CurrentChessPiece.PathList.Any(path =>
+                {
+                    var canJumpTo = _movements[path.GetNextStep()]?.JumpEatTo(path, endModel);
+                    return canJumpTo != null && (bool) canJumpTo;
+                });
+            }
             return CurrentChessPiece != null && CurrentChessPiece.PathList.Any(path =>
             {
-                var moveTo = _movements[path.GetNextStep()]?.MoveTo(path, endModel);
-                return moveTo != null && (bool) moveTo;
+                var canMoveOrEat = _movements[path.GetNextStep()]?.MoveEatTo(path, endModel);
+                return canMoveOrEat != null && (bool)canMoveOrEat;
             });
         }
 
         private bool MoveTo(Path.Path path, CellViewModel endModel)
         {
+            if (CurrentChessPiece != null) return false;
+            if (this == endModel) return true;
+            return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveTo(path, endModel);
+        }
+
+        private bool EatTo(Path.Path path, CellViewModel endModel)
+        {
+            if (this == endModel && CurrentChessPiece != null) return true;
+            if (CurrentChessPiece != null) return false;
+            return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].EatTo(path, endModel);
+        }
+
+        private bool MoveEatTo(Path.Path path, CellViewModel endModel)
+        {
             if (this == endModel) return true;
             if (CurrentChessPiece != null) return false;
-            return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveTo(path, endModel);
+            return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveEatTo(path, endModel);
+        }
+        private bool JumpEatTo(Path.Path path, CellViewModel endModel)
+        {
+            if (this == endModel) return true;
+            return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].JumpEatTo(path, endModel);
         }
 
         #endregion

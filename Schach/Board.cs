@@ -19,14 +19,15 @@ namespace Chess
 
         private void CreateDefaultChessBoard()
         {
-            A8 = new CellViewModel(new Rook(false), null, null, B8, B7, A7, null, null, null, AddToGraveYard);
-            B8 = new CellViewModel(new Knight(false), null, null, C8, C7, B7, A7, A8, null, AddToGraveYard);
-            C8 = new CellViewModel(new Bishop(false), null, null, D8, D7, C7, B7, B8, null, AddToGraveYard);
-            D8 = new CellViewModel(new Queen(false), null, null, E8, E7, D7, C7, C8, null, AddToGraveYard);
-            E8 = new CellViewModel(new King(false), null, null, F8, F7, E7, D7, D7, null, AddToGraveYard);
-            F8 = new CellViewModel(new Bishop(false), null, null, G8, G7, F7, E7, E8, null, AddToGraveYard);
-            G8 = new CellViewModel(new Knight(false), null, null, H8, H7, G7, F7, F8, null, AddToGraveYard);
-            H8 = new CellViewModel(new Rook(false), null, null, null, null, H7, G7, G8, null, AddToGraveYard);
+            CellViewModel nullValue = null;
+            A8 = new CellViewModel(new Rook(false), ref nullValue, ref nullValue, ref B8, ref B7, ref A7, ref nullValue, ref nullValue, ref nullValue, AddToGraveYard);
+            B8 = new CellViewModel(new Knight(false), ref nullValue, ref nullValue, C8, C7, B7, A7, ref A8, ref nullValue, AddToGraveYard);
+            C8 = new CellViewModel(new Bishop(false), ref nullValue, ref nullValue, ref D8, ref D7, ref C7, ref B7, ref B8, ref nullValue, AddToGraveYard);
+            D8 = new CellViewModel(new Queen(false), ref nullValue, ref nullValue, ref E8, ref E7, ref D7, ref C7, ref C8, ref nullValue, AddToGraveYard);
+            E8 = new CellViewModel(new King(false), ref nullValue, ref nullValue, ref F8, ref F7, ref E7, ref D7, ref D7, ref nullValue, AddToGraveYard);
+            F8 = new CellViewModel(new Bishop(false), ref nullValue, ref nullValue, ref G8, ref G7, ref F7, ref E7, ref E8, ref nullValue, AddToGraveYard);
+            G8 = new CellViewModel(new Knight(false), ref nullValue, ref nullValue, ref H8, ref H7, ref G7, ref F7, ref F8, ref nullValue, AddToGraveYard);
+            H8 = new CellViewModel(new Rook(false), ref nullValue, ref nullValue, ref nullValue, ref nullValue, ref H7, ref G7, ref G8, ref nullValue, AddToGraveYard);
 
             A7 = new CellViewModel(new Pawn(false), A8, B8, B7, B6, A6, null, null, null, AddToGraveYard);
             B7 = new CellViewModel(new Pawn(false), B8, C8, C7, C6, B6, A6, A7, A8, AddToGraveYard);
@@ -92,25 +93,25 @@ namespace Chess
             H1 = new CellViewModel(new Rook(true), H2, null, null, null, null, null, G2, G3, AddToGraveYard);
         }
 
-        public CellViewModel A8 { get; set; }
-        public CellViewModel B8 { get; set; }
-        public CellViewModel C8 { get; set; }
-        public CellViewModel D8 { get; set; }
-        public CellViewModel E8 { get; set; }
-        public CellViewModel F8 { get; set; }
-        public CellViewModel G8 { get; set; }
-        public CellViewModel H8 { get; set; }
-        public CellViewModel A7 { get; set; }
-        public CellViewModel B7 { get; set; }
-        public CellViewModel C7 { get; set; }
-        public CellViewModel D7 { get; set; }
-        public CellViewModel E7 { get; set; }
-        public CellViewModel F7 { get; set; }
-        public CellViewModel G7 { get; set; }
-        public CellViewModel H7 { get; set; }
-        public CellViewModel A6 { get; set; }
-        public CellViewModel B6 { get; set; }
-        public CellViewModel C6 { get; set; }
+        public CellViewModel A8;
+        public CellViewModel B8;
+        public CellViewModel C8;
+        public CellViewModel D8;
+        public CellViewModel E8;
+        public CellViewModel F8;
+        public CellViewModel G8;
+        public CellViewModel H8;
+        public CellViewModel A7;
+        public CellViewModel B7;
+        public CellViewModel C7;
+        public CellViewModel D7;
+        public CellViewModel E7;
+        public CellViewModel F7;
+        public CellViewModel G7;
+        public CellViewModel H7;
+        public CellViewModel A6;
+        public CellViewModel B6;
+        public CellViewModel C6;
         public CellViewModel D6 { get; set; }
         public CellViewModel E6 { get; set; }
         public CellViewModel F6 { get; set; }
