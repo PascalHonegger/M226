@@ -7,23 +7,29 @@ namespace Chess.ChessPieces
     {
         private readonly bool _colorIsWhite;
 
-        public bool IsWhite()
+        public virtual bool IsWhite()
         {
             return _colorIsWhite;
         }
-        public bool IsBlack()
+        public virtual bool IsBlack()
         {
             return !_colorIsWhite;
         }
 
         public BitmapSource Texture { get; set; }
 
-        public List<Path.Path> PathList { get; }
+        public virtual List<Path.Path> PathList { get; }
 
         protected ChessPieceBase(bool isWhite)
         {
             _colorIsWhite = isWhite;
             PathList = new List<Path.Path>();
+        }
+
+        // Used for Mock-Testing
+        protected ChessPieceBase()
+        {
+            
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Windows.Media.Imaging;
 
 namespace Chess.ChessPieces
 {
-    interface IChessPiece
+    public interface IChessPiece
     {
         bool IsBlack();
         bool IsWhite();
