@@ -93,6 +93,7 @@ namespace Chess.Cells
 
             endModel.MoveToGraveyard();
             endModel.CurrentChessPiece = startModel.CurrentChessPiece;
+            endModel.CurrentChessPiece.DidMove = true;
             startModel.CurrentChessPiece = null;
             return true;
         }

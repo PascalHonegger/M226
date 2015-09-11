@@ -155,6 +155,40 @@ namespace ChessTest
         }
 
         [Test]
+        public void Pawn()
+        {
+            // Arrange
+            _board = new Board
+            {
+                C5 = { CurrentChessPiece = new Rook(false) },
+                D5 = { CurrentChessPiece = new Rook(false) },
+                A3 = { CurrentChessPiece = new Rook(true) },
+                G6 = { CurrentChessPiece = new Rook(true) },
+            };
+
+            var c5 = _board.C5.CurrentChessPiece;
+            var d5 = _board.D5.CurrentChessPiece;
+            var a3 = _board.A3.CurrentChessPiece;
+            var g6 = _board.G6.CurrentChessPiece;
+
+            //Act
+            TestMoveEat(_board.C5, _board.A5);
+            TestMoveEat(_board.D5, _board.E5);
+            TestMoveEat(_board.A3, _board.A4);
+            TestMoveEat(_board.G6, _board.G3);
+
+            //Assert
+            Assert.IsNull(_board.C5.CurrentChessPiece, "LEFT LEFT Didn't remove ChessPiece");
+            Assert.IsNull(_board.D5.CurrentChessPiece, "RIGHT Didn't remove ChessPiece");
+            Assert.IsNull(_board.A3.CurrentChessPiece, "TOP Didn't remove ChessPiece");
+            Assert.IsNull(_board.G6.CurrentChessPiece, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
+            Assert.AreEqual(_board.A5.CurrentChessPiece, c5, "LEFT LEFT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.E5.CurrentChessPiece, d5, "RIGHT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.A4.CurrentChessPiece, a3, "TOP Didn't remove ChessPiece");
+            Assert.AreEqual(_board.G3.CurrentChessPiece, g6, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
+        }
+
+        [Test]
         public void Rook()
         {
             // Arrange
@@ -204,7 +238,7 @@ namespace ChessTest
                 new PathFactory().AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.TopLeft).Create();
 
             // Assert
-            Assert.AreEqual(correctPathList, createdPathList);
+            Assert.AreEqual(correctPathList, createdPathList, "The Path created via the PathCreator doesn't match the hand-made Path.");
         }
 
         public static void TestMoveEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)

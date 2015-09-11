@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Chess.Cells;
+using Chess.Path;
 
 namespace Chess.ChessPieces
 {
@@ -14,6 +18,38 @@ namespace Chess.ChessPieces
         public virtual bool IsBlack()
         {
             return !_colorIsWhite;
+        }
+
+        public bool DidMove
+        {
+            get { return DidMove; }
+            set
+            {
+                if (value == DidMove) return;
+                if (this is Pawn && !DidMove)
+                {
+                    Path.Path path;
+                    if (IsWhite())
+                    {
+                        path =
+                            new PathFactory().AddToPath(Movement.Direction.Top)
+                                .AddToPath(Movement.Direction.Top)
+                                .SetIsRecursive(false)
+                                .Create();
+                    }
+                    else
+                    {
+                        path =
+                           new PathFactory().AddToPath(Movement.Direction.Bottom)
+                               .AddToPath(Movement.Direction.Bottom)
+                               .SetIsRecursive(false)
+                               .Create();
+                    }
+                    
+                    PathList.Remove(path);
+                }
+                DidMove = value;
+            }
         }
 
         public BitmapSource Texture { get; set; }
