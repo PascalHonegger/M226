@@ -54,7 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TestCellViewModelMovement.cs" />
+    <Compile Include="PathTest.cs" />
     <Compile Include="CellViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

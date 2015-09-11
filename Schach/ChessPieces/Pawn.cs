@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.RightsManagement;
 using Chess.Cells;
 using Chess.Path;
 

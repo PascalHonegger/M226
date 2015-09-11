@@ -2,7 +2,7 @@
 
 namespace Chess.Path
 {
-    class PathFactory
+    public class PathFactory
     {
         private readonly Path _movementList;
 

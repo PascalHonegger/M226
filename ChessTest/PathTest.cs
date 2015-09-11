@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
 using NUnit.Framework;
+using Chess.Path;
 
 namespace ChessTest
 {
     [TestFixture]
-    public class TestCellViewModelMovement
+    public class PathTest
     {
         private Board _board;
 
@@ -186,6 +186,25 @@ namespace ChessTest
             Assert.AreEqual(_board.E5.CurrentChessPiece, d5, "RIGHT Didn't remove ChessPiece");
             Assert.AreEqual(_board.A4.CurrentChessPiece, a3, "TOP Didn't remove ChessPiece");
             Assert.AreEqual(_board.G3.CurrentChessPiece, g6, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
+        }
+
+        [Test]
+        public void PathFactory()
+        {
+            // Arrange
+            var correctPathList = new List<Movement.Direction>
+            {
+                Movement.Direction.Top,
+                Movement.Direction.TopLeft,
+                Movement.Direction.Final
+            };
+
+            // Act
+            var createdPathList =
+                new PathFactory().AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.TopLeft).Create();
+
+            // Assert
+            Assert.AreEqual(correctPathList, createdPathList);
         }
 
         public static void TestMoveEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
