@@ -169,25 +169,25 @@ namespace Chess
             H1.CreateLink(H2, null, null, null, null, null, G2, G3);
         }
 
-        public CellViewModel A8;
-        public CellViewModel B8;
-        public CellViewModel C8;
-        public CellViewModel D8;
-        public CellViewModel E8;
-        public CellViewModel F8;
-        public CellViewModel G8;
-        public CellViewModel H8;
-        public CellViewModel A7;
-        public CellViewModel B7;
-        public CellViewModel C7;
-        public CellViewModel D7;
-        public CellViewModel E7;
-        public CellViewModel F7;
-        public CellViewModel G7;
-        public CellViewModel H7;
-        public CellViewModel A6;
-        public CellViewModel B6;
-        public CellViewModel C6;
+        public CellViewModel A8 { get; set; }
+        public CellViewModel B8 { get; set; }
+        public CellViewModel C8 { get; set; }
+        public CellViewModel D8 { get; set; }
+        public CellViewModel E8 { get; set; }
+        public CellViewModel F8 { get; set; }
+        public CellViewModel G8 { get; set; }
+        public CellViewModel H8 { get; set; }
+        public CellViewModel A7 { get; set; }
+        public CellViewModel B7 { get; set; }
+        public CellViewModel C7 { get; set; }
+        public CellViewModel D7 { get; set; }
+        public CellViewModel E7 { get; set; }
+        public CellViewModel F7 { get; set; }
+        public CellViewModel G7 { get; set; }
+        public CellViewModel H7 { get; set; }
+        public CellViewModel A6 { get; set; }
+        public CellViewModel B6 { get; set; }
+        public CellViewModel C6 { get; set; }
         public CellViewModel D6 { get; set; }
         public CellViewModel E6 { get; set; }
         public CellViewModel F6 { get; set; }
