@@ -21,7 +21,14 @@ namespace Chess.Cells
         private static readonly SolidColorBrush Red = Brushes.Red;
         private static readonly SolidColorBrush Orange = Brushes.Orange;
 
-        public CellViewModel(ref ChessPieceBase currentChessChessPiece, ref CellViewModel top, ref CellViewModel topright, ref CellViewModel right, ref CellViewModel bottomright, ref CellViewModel bottom, ref CellViewModel bottomleft, ref CellViewModel left, ref CellViewModel topleft, Action<CellViewModel> addToGraveyardAction)
+        public CellViewModel(ChessPieceBase currentChessChessPiece, Action<CellViewModel> addToGraveyardAction)
+        {
+            _addToGraveyardAction = addToGraveyardAction;
+            CurrentChessPiece = currentChessChessPiece;
+        }
+
+        public void CreateLink(CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
+            CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
         {
             _movements.Add(Movement.Direction.Top, top);
             _movements.Add(Movement.Direction.TopRight, topright);
@@ -31,8 +38,6 @@ namespace Chess.Cells
             _movements.Add(Movement.Direction.BottomLeft, bottomleft);
             _movements.Add(Movement.Direction.Left, left);
             _movements.Add(Movement.Direction.TopLeft, topleft);
-            _addToGraveyardAction = addToGraveyardAction;
-            CurrentChessPiece = currentChessChessPiece;
         }
 
         public CellViewModel(ChessPieceBase chessPiece)
