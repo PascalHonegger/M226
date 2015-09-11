@@ -4,7 +4,7 @@ using Chess.Path;
 
 namespace Chess.ChessPieces
 {
-    public class Pawn : ChessPieceBase
+    public sealed class Pawn : ChessPieceBase
     {
         public readonly List<Path.Path> EatList;
 

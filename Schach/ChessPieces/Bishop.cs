@@ -3,7 +3,7 @@ using Chess.Path;
 
 namespace Chess.ChessPieces
 {
-    public class Bishop : ChessPieceBase
+    public sealed class Bishop : ChessPieceBase
     {
         public Bishop(bool isWhite) : base(isWhite)
         {

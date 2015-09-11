@@ -3,7 +3,7 @@ using Chess.Cells;
 
 namespace Chess.ChessPieces
 {
-    public class Rook : ChessPieceBase
+    public sealed class Rook : ChessPieceBase
     {
         public Rook(bool isWhite) : base(isWhite)
         {
