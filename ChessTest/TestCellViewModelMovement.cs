@@ -87,20 +87,19 @@ namespace ChessTest
             {
                 A3 = {CurrentChessPiece = new Queen(false)},
                 A4 = {CurrentChessPiece = new Queen(false)},
-                A5 = {CurrentChessPiece = new Queen(true)},
-                B6 = {CurrentChessPiece = new Queen(true)},
-                G6 = { CurrentChessPiece = new Queen(true) },
-                H4 = { CurrentChessPiece = new Queen(true) },
-                H5 = { CurrentChessPiece = new Queen(true) },
-                H6 = { CurrentChessPiece = new Queen(true) },
-
+                A5 = {CurrentChessPiece = new Queen(false)},
+                B6 = {CurrentChessPiece = new Queen(false)},
+                G3 = {CurrentChessPiece = new Queen(true)},
+                H4 = {CurrentChessPiece = new Queen(true)},
+                H5 = {CurrentChessPiece = new Queen(true)},
+                H6 = {CurrentChessPiece = new Queen(true)},
             };
 
             var a3 = _board.A3.CurrentChessPiece;
             var a4 = _board.A4.CurrentChessPiece;
             var a5 = _board.A5.CurrentChessPiece;
             var b6 = _board.B6.CurrentChessPiece;
-            var g3 = _board.G6.CurrentChessPiece;
+            var g3 = _board.G3.CurrentChessPiece;
             var h4 = _board.H4.CurrentChessPiece;
             var h5 = _board.H5.CurrentChessPiece;
             var h6 = _board.H6.CurrentChessPiece;
@@ -110,28 +109,28 @@ namespace ChessTest
             TestMoveEat(_board.A5, _board.C3);
             TestMoveEat(_board.A4, _board.C4);
             TestMoveEat(_board.B6, _board.B3);
-            TestMoveEat(_board.H4, _board.E6);
-            TestMoveEat(_board.H6, _board.E4);
-            TestMoveEat(_board.H5, _board.F6);
+            TestMoveEat(_board.H4, _board.F6);
+            TestMoveEat(_board.H6, _board.F4);
+            TestMoveEat(_board.H5, _board.F5);
             TestMoveEat(_board.G3, _board.G6);
 
             // Assert
             Assert.IsNull(_board.A3.CurrentChessPiece, "TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
-            Assert.IsNull(_board.A4.CurrentChessPiece, "RIGHT RIGHT Didn't remove ChessPiece");
             Assert.IsNull(_board.A5.CurrentChessPiece, "BOTTOMRIGHT BOTTOMRIGHT Didn't remove ChessPiece");
+            Assert.IsNull(_board.A4.CurrentChessPiece, "RIGHT RIGHT Didn't remove ChessPiece");
             Assert.IsNull(_board.B6.CurrentChessPiece, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
-            Assert.IsNull(_board.G3.CurrentChessPiece, "TOP TOP TOP  Didn't remove ChessPiece");
             Assert.IsNull(_board.H4.CurrentChessPiece, "TOPLEFT TOPLEFT  Didn't remove ChessPiece");
-            Assert.IsNull(_board.H5.CurrentChessPiece, "LEFT LEFT  Didn't remove ChessPiece");
-            Assert.IsNull(_board.H6.CurrentChessPiece, "BOTTOMLEFT BOTTOMLEFT Didn't remove ChessPiece");
-            Assert.AreEqual(_board.C5.CurrentChessPiece, a3);
-            Assert.AreEqual(_board.C3.CurrentChessPiece, a5);
-            Assert.AreEqual(_board.C4.CurrentChessPiece, a4);
-            Assert.AreEqual(_board.B3.CurrentChessPiece, b6);
-            Assert.AreEqual(_board.E6.CurrentChessPiece, h4);
-            Assert.AreEqual(_board.E3.CurrentChessPiece, h5);
-            Assert.AreEqual(_board.F6.CurrentChessPiece, h6);
-            Assert.AreEqual(_board.H6.CurrentChessPiece, g3);
+            Assert.IsNull(_board.H6.CurrentChessPiece, "BOTTOMLEFT BOTTOMLEFT  Didn't remove ChessPiece");
+            Assert.IsNull(_board.H5.CurrentChessPiece, "LEFT LEFT Didn't remove ChessPiece");
+            Assert.IsNull(_board.G3.CurrentChessPiece, "TOP TOP TOP  Didn't remove ChessPiece");
+            Assert.AreEqual(_board.C5.CurrentChessPiece, a3, "TOPRIGHT TOPRIGHT Didn't add ChessPiece");
+            Assert.AreEqual(_board.C3.CurrentChessPiece, a5, "BOTTOMRIGHT BOTTOMRIGHT Didn't add ChessPiece");
+            Assert.AreEqual(_board.C4.CurrentChessPiece, a4, "RIGHT RIGHT Didn't add ChessPiece");
+            Assert.AreEqual(_board.B3.CurrentChessPiece, b6, "BOTTOM BOTTOM BOTTOM Didn't add ChessPiece");
+            Assert.AreEqual(_board.F6.CurrentChessPiece, h4, "TOPLEFT TOPLEFT  Didn't add ChessPiece");
+            Assert.AreEqual(_board.F4.CurrentChessPiece, h6, "BOTTOMLEFT BOTTOMLEFT  Didn't add ChessPiece");
+            Assert.AreEqual(_board.F5.CurrentChessPiece, h5, "LEFT LEFT  Didn't add ChessPiece");
+            Assert.AreEqual(_board.G6.CurrentChessPiece, g3, "TOP TOP TOP Didn't add ChessPiece");
         }
 
         [Test]
