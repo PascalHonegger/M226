@@ -152,8 +152,8 @@ namespace ChessTest
 
             //Act
             TestMoveEat(_board.C5, _board.A5);
-            TestMoveEat(_board.D5, _board.G5);
-            TestMoveEat(_board.A3, _board.A6);
+            TestMoveEat(_board.D5, _board.E5);
+            TestMoveEat(_board.A3, _board.A4);
             TestMoveEat(_board.G6, _board.G3);
 
             //Assert
@@ -162,8 +162,8 @@ namespace ChessTest
             Assert.IsNull(_board.A3.CurrentChessPiece);
             Assert.IsNull(_board.G6.CurrentChessPiece);
             Assert.AreEqual(_board.A5.CurrentChessPiece, c5);
-            Assert.AreEqual(_board.G5.CurrentChessPiece, d5);
-            Assert.AreEqual(_board.A6.CurrentChessPiece, a3);
+            Assert.AreEqual(_board.E5.CurrentChessPiece, d5);
+            Assert.AreEqual(_board.A4.CurrentChessPiece, a3);
             Assert.AreEqual(_board.G3.CurrentChessPiece, g6);
         }
 
