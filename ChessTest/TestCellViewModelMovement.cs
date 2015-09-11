@@ -35,14 +35,14 @@ namespace ChessTest
             TestMoveEat(_board.A6, _board.C4);
 
             // Assert
-            Assert.IsNull(_board.A3.CurrentChessPiece);
-            Assert.IsNull(_board.D4.CurrentChessPiece);
-            Assert.IsNull(_board.G6.CurrentChessPiece);
-            Assert.IsNull(_board.A6.CurrentChessPiece);
-            Assert.AreEqual(_board.D6.CurrentChessPiece, a3);
-            Assert.AreEqual(_board.B6.CurrentChessPiece, d4);
-            Assert.AreEqual(_board.E4.CurrentChessPiece, g6);
-            Assert.AreEqual(_board.C4.CurrentChessPiece, a6);
+            Assert.IsNull(_board.A3.CurrentChessPiece, "TOPRIGHT TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
+            Assert.IsNull(_board.D4.CurrentChessPiece, "TOPLEFT TOPLEFT Didn't remove ChessPiece");
+            Assert.IsNull(_board.G6.CurrentChessPiece, "BOTTOMLEFT BOTTOMLEFT Didn't remove ChessPiece");
+            Assert.IsNull(_board.A6.CurrentChessPiece, "BOTTOMRIGHT BOTTOMRIGHT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.D6.CurrentChessPiece, a3, "TOPRIGHT TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.B6.CurrentChessPiece, d4, "TOPLEFT TOPLEFT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.E4.CurrentChessPiece, g6, "BOTTOMLEFT BOTTOMLEFT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.C4.CurrentChessPiece, a6, "BOTTOMRIGHT BOTTOMRIGHT Didn't remove ChessPiece");
         }
 
         [Test]
@@ -178,14 +178,14 @@ namespace ChessTest
             TestMoveEat(_board.G6, _board.G3);
 
             //Assert
-            Assert.IsNull(_board.C5.CurrentChessPiece);
-            Assert.IsNull(_board.D5.CurrentChessPiece);
-            Assert.IsNull(_board.A3.CurrentChessPiece);
-            Assert.IsNull(_board.G6.CurrentChessPiece);
-            Assert.AreEqual(_board.A5.CurrentChessPiece, c5);
-            Assert.AreEqual(_board.E5.CurrentChessPiece, d5);
-            Assert.AreEqual(_board.A4.CurrentChessPiece, a3);
-            Assert.AreEqual(_board.G3.CurrentChessPiece, g6);
+            Assert.IsNull(_board.C5.CurrentChessPiece, "LEFT LEFT Didn't remove ChessPiece");
+            Assert.IsNull(_board.D5.CurrentChessPiece, "RIGHT Didn't remove ChessPiece");
+            Assert.IsNull(_board.A3.CurrentChessPiece, "TOP Didn't remove ChessPiece");
+            Assert.IsNull(_board.G6.CurrentChessPiece, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
+            Assert.AreEqual(_board.A5.CurrentChessPiece, c5, "LEFT LEFT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.E5.CurrentChessPiece, d5, "RIGHT Didn't remove ChessPiece");
+            Assert.AreEqual(_board.A4.CurrentChessPiece, a3, "TOP Didn't remove ChessPiece");
+            Assert.AreEqual(_board.G3.CurrentChessPiece, g6, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
         }
 
         public static void TestMoveEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
