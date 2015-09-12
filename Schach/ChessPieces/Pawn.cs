@@ -20,6 +20,11 @@ namespace Chess.ChessPieces
             {
                 PathList.Add(
                     new PathFactory().AddToPath
+                    (Movement.Direction.Bottom).AddToPath
+                    (Movement.Direction.Bottom).SetIsRecursive(false).Create());
+
+                PathList.Add(
+                    new PathFactory().AddToPath
                     (Movement.Direction.Bottom).SetIsRecursive(false).Create());
 
                 EatList.Add(
@@ -32,6 +37,11 @@ namespace Chess.ChessPieces
             }
             else
             {
+                PathList.Add(
+                    new PathFactory().AddToPath
+                    (Movement.Direction.Top).AddToPath
+                    (Movement.Direction.Top).SetIsRecursive(false).Create());
+
                 PathList.Add(
                     new PathFactory().AddToPath
                     (Movement.Direction.Top).SetIsRecursive(false).Create());

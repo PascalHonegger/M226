@@ -20,35 +20,19 @@ namespace Chess.ChessPieces
             return !_colorIsWhite;
         }
 
+        private bool _didMove;
+
         public bool DidMove
         {
-            get { return DidMove; }
+            get { return _didMove; }
             set
             {
                 if (value == DidMove) return;
-                if (this is Pawn && !DidMove)
+                if (this is Pawn)
                 {
-                    Path.Path path;
-                    if (IsWhite())
-                    {
-                        path =
-                            new PathFactory().AddToPath(Movement.Direction.Top)
-                                .AddToPath(Movement.Direction.Top)
-                                .SetIsRecursive(false)
-                                .Create();
-                    }
-                    else
-                    {
-                        path =
-                           new PathFactory().AddToPath(Movement.Direction.Bottom)
-                               .AddToPath(Movement.Direction.Bottom)
-                               .SetIsRecursive(false)
-                               .Create();
-                    }
-                    
-                    PathList.Remove(path);
+                    PathList.RemoveAt(0);
                 }
-                DidMove = value;
+                _didMove = value;
             }
         }
 
