@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Chess.Cells;
-using Chess.Path;
 
 namespace Chess.ChessPieces
 {

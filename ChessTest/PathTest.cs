@@ -29,10 +29,10 @@ namespace ChessTest
             var a6 = _board.A6.CurrentChessPiece;
             
             // Act
-            TestMoveEat(_board.A3, _board.D6);
-            TestMoveEat(_board.D4, _board.B6);
-            TestMoveEat(_board.G6, _board.E4);
-            TestMoveEat(_board.A6, _board.C4);
+            CellViewModel.MoveModel(_board.A3, _board.D6);
+            CellViewModel.MoveModel(_board.D4, _board.B6);
+            CellViewModel.MoveModel(_board.G6, _board.E4);
+            CellViewModel.MoveModel(_board.A6, _board.C4);
 
             // Assert
             Assert.IsNull(_board.A3.CurrentChessPiece, "TOPRIGHT TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
@@ -72,14 +72,14 @@ namespace ChessTest
 
 
             // Act
-            TestMoveEat(_board.A6, _board.B4);
-            TestMoveEat(_board.H6, _board.G4);
-            TestMoveEat(_board.A3, _board.B5);
-            TestMoveEat(_board.H3, _board.G5);
-            TestMoveEat(_board.E3, _board.C4);
-            TestMoveEat(_board.E6, _board.C5);
-            TestMoveEat(_board.D3, _board.F4);
-            TestMoveEat(_board.D6, _board.F5);
+            CellViewModel.MoveModel(_board.A6, _board.B4);
+            CellViewModel.MoveModel(_board.H6, _board.G4);
+            CellViewModel.MoveModel(_board.A3, _board.B5);
+            CellViewModel.MoveModel(_board.H3, _board.G5);
+            CellViewModel.MoveModel(_board.E3, _board.C4);
+            CellViewModel.MoveModel(_board.E6, _board.C5);
+            CellViewModel.MoveModel(_board.D3, _board.F4);
+            CellViewModel.MoveModel(_board.D6, _board.F5);
 
             // Assert
             Assert.IsNull(_board.A6.CurrentChessPiece, "BOTTOM BOTTOMRIGHT Didn't remove ChessPiece");
@@ -126,14 +126,14 @@ namespace ChessTest
             var h6 = _board.H6.CurrentChessPiece;
 
             // Act
-            TestMoveEat(_board.A3, _board.C5);
-            TestMoveEat(_board.A5, _board.C3);
-            TestMoveEat(_board.A4, _board.C4);
-            TestMoveEat(_board.B6, _board.B3);
-            TestMoveEat(_board.H4, _board.F6);
-            TestMoveEat(_board.H6, _board.F4);
-            TestMoveEat(_board.H5, _board.F5);
-            TestMoveEat(_board.G3, _board.G6);
+            CellViewModel.MoveModel(_board.A3, _board.C5);
+            CellViewModel.MoveModel(_board.A5, _board.C3);
+            CellViewModel.MoveModel(_board.A4, _board.C4);
+            CellViewModel.MoveModel(_board.B6, _board.B3);
+            CellViewModel.MoveModel(_board.H4, _board.F6);
+            CellViewModel.MoveModel(_board.H6, _board.F4);
+            CellViewModel.MoveModel(_board.H5, _board.F5);
+            CellViewModel.MoveModel(_board.G3, _board.G6);
 
             // Assert
             Assert.IsNull(_board.A3.CurrentChessPiece, "TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
@@ -174,11 +174,11 @@ namespace ChessTest
             var e6 = _board.E6.CurrentChessPiece;
 
             //Act
-            TestMoveEat(_board.A6, _board.A5);
-            TestMoveEat(_board.A5, _board.A3);
-            TestMoveEat(_board.B6, _board.B4);
-            TestMoveEat(_board.D6, _board.C5);
-            TestMoveEat(_board.E6, _board.F5);
+            CellViewModel.MoveModel(_board.A6, _board.A5);
+            CellViewModel.MoveModel(_board.A5, _board.A3);
+            CellViewModel.MoveModel(_board.B6, _board.B4);
+            CellViewModel.MoveModel(_board.D6, _board.C5);
+            CellViewModel.MoveModel(_board.E6, _board.F5);
 
             //Assert
             Assert.IsNull(_board.A3.CurrentChessPiece, "BOTTOM BOTTOM did move the ChessPiece, but shouldn't have because DidMove was true");
@@ -212,11 +212,11 @@ namespace ChessTest
             var g4 = _board.G4.CurrentChessPiece;
 
             //Act
-            TestMoveEat(_board.A3, _board.A4);
-            TestMoveEat(_board.A4, _board.A6);
-            TestMoveEat(_board.B3, _board.B5);
-            TestMoveEat(_board.E5, _board.D6);
-            TestMoveEat(_board.G4, _board.H5);
+            CellViewModel.MoveModel(_board.A3, _board.A4);
+            CellViewModel.MoveModel(_board.A4, _board.A6);
+            CellViewModel.MoveModel(_board.B3, _board.B5);
+            CellViewModel.MoveModel(_board.E5, _board.D6);
+            CellViewModel.MoveModel(_board.G4, _board.H5);
 
             //Assert
             Assert.IsNull(_board.A6.CurrentChessPiece, "TOP TOP did move the ChessPiece, but shouldn't have because DidMove was true");
@@ -248,10 +248,10 @@ namespace ChessTest
             var g6 = _board.G6.CurrentChessPiece;
 
             //Act
-            TestMoveEat(_board.C5, _board.A5);
-            TestMoveEat(_board.D5, _board.E5);
-            TestMoveEat(_board.A3, _board.A4);
-            TestMoveEat(_board.G6, _board.G3);
+            CellViewModel.MoveModel(_board.C5, _board.A5);
+            CellViewModel.MoveModel(_board.D5, _board.E5);
+            CellViewModel.MoveModel(_board.A3, _board.A4);
+            CellViewModel.MoveModel(_board.G6, _board.G3);
 
             //Assert
             Assert.IsNull(_board.C5.CurrentChessPiece, "LEFT LEFT Didn't remove ChessPiece");
@@ -281,11 +281,6 @@ namespace ChessTest
 
             // Assert
             Assert.AreEqual(correctPathList, createdPathList, "The Path created via the PathCreator doesn't match the hand-made Path");
-        }
-
-        public static void TestMoveEat(CellViewModel cellToEat, CellViewModel cellToBeEaten)
-        {
-            CellViewModel.MoveModel(cellToEat, cellToBeEaten);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
@@ -46,7 +45,7 @@ namespace ChessTest
             var d4 = _board.D4.CurrentChessPiece;
 
             // Act
-            PathTest.TestMoveEat(_board.D4, _board.D3);
+            CellViewModel.MoveModel(_board.D4, _board.D3);
 
             // Assert
             Assert.IsNull(_board.D4.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D4, which should have moved away");
@@ -93,9 +92,9 @@ namespace ChessTest
             var b3 = _board.B3.CurrentChessPiece;
 
             // Act
-            PathTest.TestMoveEat(_board.D5, _board.D3);
-            PathTest.TestMoveEat(_board.D5, _board.D3);
-            PathTest.TestMoveEat(_board.D5, _board.B5);
+            CellViewModel.MoveModel(_board.D5, _board.D3);
+            CellViewModel.MoveModel(_board.D5, _board.D3);
+            CellViewModel.MoveModel(_board.D5, _board.B5);
 
             // Assert
             Assert.IsNull(_board.D5.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D5, which should have moved away");
@@ -139,7 +138,7 @@ namespace ChessTest
             var d4 = _board.D4.CurrentChessPiece;
 
             // Act
-            PathTest.TestMoveEat(_board.D4, _board.H5);
+            CellViewModel.MoveModel(_board.D4, _board.H5);
 
             // Assert
             Assert.IsNull(_board.D4.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D4, which should have moved away");
@@ -173,9 +172,9 @@ namespace ChessTest
             var d4 = _board.D4.CurrentChessPiece;
 
             // Act
-            PathTest.TestMoveEat(_board.D5, _board.D3);
-            PathTest.TestMoveEat(_board.D5, _board.B3);
-            PathTest.TestMoveEat(_board.D5, _board.B5);
+            CellViewModel.MoveModel(_board.D5, _board.D3);
+            CellViewModel.MoveModel(_board.D5, _board.B3);
+            CellViewModel.MoveModel(_board.D5, _board.B5);
 
             // Assert
             Assert.IsNull(_board.D5.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D5, which should have moved away");
