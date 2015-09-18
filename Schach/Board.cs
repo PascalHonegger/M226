@@ -238,7 +238,6 @@ namespace Chess
 
         public void AddToGraveYard(CellViewModel cellViewModel)
         {
-            if (cellViewModel.CurrentChessPiece == null) return;
             GraveYard.Add(cellViewModel.CurrentChessPiece);
         }
     }

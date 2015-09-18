@@ -86,6 +86,8 @@ namespace Chess.Cells
         } 
         #endregion
 
+
+
         #region Movement
         public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
         {
@@ -195,6 +197,7 @@ namespace Chess.Cells
 
         public void MoveToGraveyard()
         {
+            if (CurrentChessPiece == null) return;
             _addToGraveyardAction.Invoke(this);
             CurrentChessPiece = null;
         }
