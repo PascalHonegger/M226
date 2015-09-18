@@ -5,7 +5,7 @@ namespace Chess.Cells
     /// <summary>
     /// Interaction logic for CellControl.xaml
     /// </summary>
-    public partial class CellControl : UserControl
+    public partial class CellControl
     {
         private CellViewModel MyDataCellViewModel => DataContext as CellViewModel;
 

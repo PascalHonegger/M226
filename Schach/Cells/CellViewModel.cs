@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -41,11 +42,6 @@ namespace Chess.Cells
             _movements.Add(Movement.Direction.Final, null);
         }
 
-        public CellViewModel(ChessPieceBase chessPiece)
-        {
-            CurrentChessPiece = chessPiece;
-        }
-
         #region Coloring
         public void ColorizeMove(Path.Path path)
         {
@@ -54,36 +50,6 @@ namespace Chess.Cells
             if (path.GetStep() != Movement.Direction.Final) _movements[path.GetNextStep()]?.ColorizeMove(path);
         }
 
-        public void ColorizeEat(Path.Path path, bool isWhite)
-        {
-            if (CurrentChessPiece == null && path.GetStep() != Movement.Direction.Final)
-            {
-                _movements[path.GetNextStep()]?.ColorizeMove(path);
-            }
-            else if (CurrentChessPiece != null && (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite))
-            {
-                Bgc = Orange;
-            }
-        }
-
-        public void ColorizeJump(Path.Path path, bool isWhite)
-        {
-            if (path.GetStep() == Movement.Direction.Final)
-            {
-                if (CurrentChessPiece == null)
-                {
-                    Bgc = Green;
-                }
-                else if (CurrentChessPiece.IsBlack() == isWhite || CurrentChessPiece.IsWhite() != isWhite)
-                {
-                    Bgc = Orange;
-                }
-            }
-            else
-            {
-                _movements[path.GetNextStep()]?.ColorizeJump(path, isWhite);
-            }
-        } 
         #endregion
 
 
@@ -91,6 +57,10 @@ namespace Chess.Cells
         #region Movement
         public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
         {
+            if (startModel.CurrentChessPiece == null) return false;
+            if (endModel.CurrentChessPiece != null &&
+                ((startModel.CurrentChessPiece.IsWhite() && endModel.CurrentChessPiece.IsWhite()) ||
+                 (startModel.CurrentChessPiece.IsBlack() && endModel.CurrentChessPiece.IsBlack()))) return false;
             if (!startModel.FindPathTo(endModel)) return false;
 
             endModel.MoveToGraveyard();
@@ -102,7 +72,6 @@ namespace Chess.Cells
 
         private bool FindPathTo(CellViewModel endModel)
         {
-            if (CurrentChessPiece == null) return false;
             var pawn = CurrentChessPiece as Pawn;
             if (pawn != null)
             {
@@ -151,6 +120,7 @@ namespace Chess.Cells
             if (CurrentChessPiece != null) return false;
             return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveEatTo(path, endModel);
         }
+
         private bool JumpEatTo(Path.Path path, CellViewModel endModel)
         {
             if (this == endModel) return true;
