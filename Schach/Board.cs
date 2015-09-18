@@ -231,8 +231,9 @@ namespace Chess
         public CellViewModel G1 { get; set; }
         public CellViewModel H1 { get; set; }
 
-        public void AddToGraveYard(CellViewModel cellViewModel)
+        private void AddToGraveYard(CellViewModel cellViewModel)
         {
+            if (cellViewModel.CurrentChessPiece == null) return;
             GraveYard.Add(cellViewModel.CurrentChessPiece);
         }
     }
