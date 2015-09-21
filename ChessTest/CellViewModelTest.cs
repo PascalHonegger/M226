@@ -12,34 +12,53 @@ namespace ChessTest
     public class CellViewModelTest
     {
         private Board _board;
+        private readonly Mock<ChessPieceBase> _whiteChessPieceMock;
+        private readonly Mock<ChessPieceBase> _blackChessPieceMock;
+
+        public CellViewModelTest()
+        {
+            _blackChessPieceMock = new Mock<ChessPieceBase>();
+            _blackChessPieceMock
+                .Setup(mock => mock.IsWhite())
+                .Returns(false);
+            _blackChessPieceMock
+                .Setup(mock => mock.IsBlack())
+                .Returns(true);
+
+            _whiteChessPieceMock = new Mock<ChessPieceBase>();
+            _whiteChessPieceMock
+                .Setup(mock => mock.IsWhite())
+                .Returns(true);
+            _whiteChessPieceMock
+                .Setup(mock => mock.IsBlack())
+                .Returns(false);
+        }
 
         [Test]
         public void EatPossible()
         {
+            // Arrange
             var pathList = new List<Path>
             {
                 new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
                 new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create()
             };
 
-            var chessPieceMock = new Mock<ChessPieceBase>();
-            chessPieceMock
+            var unitUnderTest = new Mock<ChessPieceBase>();
+            unitUnderTest
                 .Setup(mock => mock.IsWhite())
                 .Returns(true);
-            chessPieceMock
+            unitUnderTest
+                .Setup(mock => mock.IsBlack())
+                .Returns(false);
+            unitUnderTest
                 .Setup(mock => mock.PathList)
                 .Returns(pathList);
 
-            var chessPieceMock2 = new Mock<ChessPieceBase>();
-            chessPieceMock2
-                .Setup(value => value.IsWhite())
-                .Returns(false);
-
-            // Arrange
             _board = new Board
             {
-                D4 = { CurrentChessPiece = chessPieceMock.Object },
-                D3 = { CurrentChessPiece = chessPieceMock2.Object }
+                D4 = { CurrentChessPiece = unitUnderTest.Object },
+                D3 = { CurrentChessPiece = _blackChessPieceMock.Object }
             };
             var d3 = _board.D3.CurrentChessPiece;
             var d4 = _board.D4.CurrentChessPiece;
@@ -56,6 +75,7 @@ namespace ChessTest
         [Test]
         public void EatImpossible()
         {
+            // Arrange
             var pathList = new List<Path>
             {
                 new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
@@ -71,19 +91,13 @@ namespace ChessTest
                 .Setup(mock => mock.PathList)
                 .Returns(pathList);
 
-            var chessPieceMock2 = new Mock<ChessPieceBase>();
-            chessPieceMock2
-                .Setup(value => value.IsWhite())
-                .Returns(false);
-
-            // Arrange
             _board = new Board
             {
                 D5 = {CurrentChessPiece = chessPieceMock.Object},
-                D4 = {CurrentChessPiece = chessPieceMock2.Object},
-                D3 = {CurrentChessPiece = chessPieceMock2.Object},
-                B5 = {CurrentChessPiece = chessPieceMock2.Object},
-                B3 = {CurrentChessPiece = chessPieceMock2.Object}
+                D4 = {CurrentChessPiece = _blackChessPieceMock.Object},
+                D3 = {CurrentChessPiece = _blackChessPieceMock.Object},
+                B5 = {CurrentChessPiece = _blackChessPieceMock.Object},
+                B3 = {CurrentChessPiece = _blackChessPieceMock.Object}
             };
             var d5 = _board.D5.CurrentChessPiece;
             var d4 = _board.D4.CurrentChessPiece;
@@ -109,6 +123,7 @@ namespace ChessTest
         [Test]
         public void MovePossible()
         {
+            // Arrange
             var pathList = new List<Path>
             {
                 new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
@@ -122,18 +137,20 @@ namespace ChessTest
                     .Create()
             };
 
-            var chessPieceMock = new Mock<ChessPieceBase>();
-            chessPieceMock
+            var unitUnderTest = new Mock<ChessPieceBase>();
+            unitUnderTest
                 .Setup(mock => mock.IsWhite())
                 .Returns(true);
-            chessPieceMock
+            unitUnderTest
+                .Setup(mock => mock.IsBlack())
+                .Returns(false);
+            unitUnderTest
                 .Setup(mock => mock.PathList)
                 .Returns(pathList);
 
-            // Arrange
             _board = new Board
             {
-                D4 = { CurrentChessPiece = chessPieceMock.Object }
+                D4 = { CurrentChessPiece = unitUnderTest.Object }
             };
             var d4 = _board.D4.CurrentChessPiece;
 
@@ -154,19 +171,22 @@ namespace ChessTest
                 new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create()
             };
 
-            var chessPieceMock = new Mock<ChessPieceBase>();
-            chessPieceMock
+            var unitUnderTest = new Mock<ChessPieceBase>();
+            unitUnderTest
                 .Setup(mock => mock.IsWhite())
                 .Returns(true);
-            chessPieceMock
+            unitUnderTest
+                .Setup(mock => mock.IsBlack())
+                .Returns(false);
+            unitUnderTest
                 .Setup(mock => mock.PathList)
                 .Returns(pathList);
 
             // Arrange
             _board = new Board
             {
-                D5 = { CurrentChessPiece = chessPieceMock.Object },
-                D4 = { CurrentChessPiece = chessPieceMock.Object }
+                D5 = { CurrentChessPiece = unitUnderTest.Object },
+                D4 = { CurrentChessPiece = unitUnderTest.Object }
             };
             var d5 = _board.D5.CurrentChessPiece;
             var d4 = _board.D4.CurrentChessPiece;
