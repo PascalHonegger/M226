@@ -3,49 +3,44 @@ using System.Windows.Media.Imaging;
 
 namespace Chess.ChessPieces
 {
-    public abstract class ChessPieceBase : IChessPiece
-    {
-        private readonly bool _colorIsWhite;
+	public abstract class ChessPieceBase : IChessPiece
+	{
+		private readonly bool _colorIsWhite;
 
-        public virtual bool IsWhite()
-        {
-            return _colorIsWhite;
-        }
-        public virtual bool IsBlack()
-        {
-            return !_colorIsWhite;
-        }
+		private bool _didMove;
 
-        private bool _didMove;
+		protected ChessPieceBase(bool isWhite)
+		{
+			_colorIsWhite = isWhite;
+			PathList = new List<Path.Path>();
+		}
 
-        public bool DidMove
-        {
-            get { return _didMove; }
-            set
-            {
-                if (value == DidMove) return;
-                if (this is Pawn)
-                {
-                    PathList.RemoveAt(0);
-                }
-                _didMove = value;
-            }
-        }
+		public bool DidMove
+		{
+			get { return _didMove; }
+			set
+			{
+				if (value == DidMove) return;
+				if (this is Pawn && value)
+				{
+					PathList.RemoveAt(0);
+				}
+				_didMove = value;
+			}
+		}
 
-        public BitmapSource Texture { get; set; }
+		public virtual bool IsWhite()
+		{
+			return _colorIsWhite;
+		}
 
-        public virtual List<Path.Path> PathList { get; }
+		public virtual bool IsBlack()
+		{
+			return !_colorIsWhite;
+		}
 
-        protected ChessPieceBase(bool isWhite)
-        {
-            _colorIsWhite = isWhite;
-            PathList = new List<Path.Path>();
-        }
+		public BitmapSource Texture { get; set; }
 
-        // Used for Mock-Testing
-        protected ChessPieceBase()
-        {
-            
-        }
-    }
+		public virtual List<Path.Path> PathList { get; }
+	}
 }

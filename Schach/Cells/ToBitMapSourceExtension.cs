@@ -10,35 +10,35 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Chess.Cells
 {
-    public static class ToBitMapSourceExtension
-    {
-        public static BitmapSource ToBitmapSource(this Bitmap source)
-        {
-            using (var handle = new SafeHBitmapHandle(source))
-            {
-                return Imaging.CreateBitmapSourceFromHBitmap(handle.DangerousGetHandle(),
-                    IntPtr.Zero, Int32Rect.Empty,
-                    BitmapSizeOptions.FromEmptyOptions());
-            }
-        }
+	public static class ToBitMapSourceExtension
+	{
+		public static BitmapSource ToBitmapSource(this Bitmap source)
+		{
+			using (var handle = new SafeHBitmapHandle(source))
+			{
+				return Imaging.CreateBitmapSourceFromHBitmap(handle.DangerousGetHandle(),
+					IntPtr.Zero, Int32Rect.Empty,
+					BitmapSizeOptions.FromEmptyOptions());
+			}
+		}
 
-        [DllImport("gdi32")]
-        private static extern int DeleteObject(IntPtr o);
+		[DllImport("gdi32")]
+		private static extern int DeleteObject(IntPtr o);
 
-        private sealed class SafeHBitmapHandle : SafeHandleZeroOrMinusOneIsInvalid
-        {
-            [SecurityCritical]
-            public SafeHBitmapHandle(Bitmap bitmap)
-                : base(true)
-            {
-                SetHandle(bitmap.GetHbitmap());
-            }
+		private sealed class SafeHBitmapHandle : SafeHandleZeroOrMinusOneIsInvalid
+		{
+			[SecurityCritical]
+			public SafeHBitmapHandle(Bitmap bitmap)
+				: base(true)
+			{
+				SetHandle(bitmap.GetHbitmap());
+			}
 
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-            protected override bool ReleaseHandle()
-            {
-                return DeleteObject(handle) > 0;
-            }
-        }
-    }
+			[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+			protected override bool ReleaseHandle()
+			{
+				return DeleteObject(handle) > 0;
+			}
+		}
+	}
 }
