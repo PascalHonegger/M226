@@ -242,6 +242,14 @@ namespace ChessTest
                 G6 = { CurrentChessPiece = new Rook(true) }
             };
 
+            CompareBoards(new Board()
+            {
+                A1 = null
+            }, new Board()
+            {
+                A1 = null
+            });
+
             var c5 = _board.C5.CurrentChessPiece;
             var d5 = _board.D5.CurrentChessPiece;
             var a3 = _board.A3.CurrentChessPiece;
@@ -281,6 +289,20 @@ namespace ChessTest
 
             // Assert
             Assert.AreEqual(correctPathList, createdPathList, "The Path created via the PathCreator doesn't match the hand-made Path");
+        }
+
+        private static void CompareBoards(Board board1, Board board2)
+        {
+            for (var i = 1; i < 9; i++)
+            {
+                for (int i2 = 'A'; i2 <= 'H'; i2++)
+                {
+                    var propertyName = (char) i2 + i.ToString();
+                    var property1 = board1.GetType().GetProperty(propertyName).GetValue(board1);
+                    var property2 = board2.GetType().GetProperty(propertyName).GetValue(board2);
+                    Assert.That(property1, Is.EqualTo(property2), "Property {0} war nicht gleich!", propertyName);
+                }
+            }
         }
     }
 }

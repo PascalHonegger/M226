@@ -107,21 +107,21 @@ namespace Chess.Cells
 
         private bool EatTo(Path.Path path, CellViewModel endModel)
         {
-            if (this == endModel && CurrentChessPiece != null) return true;
+            if (Equals(this, endModel) && CurrentChessPiece != null) return true;
             if (CurrentChessPiece != null) return false;
             return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].EatTo(path, endModel);
         }
 
         private bool MoveEatTo(Path.Path path, CellViewModel endModel)
         {
-            if (this == endModel) return true;
+            if (Equals(this, endModel)) return true;
             if (CurrentChessPiece != null) return false;
             return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveEatTo(path, endModel);
         }
 
         private bool JumpEatTo(Path.Path path, CellViewModel endModel)
         {
-            if (this == endModel) return true;
+            if (Equals(this, endModel)) return true;
             return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].JumpEatTo(path, endModel);
         }
 
@@ -167,6 +167,38 @@ namespace Chess.Cells
         {
             _addToGraveyardAction.Invoke(this);
             CurrentChessPiece = null;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var cellViewModel = obj as CellViewModel;
+
+            if (cellViewModel == null)
+            {
+                return false;
+            }
+
+            if (_bgc != cellViewModel._bgc)
+            {
+                return false;
+            }
+
+            if (_currentChessPiece != cellViewModel.CurrentChessPiece)
+            {
+                return false;
+            }
+
+            if (_image != cellViewModel._image)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
