@@ -155,7 +155,7 @@ namespace Chess.Cells
 		private bool MoveTo(Path.Path path, CellViewModel endModel)
 		{
 			if (CurrentChessPiece != null) return false;
-			if (this == endModel) return true;
+			if (Equals(this, endModel)) return true;
 			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveTo(path, endModel);
 		}
 
@@ -192,12 +192,12 @@ namespace Chess.Cells
 				return false;
 			}
 
-			if (_bgc != cellViewModel._bgc)
+			if (Bgc != cellViewModel.Bgc)
 			{
 				return false;
 			}
 
-			if (_currentChessPiece != cellViewModel.CurrentChessPiece)
+			if (!Equals(CurrentChessPiece, cellViewModel.CurrentChessPiece))
 			{
 				return false;
 			}
@@ -218,9 +218,9 @@ namespace Chess.Cells
 
 			test += nameof(Bgc);
 
-			test += nameof(CurrentChessPiece) ?? "";
+			test += nameof(CurrentChessPiece);
 
-			test += nameof(Image) ?? "";
+			test += nameof(Image);
 
 			return test.GetHashCode();
 		}

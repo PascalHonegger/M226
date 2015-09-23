@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Forms;
 using Chess.Cells;
 using Chess.ChessPieces;
+using NUnit.Framework.Constraints;
 
 namespace Chess
 {
@@ -238,5 +240,6 @@ namespace Chess
 			if (cellViewModel.CurrentChessPiece == null) return;
 			GraveYard.Add(cellViewModel.CurrentChessPiece);
 		}
+
 	}
 }

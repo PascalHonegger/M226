@@ -42,5 +42,27 @@ namespace Chess.ChessPieces
 		public BitmapSource Texture { get; set; }
 
 		public virtual List<Path.Path> PathList { get; }
+
+		public override bool Equals(object obj)
+		{
+
+			var other = obj as IChessPiece;
+
+			if (other == null) return false;
+
+			return IsWhite() == other.IsWhite() && DidMove == other.DidMove && Equals(Texture, other.Texture) && Equals(PathList, other.PathList);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = _colorIsWhite.GetHashCode();
+				hashCode = (hashCode*397) ^ _didMove.GetHashCode();
+				hashCode = (hashCode*397) ^ (Texture?.GetHashCode() ?? 0);
+				hashCode = (hashCode*397) ^ (PathList?.GetHashCode() ?? 0);
+				return hashCode;
+			}
+		}
 	}
 }
