@@ -6,7 +6,7 @@
              xmlns:cells="clr-namespace:Chess.Cells"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50" d:DataContext="{d:DesignInstance cells:CellViewModel}">
-    <Grid Background="{Binding Bgc}">
-        <Image Source="{Binding Image}" MouseDown="Image_MouseDown"/>
+    <Grid Background="{Binding Bgc}" MouseDown="MouseDown">
+        <Image Source="{Binding Image}"/>
     </Grid>
 </UserControl>
