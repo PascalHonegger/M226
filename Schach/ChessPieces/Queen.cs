@@ -1,32 +1,41 @@
-﻿using System;
+﻿using Chess.Cells;
+using Chess.Path;
+using Chess.Properties;
 
 namespace Chess.ChessPieces
 {
-    class Queen : ChessPiece
-    {
-        protected override bool CanMoveThere(int row, int column)
-        {
-            throw new NotImplementedException();
-        }
+	public sealed class Queen : ChessPieceBase
+	{
+		public Queen(bool isWhite) : base(isWhite)
+		{
+			Texture = isWhite
+				? Resources.WhiteQueen.ToBitmapSource()
+				: Resources.BlackQueen.ToBitmapSource();
 
-        protected override void GetEaten()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void Eat()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool CanEat()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool TryEat(int rown, int column)
-        {
-            throw new NotImplementedException();
-        }
-    }
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.Top).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.Left).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.Bottom).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.Right).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.TopLeft).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.TopRight).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.BottomLeft).SetIsRecursive(true).Create());
+			PathList.Add(
+				new PathFactory().AddToPath
+					(Movement.Direction.BottomRight).SetIsRecursive(true).Create());
+		}
+	}
 }

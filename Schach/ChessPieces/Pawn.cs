@@ -1,37 +1,60 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Chess.Cells;
+using Chess.Path;
+using Chess.Properties;
 
 namespace Chess.ChessPieces
 {
-    class Pawn : ChessPiece
-    {
-        public Pawn(int row, int column)
-        {
-            // TODO spawn a Pawn with a good texture at the desired location!
-        }
+	public sealed class Pawn : ChessPieceBase
+	{
+		public readonly List<Path.Path> EatList;
 
-        protected override bool CanMoveThere(int row, int column)
-        {
-            throw new NotImplementedException();
-        }
+		public Pawn(bool isWhite) : base(isWhite)
+		{
+			Texture = isWhite
+				? Resources.WhitePawn.ToBitmapSource()
+				: Resources.BlackPawn.ToBitmapSource();
 
-        protected override void GetEaten()
-        {
-            throw new NotImplementedException();
-        }
+			EatList = new List<Path.Path>();
 
-        protected override void Eat()
-        {
-            throw new NotImplementedException();
-        }
+			if (IsBlack())
+			{
+				PathList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.Bottom).AddToPath
+						(Movement.Direction.Bottom).SetIsRecursive(false).Create());
 
-        protected override bool CanEat()
-        {
-            throw new NotImplementedException();
-        }
+				PathList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.Bottom).SetIsRecursive(false).Create());
 
-        protected override bool TryEat(int rown, int column)
-        {
-            throw new NotImplementedException();
-        }
-    }
+				EatList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.BottomLeft).SetIsRecursive(false).Create());
+
+				EatList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.BottomRight).SetIsRecursive(false).Create());
+			}
+			else
+			{
+				PathList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.Top).AddToPath
+						(Movement.Direction.Top).SetIsRecursive(false).Create());
+
+				PathList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.Top).SetIsRecursive(false).Create());
+
+				EatList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.TopLeft).SetIsRecursive(false).Create());
+
+				EatList.Add(
+					new PathFactory().AddToPath
+						(Movement.Direction.TopRight).SetIsRecursive(false).Create());
+			}
+		}
+	}
 }
