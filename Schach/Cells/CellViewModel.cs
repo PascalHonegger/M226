@@ -145,6 +145,7 @@ namespace Chess.Cells
 					return canJumpTo != null && (bool) canJumpTo;
 				});
 			}
+
 			return CurrentChessPiece != null && CurrentChessPiece.PathList.Any(path =>
 			{
 				var canMoveOrEat = _movements[path.GetStep()]?.MoveEatTo(path, endModel);
@@ -198,11 +199,6 @@ namespace Chess.Cells
 			}
 
 			if (!Equals(CurrentChessPiece, cellViewModel.CurrentChessPiece))
-			{
-				return false;
-			}
-
-			if (_image != cellViewModel._image)
 			{
 				return false;
 			}

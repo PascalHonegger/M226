@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Chess.Cells;
 
 namespace Chess.Path
@@ -55,7 +56,7 @@ namespace Chess.Path
 				return false;
 			}
 
-			if (other.GetEnumerator() != GetEnumerator())
+			if (other.Count() != this.Count())
 			{
 				return false;
 			}

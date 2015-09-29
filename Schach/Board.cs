@@ -8,9 +8,16 @@ namespace Chess
 	{
 		private ObservableCollection<IChessPiece> _graveYard;
 
-		public Board()
+		public Board(bool hasDefaultValues = true)
 		{
-			CreateDefaultChessBoard();
+			if (hasDefaultValues)
+			{
+				CreateDefaultChessBoard();
+			}
+			else
+			{
+				CreateEmptyChessBoard();
+			}
 		}
 
 		public ObservableCollection<IChessPiece> GraveYard
@@ -158,6 +165,83 @@ namespace Chess
 			CreateLink();
 		}
 
+		private void CreateEmptyChessBoard()
+		{
+			A8 = new CellViewModel(null, AddToGraveYard);
+			B8 = new CellViewModel(null, AddToGraveYard);
+			C8 = new CellViewModel(null, AddToGraveYard);
+			D8 = new CellViewModel(null, AddToGraveYard);
+			E8 = new CellViewModel(null, AddToGraveYard);
+			F8 = new CellViewModel(null, AddToGraveYard);
+			G8 = new CellViewModel(null, AddToGraveYard);
+			H8 = new CellViewModel(null, AddToGraveYard);
+
+			A7 = new CellViewModel(null, AddToGraveYard);
+			B7 = new CellViewModel(null, AddToGraveYard);
+			C7 = new CellViewModel(null, AddToGraveYard);
+			D7 = new CellViewModel(null, AddToGraveYard);
+			E7 = new CellViewModel(null, AddToGraveYard);
+			F7 = new CellViewModel(null, AddToGraveYard);
+			G7 = new CellViewModel(null, AddToGraveYard);
+			H7 = new CellViewModel(null, AddToGraveYard);
+
+			A6 = new CellViewModel(null, AddToGraveYard);
+			B6 = new CellViewModel(null, AddToGraveYard);
+			C6 = new CellViewModel(null, AddToGraveYard);
+			D6 = new CellViewModel(null, AddToGraveYard);
+			E6 = new CellViewModel(null, AddToGraveYard);
+			F6 = new CellViewModel(null, AddToGraveYard);
+			G6 = new CellViewModel(null, AddToGraveYard);
+			H6 = new CellViewModel(null, AddToGraveYard);
+
+			A5 = new CellViewModel(null, AddToGraveYard);
+			B5 = new CellViewModel(null, AddToGraveYard);
+			C5 = new CellViewModel(null, AddToGraveYard);
+			D5 = new CellViewModel(null, AddToGraveYard);
+			E5 = new CellViewModel(null, AddToGraveYard);
+			F5 = new CellViewModel(null, AddToGraveYard);
+			G5 = new CellViewModel(null, AddToGraveYard);
+			H5 = new CellViewModel(null, AddToGraveYard);
+
+			A4 = new CellViewModel(null, AddToGraveYard);
+			B4 = new CellViewModel(null, AddToGraveYard);
+			C4 = new CellViewModel(null, AddToGraveYard);
+			D4 = new CellViewModel(null, AddToGraveYard);
+			E4 = new CellViewModel(null, AddToGraveYard);
+			F4 = new CellViewModel(null, AddToGraveYard);
+			G4 = new CellViewModel(null, AddToGraveYard);
+			H4 = new CellViewModel(null, AddToGraveYard);
+
+			A3 = new CellViewModel(null, AddToGraveYard);
+			B3 = new CellViewModel(null, AddToGraveYard);
+			C3 = new CellViewModel(null, AddToGraveYard);
+			D3 = new CellViewModel(null, AddToGraveYard);
+			E3 = new CellViewModel(null, AddToGraveYard);
+			F3 = new CellViewModel(null, AddToGraveYard);
+			G3 = new CellViewModel(null, AddToGraveYard);
+			H3 = new CellViewModel(null, AddToGraveYard);
+
+			A2 = new CellViewModel(null, AddToGraveYard);
+			B2 = new CellViewModel(null, AddToGraveYard);
+			C2 = new CellViewModel(null, AddToGraveYard);
+			D2 = new CellViewModel(null, AddToGraveYard);
+			E2 = new CellViewModel(null, AddToGraveYard);
+			F2 = new CellViewModel(null, AddToGraveYard);
+			G2 = new CellViewModel(null, AddToGraveYard);
+			H2 = new CellViewModel(null, AddToGraveYard);
+
+			A1 = new CellViewModel(null, AddToGraveYard);
+			B1 = new CellViewModel(null, AddToGraveYard);
+			C1 = new CellViewModel(null, AddToGraveYard);
+			D1 = new CellViewModel(null, AddToGraveYard);
+			E1 = new CellViewModel(null, AddToGraveYard);
+			F1 = new CellViewModel(null, AddToGraveYard);
+			G1 = new CellViewModel(null, AddToGraveYard);
+			H1 = new CellViewModel(null, AddToGraveYard);
+
+			CreateLink();
+		}
+
 		private void CreateLink()
 		{
 			A8.CreateLink(null, null, B8, B7, A7, null, null, null);
@@ -235,7 +319,7 @@ namespace Chess
 
 		private void AddToGraveYard(CellViewModel cellViewModel)
 		{
-			if (cellViewModel.CurrentChessPiece == null) return;
+			if (cellViewModel?.CurrentChessPiece == null) return;
 			GraveYard.Add(cellViewModel.CurrentChessPiece);
 		}
 

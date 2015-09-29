@@ -14,6 +14,7 @@ namespace ChessTest
 
 		private static void CompareBoards(Board board1, Board board2)
 		{
+			Assert.That(board1.GraveYard, Is.EqualTo(board2.GraveYard));
 			for (var number = 1; number <= 8; number++)
 			{
 				for (int character = 'A'; character <= 'H'; character++)
@@ -21,7 +22,7 @@ namespace ChessTest
 					var propertyName = (char) character + number.ToString();
 					var property1 = board1.GetType().GetProperty(propertyName).GetValue(board1);
 					var property2 = board2.GetType().GetProperty(propertyName).GetValue(board2);
-					Assert.True(Equals(property1, property2), "Property {0} war nicht gleich!", propertyName);
+					Assert.That(property1, Is.EqualTo(property2), "Property {0} war nicht gleich!", propertyName);
 				}
 			}
 		}
@@ -30,7 +31,7 @@ namespace ChessTest
 		public void Bishop()
 		{
 			// Arrange
-			_board = new Board
+			_board = new Board(false)
 			{
 				A3 = {CurrentChessPiece = new Bishop(false)},
 				D4 = {CurrentChessPiece = new Bishop(false)},
@@ -63,7 +64,7 @@ namespace ChessTest
 		public void BlackPawn()
 		{
 			// Arrange
-			_board = new Board
+			_board = new Board(false)
 			{
 				A6 = {CurrentChessPiece = new Pawn(false)},
 				B6 = {CurrentChessPiece = new Pawn(false)},
@@ -103,7 +104,7 @@ namespace ChessTest
 		public void Knight()
 		{
 			// Arrange
-			_board = new Board
+			_board = new Board(false)
 			{
 				A6 = {CurrentChessPiece = new Knight(false)},
 				H6 = {CurrentChessPiece = new Knight(false)},
@@ -178,7 +179,7 @@ namespace ChessTest
 		public void Queen()
 		{
 			// Arrange
-			_board = new Board
+			_board = new Board(false)
 			{
 				A3 = {CurrentChessPiece = new Queen(false)},
 				A4 = {CurrentChessPiece = new Queen(false)},
@@ -210,39 +211,32 @@ namespace ChessTest
 			CellViewModel.MoveModel(_board.G3, _board.G6);
 
 			// Assert
-			Assert.IsNull(_board.A3.CurrentChessPiece, "TOPRIGHT TOPRIGHT Didn't remove ChessPiece");
-			Assert.IsNull(_board.A5.CurrentChessPiece, "BOTTOMRIGHT BOTTOMRIGHT Didn't remove ChessPiece");
-			Assert.IsNull(_board.A4.CurrentChessPiece, "RIGHT RIGHT Didn't remove ChessPiece");
-			Assert.IsNull(_board.B6.CurrentChessPiece, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
-			Assert.IsNull(_board.H4.CurrentChessPiece, "TOPLEFT TOPLEFT  Didn't remove ChessPiece");
-			Assert.IsNull(_board.H6.CurrentChessPiece, "BOTTOMLEFT BOTTOMLEFT  Didn't remove ChessPiece");
-			Assert.IsNull(_board.H5.CurrentChessPiece, "LEFT LEFT Didn't remove ChessPiece");
-			Assert.IsNull(_board.G3.CurrentChessPiece, "TOP TOP TOP  Didn't remove ChessPiece");
-			Assert.AreEqual(_board.C5.CurrentChessPiece, a3, "TOPRIGHT TOPRIGHT Didn't add ChessPiece");
-			Assert.AreEqual(_board.C3.CurrentChessPiece, a5, "BOTTOMRIGHT BOTTOMRIGHT Didn't add ChessPiece");
-			Assert.AreEqual(_board.C4.CurrentChessPiece, a4, "RIGHT RIGHT Didn't add ChessPiece");
-			Assert.AreEqual(_board.B3.CurrentChessPiece, b6, "BOTTOM BOTTOM BOTTOM Didn't add ChessPiece");
-			Assert.AreEqual(_board.F6.CurrentChessPiece, h4, "TOPLEFT TOPLEFT  Didn't add ChessPiece");
-			Assert.AreEqual(_board.F4.CurrentChessPiece, h6, "BOTTOMLEFT BOTTOMLEFT  Didn't add ChessPiece");
-			Assert.AreEqual(_board.F5.CurrentChessPiece, h5, "LEFT LEFT  Didn't add ChessPiece");
-			Assert.AreEqual(_board.G6.CurrentChessPiece, g3, "TOP TOP TOP Didn't add ChessPiece");
+			var expectedBoard = new Board(false)
+			{
+				C5 = { CurrentChessPiece = a3 },
+				C3 = { CurrentChessPiece = a5 },
+				C4 = { CurrentChessPiece = a4 },
+				B3 = { CurrentChessPiece = b6 },
+				F6 = { CurrentChessPiece = h4 },
+				F4 = { CurrentChessPiece = h5 },
+				F5 = { CurrentChessPiece = h6 },
+				G6 = { CurrentChessPiece = g3 }
+			};
+
+			CompareBoards(_board, expectedBoard);
 		}
 
 		[Test]
 		public void Rook()
 		{
 			// Arrange
-			_board = new Board
+			_board = new Board(false)
 			{
 				C5 = {CurrentChessPiece = new Rook(false)},
 				D5 = {CurrentChessPiece = new Rook(false)},
 				A3 = {CurrentChessPiece = new Rook(true)},
 				G6 = {CurrentChessPiece = new Rook(true)}
 			};
-
-			var banane = new Board();
-
-			CompareBoards(banane, new Board());
 
 			var c5 = _board.C5.CurrentChessPiece;
 			var d5 = _board.D5.CurrentChessPiece;
@@ -256,21 +250,22 @@ namespace ChessTest
 			CellViewModel.MoveModel(_board.G6, _board.G3);
 
 			//Assert
-			Assert.IsNull(_board.C5.CurrentChessPiece, "LEFT LEFT Didn't remove ChessPiece");
-			Assert.IsNull(_board.D5.CurrentChessPiece, "RIGHT Didn't remove ChessPiece");
-			Assert.IsNull(_board.A3.CurrentChessPiece, "TOP Didn't remove ChessPiece");
-			Assert.IsNull(_board.G6.CurrentChessPiece, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
-			Assert.AreEqual(_board.A5.CurrentChessPiece, c5, "LEFT LEFT Didn't remove ChessPiece");
-			Assert.AreEqual(_board.E5.CurrentChessPiece, d5, "RIGHT Didn't remove ChessPiece");
-			Assert.AreEqual(_board.A4.CurrentChessPiece, a3, "TOP Didn't remove ChessPiece");
-			Assert.AreEqual(_board.G3.CurrentChessPiece, g6, "BOTTOM BOTTOM BOTTOM Didn't remove ChessPiece");
+			var expectedBoard = new Board(false)
+			{
+				A5 = { CurrentChessPiece = c5},
+				E5 = { CurrentChessPiece = d5 },
+				A4 = { CurrentChessPiece = a3 },
+				G3 = { CurrentChessPiece = g6 }
+			};
+
+			CompareBoards(_board, expectedBoard);
 		}
 
 		[Test]
 		public void WhitePawn()
 		{
 			// Arrange
-			_board = new Board
+			_board = new Board(false)
 			{
 				A3 = {CurrentChessPiece = new Pawn(true)},
 				B3 = {CurrentChessPiece = new Pawn(true)},
@@ -293,17 +288,15 @@ namespace ChessTest
 			CellViewModel.MoveModel(_board.G4, _board.H5);
 
 			//Assert
-			Assert.IsNull(_board.A6.CurrentChessPiece,
-				"TOP TOP did move the ChessPiece, but shouldn't have because DidMove was true");
-			Assert.IsNull(_board.A3.CurrentChessPiece, "TOP Didn't remove ChessPiece");
-			Assert.IsNull(_board.B3.CurrentChessPiece,
-				"TOP TOP didn't move the ChessPiece, but should have because DidMove was false");
-			Assert.IsNull(_board.E5.CurrentChessPiece, "TOPLEFT remove ChessPiece");
-			Assert.IsNull(_board.G4.CurrentChessPiece, "TOPRIGHT Didn't remove ChessPiece");
-			Assert.AreEqual(_board.A4.CurrentChessPiece, a3, "TOP Didn't add ChessPiece");
-			Assert.AreEqual(_board.B5.CurrentChessPiece, b3, "TOP TOP Didn't add ChessPiece");
-			Assert.AreEqual(_board.D6.CurrentChessPiece, e5, "TOPLEFT Didn't add ChessPiece");
-			Assert.AreEqual(_board.H5.CurrentChessPiece, g4, "TOPRIGHT Didn't add ChessPiece");
+			var expectedBoard = new Board(false)
+			{
+				A4 = { CurrentChessPiece = a3 },
+				B5 = { CurrentChessPiece = b3 },
+				D6 = { CurrentChessPiece = e5 },
+				H5 = { CurrentChessPiece = g4 }
+			};
+
+			CompareBoards(_board, expectedBoard);
 		}
 	}
 }
