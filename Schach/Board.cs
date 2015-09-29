@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Forms;
 using Chess.Cells;
 using Chess.ChessPieces;
-using NUnit.Framework.Constraints;
 
 namespace Chess
 {

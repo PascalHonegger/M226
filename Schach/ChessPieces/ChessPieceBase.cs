@@ -50,7 +50,11 @@ namespace Chess.ChessPieces
 
 			if (other == null) return false;
 
-			return IsWhite() == other.IsWhite() && DidMove == other.DidMove && Equals(Texture, other.Texture) && Equals(PathList, other.PathList);
+			return 
+				IsWhite() == other.IsWhite() && 
+				DidMove == other.DidMove && 
+				Equals(Texture, other.Texture) && 
+				Equals(PathList, other.PathList);
 		}
 
 		public override int GetHashCode()

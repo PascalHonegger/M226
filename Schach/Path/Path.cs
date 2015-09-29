@@ -40,5 +40,32 @@ namespace Chess.Path
 		{
 			return _path[0];
 		}
+
+		public override bool Equals(object obj)
+		{
+			var other = obj as Path;
+
+			if (other == null)
+			{
+				return false;
+			}
+
+			if (other.IsRecursive != IsRecursive)
+			{
+				return false;
+			}
+
+			if (other.GetEnumerator() != GetEnumerator())
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		public override int GetHashCode()
+		{
+			return _path.GetHashCode();
+		}
 	}
 }

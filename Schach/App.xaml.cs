@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Chess
+﻿namespace Chess
 {
     /// <summary>
     /// Interaction logic for App.xaml
