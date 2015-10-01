@@ -111,7 +111,8 @@ namespace ChessTest
             CellViewModel.MoveModel(_board.D5, _board.B5);
 
             // Assert
-            Assert.IsNull(_board.D5.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D5, which should have moved away");
+			Assert.IsNull(_board.D5.CurrentChessPiece,
+				"There is still a ChessPiece on the CellViewModel D5, which should have moved away");
             Assert.AreEqual(_board.D4.CurrentChessPiece, d4, "ChessPiece 'd4' shouldn't be removed");
             Assert.AreEqual(_board.D3.CurrentChessPiece, d3, "ChessPiece 'd3' shouldn't be removed");
             Assert.AreEqual(_board.B3.CurrentChessPiece, b3, "ChessPiece 'b3' did get eaten, but there was no valid Path");
@@ -121,20 +122,13 @@ namespace ChessTest
         }
 
         [Test]
-        public void MovePossible()
+		public void EatPossible()
         {
             // Arrange
             var pathList = new List<Path>
             {
                 new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
-                new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(),
-                new PathFactory().AddToPath(Movement.Direction.Right)
-                    .AddToPath(Movement.Direction.Right)
-                    .AddToPath(Movement.Direction.Right)
-                    .AddToPath(Movement.Direction.Right)
-                    .AddToPath(Movement.Direction.Top)
-                    .SetIsRecursive(false)
-                    .Create()
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create()
             };
 
             var unitUnderTest = new Mock<ChessPieceBase>();
@@ -148,18 +142,21 @@ namespace ChessTest
                 .Setup(mock => mock.PathList)
                 .Returns(pathList);
 
-            _board = new Board
+			_board = new Board(false)
             {
                 D4 = { CurrentChessPiece = unitUnderTest.Object }
             };
+			var d3 = _board.D3.CurrentChessPiece;
             var d4 = _board.D4.CurrentChessPiece;
 
             // Act
-            CellViewModel.MoveModel(_board.D4, _board.H5);
+			CellViewModel.MoveModel(_board.D4, _board.D3);
 
             // Assert
-            Assert.IsNull(_board.D4.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D4, which should have moved away");
-            Assert.AreEqual(_board.H5.CurrentChessPiece, d4, "ChessPiece 'd4' didn't move to his new Location properly");
+			Assert.IsNull(_board.D4.CurrentChessPiece,
+				"There is still a ChessPiece on the CellViewModel D4, which should have moved away");
+			Assert.AreEqual(_board.D3.CurrentChessPiece, d4, "ChessPiece 'd4' didn't move to his new Location properly");
+			Assert.True(_board.GraveYard.Contains(d3), "ChessPiece 'toBeEaten' didn't move to the Graveyard properly");
         }
 
         [Test]
@@ -183,7 +180,7 @@ namespace ChessTest
                 .Returns(pathList);
 
             // Arrange
-            _board = new Board
+			_board = new Board(false)
             {
                 D5 = { CurrentChessPiece = unitUnderTest.Object },
                 D4 = { CurrentChessPiece = unitUnderTest.Object }
@@ -197,15 +194,58 @@ namespace ChessTest
             CellViewModel.MoveModel(_board.D5, _board.B5);
 
             // Assert
-            Assert.IsNull(_board.D5.CurrentChessPiece, "There is still a ChessPiece on the CellViewModel D5, which should have moved away");
+			Assert.IsNull(_board.D5.CurrentChessPiece,
+				"There is still a ChessPiece on the CellViewModel D5, which should have moved away");
             Assert.AreEqual(_board.D4.CurrentChessPiece, d4, "ChessPiece 'd4' shouldn't be removed");
-            Assert.IsNull(_board.D3.CurrentChessPiece, "ChessPiece 'd5' did move to the CellViewModel 'D3', but there was no valid Path");
-            Assert.IsNull(_board.B3.CurrentChessPiece, "ChessPiece 'd5' did move to the CellViewModel 'B3', but there was no valid Path");
+			Assert.IsNull(_board.D3.CurrentChessPiece,
+				"ChessPiece 'd5' did move to the CellViewModel 'D3', but there was no valid Path");
+			Assert.IsNull(_board.B3.CurrentChessPiece,
+				"ChessPiece 'd5' did move to the CellViewModel 'B3', but there was no valid Path");
             Assert.AreEqual(_board.B5.CurrentChessPiece, d5, "ChessPiece 'd5' didn't move to the CellViewModel 'B5'");
             Assert.AreEqual(_board.GraveYard.Count, 0, "There where more ChessPieces in the Graveyard than expected");
         }
 
         [Test]
+		public void MovePossible()
+		{
+			var pathList = new List<Path>
+			{
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Right)
+					.AddToPath(Movement.Direction.Right)
+					.AddToPath(Movement.Direction.Right)
+					.AddToPath(Movement.Direction.Right)
+					.AddToPath(Movement.Direction.Top)
+					.SetIsRecursive(false)
+					.Create()
+			};
+
+			var chessPieceMock = new Mock<ChessPieceBase>();
+			chessPieceMock
+				.Setup(mock => mock.IsWhite())
+				.Returns(true);
+			chessPieceMock
+				.Setup(mock => mock.PathList)
+				.Returns(pathList);
+
+			// Arrange
+			_board = new Board(false)
+			{
+				D4 = {CurrentChessPiece = chessPieceMock.Object}
+			};
+			var d4 = _board.D4.CurrentChessPiece;
+
+			// Act
+			CellViewModel.MoveModel(_board.D4, _board.H5);
+
+			// Assert
+			Assert.IsNull(_board.D4.CurrentChessPiece,
+				"There is still a ChessPiece on the CellViewModel D4, which should have moved away");
+			Assert.AreEqual(_board.H5.CurrentChessPiece, d4, "ChessPiece 'd4' didn't move to his new Location properly");
+		}
+
+		[Test]
         public void TestPathFinding()
         {
             // Arrange
@@ -214,10 +254,7 @@ namespace ChessTest
             // Act
 
 
-
             // Assert
-
-
         }
     }
 }
