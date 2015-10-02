@@ -104,15 +104,8 @@
             <cells:CellControl Grid.Column="6" Grid.Row="7" DataContext="{Binding G1}" />
             <cells:CellControl Grid.Column="7" Grid.Row="7" DataContext="{Binding H1}" />
         </Grid>
-        <StackPanel Orientation="Vertical" MinWidth="50" Margin="0,218,0,255" Height="300" MaxWidth="180"
-                    HorizontalAlignment="Left">
-            <StackPanel.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF000CFF" Offset="0" />
-                    <GradientStop Color="#FFFF0606" Offset="1" />
-                </LinearGradientBrush>
-            </StackPanel.Background>
-            <ItemsControl ItemsSource="{Binding GraveYard}">
+        <StackPanel Orientation="Vertical" MinWidth="50" Margin="0,218,0,255" Height="300" MaxWidth="180" HorizontalAlignment="Left">
+            <ItemsControl ItemsSource="{Binding GraveYard}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel ItemWidth="40" />
