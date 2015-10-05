@@ -361,10 +361,10 @@ namespace Chess
 			B1.CreateLink(B2, C2, C1, null, null, null, A1, A2);
 			C1.CreateLink(C2, D2, D1, null, null, null, B1, B2);
 			D1.CreateLink(D2, E2, E1, null, null, null, C1, C2);
-			E1.CreateLink(E2, F2, F1, null, null, null, D2, D3);
-			F1.CreateLink(F2, G2, G1, null, null, null, E2, E3);
-			G1.CreateLink(G2, H2, H1, null, null, null, F2, F3);
-			H1.CreateLink(H2, null, null, null, null, null, G2, G3);
+			E1.CreateLink(E2, F2, F1, null, null, null, D1, D2);
+			F1.CreateLink(F2, G2, G1, null, null, null, E1, E2);
+			G1.CreateLink(G2, H2, H1, null, null, null, F1, F2);
+			H1.CreateLink(H2, null, null, null, null, null, G1, G2);
 		}
 
 		public void AddToGraveYard(CellViewModel cellViewModel)

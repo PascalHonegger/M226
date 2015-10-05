@@ -12,10 +12,10 @@ namespace Chess.Cells
 {
 	public class CellViewModel : INotifyPropertyChanged
 	{
-		private static readonly SolidColorBrush CanMoveHereColor = Brushes.Green;
-		private static readonly SolidColorBrush IsCheckmateColor = Brushes.Red;
-		private static readonly SolidColorBrush CanEatColor = Brushes.Orange;
-		private static readonly SolidColorBrush HighlightedColor = Brushes.Gray;
+		private static readonly SolidColorBrush CanMoveColor = new SolidColorBrush(Color.FromArgb(205, 9, 140, 0));
+		private static readonly SolidColorBrush IsCheckmateColor = new SolidColorBrush(Color.FromArgb(205, 255, 0, 0));
+		private static readonly SolidColorBrush CanEatColor = new SolidColorBrush(Color.FromArgb(205, 255, 171, 0));
+		private static readonly SolidColorBrush HighlightedColor = new SolidColorBrush(Color.FromArgb(205, 91, 100, 113));
 
 		private readonly Dictionary<Movement.Direction, CellViewModel> _movements =
 			new Dictionary<Movement.Direction, CellViewModel>();
@@ -113,48 +113,58 @@ namespace Chess.Cells
 				if (CurrentChessPiece is Pawn)
 				{
 					_movements[path.GetStep()]?.ColorizeMove(path);
-					_movements[path.GetStep()]?.ColorizeEat(path);
+					_movements[path.GetStep()]?.ColorizeEat(path, CurrentChessPiece.IsWhite());
 				}
 				else if (CurrentChessPiece is Knight)
 				{
-					_movements[path.GetStep()]?.ColorizeJump(CurrentChessPiece.IsWhite());
+					_movements[path.GetStep()]?.ColorizeJump(path, CurrentChessPiece.IsWhite());
 				}
 				else
 				{
-					_movements[path.GetStep()]?.ColorizeMoveEat(path);
+					_movements[path.GetStep()]?.ColorizeMoveEat(path, CurrentChessPiece.IsWhite());
 				}
 			}
 		}
 
-		private void ColorizeJump(bool isWhite)
+		private void ColorizeJump(Path.Path path, bool isWhite)
 		{
-			if (CurrentChessPiece == null)
+			if (path.GetStep() == Movement.Direction.Final)
 			{
-				Bgc = CanMoveHereColor;
+				if (CurrentChessPiece == null)
+				{
+					Bgc = CanMoveColor;
+				}
+				else if (isWhite && CurrentChessPiece.IsBlack())
+				{
+					Bgc = CanEatColor;
+				}
 			}
-			else if (isWhite && CurrentChessPiece.IsBlack())
+			else
 			{
-				Bgc = CanEatColor;
+				_movements[path.GetNextStep()]?.ColorizeJump(path, isWhite);
 			}
 		}
 
 
-		private void ColorizeMoveEat(Path.Path path)
+		private void ColorizeMoveEat(Path.Path path, bool isWhite)
 		{
 			ColorizeMove(path);
-			ColorizeEat(path);
+			ColorizeEat(path, isWhite);
 		}
 
-		private void ColorizeEat(Path.Path path)
+		private void ColorizeEat(Path.Path path, bool isWhite)
 		{
 			if (CurrentChessPiece != null)
 			{
-				Bgc = CanEatColor;
+				if (isWhite != CurrentChessPiece.IsWhite())
+				{
+					Bgc = CanEatColor;
+				}
 				return;
 			}
 			if (path.GetStep() != Movement.Direction.Final)
 			{
-				_movements[path.GetNextStep()]?.ColorizeEat(path);
+				_movements[path.GetNextStep()]?.ColorizeEat(path, isWhite);
 			}
 		}
 
@@ -164,7 +174,7 @@ namespace Chess.Cells
 			{
 				return;
 			}
-			Bgc = CanMoveHereColor;
+			Bgc = CanMoveColor;
 			if (path.GetStep() != Movement.Direction.Final)
 			{
 				_movements[path.GetNextStep()]?.ColorizeMove(path);
@@ -181,9 +191,7 @@ namespace Chess.Cells
 			{
 				return false;
 			}
-			if (endModel.CurrentChessPiece != null &&
-			    ((startModel.CurrentChessPiece.IsWhite() && endModel.CurrentChessPiece.IsWhite()) ||
-			     (startModel.CurrentChessPiece.IsBlack() && endModel.CurrentChessPiece.IsBlack())))
+			if (endModel.CurrentChessPiece != null && (startModel.CurrentChessPiece.IsWhite() == endModel.CurrentChessPiece.IsWhite()))
 			{
 				return false;
 			}

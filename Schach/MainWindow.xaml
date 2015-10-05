@@ -13,7 +13,7 @@
 		<DockPanel.Background>
 			<ImageBrush ImageSource="Resources/table.png" Stretch="UniformToFill" />
 		</DockPanel.Background>
-		<Button Content="Start" Click="Button_Click" Width="150" Height="100" Margin="30,641,0,30" />
+		<Button Content="Start" Click="Button_Click" Width="150" Height="100" Margin="30,637,0,34" Cursor="Help" ToolTip="Das Spiel (neu-) starten" />
 		<Grid Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" Height="300" Margin="0,0,10,40"
 		      HorizontalAlignment="Center" VerticalAlignment="Center">
 			<Grid.Background>
