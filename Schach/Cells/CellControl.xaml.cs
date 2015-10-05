@@ -16,8 +16,7 @@ namespace Chess.Cells
 
 		private new void MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			MyDataCellViewModel.StartColorize();
-			//myDataCellViewModel.Bgc = new SolidColorBrush(Color.FromArgb(75, 55, 55, 202));
+			MyDataCellViewModel.Board.SelectedCellViewModel = MyDataCellViewModel;
 		}
 	}
 }

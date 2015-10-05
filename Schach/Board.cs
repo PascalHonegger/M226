@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Media;
 using Chess.Cells;
 using Chess.ChessPieces;
 
@@ -7,8 +8,54 @@ namespace Chess
 	public sealed class Board
 	{
 		private ObservableCollection<IChessPiece> _graveYard;
+		private CellViewModel _selectedCellViewModel;
 
-		public IChessPiece SelectedChessPiece;
+		public CellViewModel SelectedCellViewModel
+		{
+			get
+			{
+				return _selectedCellViewModel; 
+			}
+			set
+			{
+				ResetColors();
+
+				if (value.CurrentChessPiece is Pawn)
+				{
+					AddToGraveYard(value);
+					value.CurrentChessPiece = null;
+				}
+
+				if (_selectedCellViewModel != value && value != null && _selectedCellViewModel?.CurrentChessPiece != null)
+				{
+					CellViewModel.MoveModel(_selectedCellViewModel, value);
+					_selectedCellViewModel = null;
+				}
+				else if (_selectedCellViewModel == value)
+				{
+					_selectedCellViewModel = null;
+				}
+				else
+				{
+					_selectedCellViewModel = value;
+
+					_selectedCellViewModel?.StartColorize();
+				}
+			}
+		}
+
+		private void ResetColors()
+		{
+			for (var number = 1; number <= 8; number++)
+			{
+				for (int character = 'A'; character <= 'H'; character++)
+				{
+					var propertyName = (char)character + number.ToString();
+					var property = (CellViewModel) GetType().GetProperty(propertyName).GetValue(this);
+					property.Bgc = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+				}
+			}
+		}
 
 		public Board(bool hasDefaultValues = true)
 		{
@@ -93,154 +140,154 @@ namespace Chess
 
 		private void CreateDefaultChessBoard()
 		{
-			A8 = new CellViewModel(new Rook(false), AddToGraveYard);
-			B8 = new CellViewModel(new Knight(false), AddToGraveYard);
-			C8 = new CellViewModel(new Bishop(false), AddToGraveYard);
-			D8 = new CellViewModel(new Queen(false), AddToGraveYard);
-			E8 = new CellViewModel(new King(false), AddToGraveYard);
-			F8 = new CellViewModel(new Bishop(false), AddToGraveYard);
-			G8 = new CellViewModel(new Knight(false), AddToGraveYard);
-			H8 = new CellViewModel(new Rook(false), AddToGraveYard);
+			A8 = new CellViewModel(new Rook(false), this);
+			B8 = new CellViewModel(new Knight(false), this);
+			C8 = new CellViewModel(new Bishop(false), this);
+			D8 = new CellViewModel(new Queen(false), this);
+			E8 = new CellViewModel(new King(false), this);
+			F8 = new CellViewModel(new Bishop(false), this);
+			G8 = new CellViewModel(new Knight(false), this);
+			H8 = new CellViewModel(new Rook(false), this);
 
-			A7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			B7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			C7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			D7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			E7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			F7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			G7 = new CellViewModel(new Pawn(false), AddToGraveYard);
-			H7 = new CellViewModel(new Pawn(false), AddToGraveYard);
+			A7 = new CellViewModel(new Pawn(false), this);
+			B7 = new CellViewModel(new Pawn(false), this);
+			C7 = new CellViewModel(new Pawn(false), this);
+			D7 = new CellViewModel(new Pawn(false), this);
+			E7 = new CellViewModel(new Pawn(false), this);
+			F7 = new CellViewModel(new Pawn(false), this);
+			G7 = new CellViewModel(new Pawn(false), this);
+			H7 = new CellViewModel(new Pawn(false), this);
 
-			A6 = new CellViewModel(null, AddToGraveYard);
-			B6 = new CellViewModel(null, AddToGraveYard);
-			C6 = new CellViewModel(null, AddToGraveYard);
-			D6 = new CellViewModel(null, AddToGraveYard);
-			E6 = new CellViewModel(null, AddToGraveYard);
-			F6 = new CellViewModel(null, AddToGraveYard);
-			G6 = new CellViewModel(null, AddToGraveYard);
-			H6 = new CellViewModel(null, AddToGraveYard);
+			A6 = new CellViewModel(null, this);
+			B6 = new CellViewModel(null, this);
+			C6 = new CellViewModel(null, this);
+			D6 = new CellViewModel(null, this);
+			E6 = new CellViewModel(null, this);
+			F6 = new CellViewModel(null, this);
+			G6 = new CellViewModel(null, this);
+			H6 = new CellViewModel(null, this);
 
-			A5 = new CellViewModel(null, AddToGraveYard);
-			B5 = new CellViewModel(null, AddToGraveYard);
-			C5 = new CellViewModel(null, AddToGraveYard);
-			D5 = new CellViewModel(null, AddToGraveYard);
-			E5 = new CellViewModel(null, AddToGraveYard);
-			F5 = new CellViewModel(null, AddToGraveYard);
-			G5 = new CellViewModel(null, AddToGraveYard);
-			H5 = new CellViewModel(null, AddToGraveYard);
+			A5 = new CellViewModel(null, this);
+			B5 = new CellViewModel(null, this);
+			C5 = new CellViewModel(null, this);
+			D5 = new CellViewModel(null, this);
+			E5 = new CellViewModel(null, this);
+			F5 = new CellViewModel(null, this);
+			G5 = new CellViewModel(null, this);
+			H5 = new CellViewModel(null, this);
 
-			A4 = new CellViewModel(null, AddToGraveYard);
-			B4 = new CellViewModel(null, AddToGraveYard);
-			C4 = new CellViewModel(null, AddToGraveYard);
-			D4 = new CellViewModel(null, AddToGraveYard);
-			E4 = new CellViewModel(null, AddToGraveYard);
-			F4 = new CellViewModel(null, AddToGraveYard);
-			G4 = new CellViewModel(null, AddToGraveYard);
-			H4 = new CellViewModel(null, AddToGraveYard);
+			A4 = new CellViewModel(null, this);
+			B4 = new CellViewModel(null, this);
+			C4 = new CellViewModel(null, this);
+			D4 = new CellViewModel(null, this);
+			E4 = new CellViewModel(null, this);
+			F4 = new CellViewModel(null, this);
+			G4 = new CellViewModel(null, this);
+			H4 = new CellViewModel(null, this);
 
-			A3 = new CellViewModel(null, AddToGraveYard);
-			B3 = new CellViewModel(null, AddToGraveYard);
-			C3 = new CellViewModel(null, AddToGraveYard);
-			D3 = new CellViewModel(null, AddToGraveYard);
-			E3 = new CellViewModel(null, AddToGraveYard);
-			F3 = new CellViewModel(null, AddToGraveYard);
-			G3 = new CellViewModel(null, AddToGraveYard);
-			H3 = new CellViewModel(null, AddToGraveYard);
+			A3 = new CellViewModel(null, this);
+			B3 = new CellViewModel(null, this);
+			C3 = new CellViewModel(null, this);
+			D3 = new CellViewModel(null, this);
+			E3 = new CellViewModel(null, this);
+			F3 = new CellViewModel(null, this);
+			G3 = new CellViewModel(null, this);
+			H3 = new CellViewModel(null, this);
 
-			A2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			B2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			C2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			D2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			E2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			F2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			G2 = new CellViewModel(new Pawn(true), AddToGraveYard);
-			H2 = new CellViewModel(new Pawn(true), AddToGraveYard);
+			A2 = new CellViewModel(new Pawn(true), this);
+			B2 = new CellViewModel(new Pawn(true), this);
+			C2 = new CellViewModel(new Pawn(true), this);
+			D2 = new CellViewModel(new Pawn(true), this);
+			E2 = new CellViewModel(new Pawn(true), this);
+			F2 = new CellViewModel(new Pawn(true), this);
+			G2 = new CellViewModel(new Pawn(true), this);
+			H2 = new CellViewModel(new Pawn(true), this);
 
-			A1 = new CellViewModel(new Rook(true), AddToGraveYard);
-			B1 = new CellViewModel(new Knight(true), AddToGraveYard);
-			C1 = new CellViewModel(new Bishop(true), AddToGraveYard);
-			D1 = new CellViewModel(new Queen(true), AddToGraveYard);
-			E1 = new CellViewModel(new King(true), AddToGraveYard);
-			F1 = new CellViewModel(new Bishop(true), AddToGraveYard);
-			G1 = new CellViewModel(new Knight(true), AddToGraveYard);
-			H1 = new CellViewModel(new Rook(true), AddToGraveYard);
+			A1 = new CellViewModel(new Rook(true), this);
+			B1 = new CellViewModel(new Knight(true), this);
+			C1 = new CellViewModel(new Bishop(true), this);
+			D1 = new CellViewModel(new Queen(true), this);
+			E1 = new CellViewModel(new King(true), this);
+			F1 = new CellViewModel(new Bishop(true), this);
+			G1 = new CellViewModel(new Knight(true), this);
+			H1 = new CellViewModel(new Rook(true), this);
 
 			CreateLink();
 		}
 
 		private void CreateEmptyChessBoard()
 		{
-			A8 = new CellViewModel(null, AddToGraveYard);
-			B8 = new CellViewModel(null, AddToGraveYard);
-			C8 = new CellViewModel(null, AddToGraveYard);
-			D8 = new CellViewModel(null, AddToGraveYard);
-			E8 = new CellViewModel(null, AddToGraveYard);
-			F8 = new CellViewModel(null, AddToGraveYard);
-			G8 = new CellViewModel(null, AddToGraveYard);
-			H8 = new CellViewModel(null, AddToGraveYard);
+			A8 = new CellViewModel(null, this);
+			B8 = new CellViewModel(null, this);
+			C8 = new CellViewModel(null, this);
+			D8 = new CellViewModel(null, this);
+			E8 = new CellViewModel(null, this);
+			F8 = new CellViewModel(null, this);
+			G8 = new CellViewModel(null, this);
+			H8 = new CellViewModel(null, this);
 
-			A7 = new CellViewModel(null, AddToGraveYard);
-			B7 = new CellViewModel(null, AddToGraveYard);
-			C7 = new CellViewModel(null, AddToGraveYard);
-			D7 = new CellViewModel(null, AddToGraveYard);
-			E7 = new CellViewModel(null, AddToGraveYard);
-			F7 = new CellViewModel(null, AddToGraveYard);
-			G7 = new CellViewModel(null, AddToGraveYard);
-			H7 = new CellViewModel(null, AddToGraveYard);
+			A7 = new CellViewModel(null, this);
+			B7 = new CellViewModel(null, this);
+			C7 = new CellViewModel(null, this);
+			D7 = new CellViewModel(null, this);
+			E7 = new CellViewModel(null, this);
+			F7 = new CellViewModel(null, this);
+			G7 = new CellViewModel(null, this);
+			H7 = new CellViewModel(null, this);
 
-			A6 = new CellViewModel(null, AddToGraveYard);
-			B6 = new CellViewModel(null, AddToGraveYard);
-			C6 = new CellViewModel(null, AddToGraveYard);
-			D6 = new CellViewModel(null, AddToGraveYard);
-			E6 = new CellViewModel(null, AddToGraveYard);
-			F6 = new CellViewModel(null, AddToGraveYard);
-			G6 = new CellViewModel(null, AddToGraveYard);
-			H6 = new CellViewModel(null, AddToGraveYard);
+			A6 = new CellViewModel(null, this);
+			B6 = new CellViewModel(null, this);
+			C6 = new CellViewModel(null, this);
+			D6 = new CellViewModel(null, this);
+			E6 = new CellViewModel(null, this);
+			F6 = new CellViewModel(null, this);
+			G6 = new CellViewModel(null, this);
+			H6 = new CellViewModel(null, this);
 
-			A5 = new CellViewModel(null, AddToGraveYard);
-			B5 = new CellViewModel(null, AddToGraveYard);
-			C5 = new CellViewModel(null, AddToGraveYard);
-			D5 = new CellViewModel(null, AddToGraveYard);
-			E5 = new CellViewModel(null, AddToGraveYard);
-			F5 = new CellViewModel(null, AddToGraveYard);
-			G5 = new CellViewModel(null, AddToGraveYard);
-			H5 = new CellViewModel(null, AddToGraveYard);
+			A5 = new CellViewModel(null, this);
+			B5 = new CellViewModel(null, this);
+			C5 = new CellViewModel(null, this);
+			D5 = new CellViewModel(null, this);
+			E5 = new CellViewModel(null, this);
+			F5 = new CellViewModel(null, this);
+			G5 = new CellViewModel(null, this);
+			H5 = new CellViewModel(null, this);
 
-			A4 = new CellViewModel(null, AddToGraveYard);
-			B4 = new CellViewModel(null, AddToGraveYard);
-			C4 = new CellViewModel(null, AddToGraveYard);
-			D4 = new CellViewModel(null, AddToGraveYard);
-			E4 = new CellViewModel(null, AddToGraveYard);
-			F4 = new CellViewModel(null, AddToGraveYard);
-			G4 = new CellViewModel(null, AddToGraveYard);
-			H4 = new CellViewModel(null, AddToGraveYard);
+			A4 = new CellViewModel(null, this);
+			B4 = new CellViewModel(null, this);
+			C4 = new CellViewModel(null, this);
+			D4 = new CellViewModel(null, this);
+			E4 = new CellViewModel(null, this);
+			F4 = new CellViewModel(null, this);
+			G4 = new CellViewModel(null, this);
+			H4 = new CellViewModel(null, this);
 
-			A3 = new CellViewModel(null, AddToGraveYard);
-			B3 = new CellViewModel(null, AddToGraveYard);
-			C3 = new CellViewModel(null, AddToGraveYard);
-			D3 = new CellViewModel(null, AddToGraveYard);
-			E3 = new CellViewModel(null, AddToGraveYard);
-			F3 = new CellViewModel(null, AddToGraveYard);
-			G3 = new CellViewModel(null, AddToGraveYard);
-			H3 = new CellViewModel(null, AddToGraveYard);
+			A3 = new CellViewModel(null, this);
+			B3 = new CellViewModel(null, this);
+			C3 = new CellViewModel(null, this);
+			D3 = new CellViewModel(null, this);
+			E3 = new CellViewModel(null, this);
+			F3 = new CellViewModel(null, this);
+			G3 = new CellViewModel(null, this);
+			H3 = new CellViewModel(null, this);
 
-			A2 = new CellViewModel(null, AddToGraveYard);
-			B2 = new CellViewModel(null, AddToGraveYard);
-			C2 = new CellViewModel(null, AddToGraveYard);
-			D2 = new CellViewModel(null, AddToGraveYard);
-			E2 = new CellViewModel(null, AddToGraveYard);
-			F2 = new CellViewModel(null, AddToGraveYard);
-			G2 = new CellViewModel(null, AddToGraveYard);
-			H2 = new CellViewModel(null, AddToGraveYard);
+			A2 = new CellViewModel(null, this);
+			B2 = new CellViewModel(null, this);
+			C2 = new CellViewModel(null, this);
+			D2 = new CellViewModel(null, this);
+			E2 = new CellViewModel(null, this);
+			F2 = new CellViewModel(null, this);
+			G2 = new CellViewModel(null, this);
+			H2 = new CellViewModel(null, this);
 
-			A1 = new CellViewModel(null, AddToGraveYard);
-			B1 = new CellViewModel(null, AddToGraveYard);
-			C1 = new CellViewModel(null, AddToGraveYard);
-			D1 = new CellViewModel(null, AddToGraveYard);
-			E1 = new CellViewModel(null, AddToGraveYard);
-			F1 = new CellViewModel(null, AddToGraveYard);
-			G1 = new CellViewModel(null, AddToGraveYard);
-			H1 = new CellViewModel(null, AddToGraveYard);
+			A1 = new CellViewModel(null, this);
+			B1 = new CellViewModel(null, this);
+			C1 = new CellViewModel(null, this);
+			D1 = new CellViewModel(null, this);
+			E1 = new CellViewModel(null, this);
+			F1 = new CellViewModel(null, this);
+			G1 = new CellViewModel(null, this);
+			H1 = new CellViewModel(null, this);
 
 			CreateLink();
 		}
@@ -320,9 +367,12 @@ namespace Chess
 			H1.CreateLink(H2, null, null, null, null, null, G2, G3);
 		}
 
-		private void AddToGraveYard(CellViewModel cellViewModel)
+		public void AddToGraveYard(CellViewModel cellViewModel)
 		{
-			if (cellViewModel?.CurrentChessPiece == null) return;
+			if (cellViewModel?.CurrentChessPiece == null)
+			{
+				return;
+			}
 			GraveYard.Add(cellViewModel.CurrentChessPiece);
 		}
 

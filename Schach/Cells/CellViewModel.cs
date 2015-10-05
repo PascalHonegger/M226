@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,23 +12,24 @@ namespace Chess.Cells
 {
 	public class CellViewModel : INotifyPropertyChanged
 	{
-		private static readonly SolidColorBrush Green = Brushes.Green;
-		private static readonly SolidColorBrush Red = Brushes.Red;
-		private static readonly SolidColorBrush Orange = Brushes.Orange;
-		private static readonly SolidColorBrush Highlighted = Brushes.Gray;
-		private readonly Action<CellViewModel> _addToGraveyardAction;
+		private static readonly SolidColorBrush CanMoveHereColor = Brushes.Green;
+		private static readonly SolidColorBrush IsCheckmateColor = Brushes.Red;
+		private static readonly SolidColorBrush CanEatColor = Brushes.Orange;
+		private static readonly SolidColorBrush HighlightedColor = Brushes.Gray;
 
 		private readonly Dictionary<Movement.Direction, CellViewModel> _movements =
 			new Dictionary<Movement.Direction, CellViewModel>();
+
+		public readonly Board Board;
 
 		private SolidColorBrush _bgc;
 		private IChessPiece _currentChessPiece;
 		private BitmapSource _image;
 
-		public CellViewModel(IChessPiece currentChessChessPiece, Action<CellViewModel> addToGraveyardAction)
+		public CellViewModel(IChessPiece currentChessChessPiece, Board board)
 		{
-			_addToGraveyardAction = addToGraveyardAction;
 			CurrentChessPiece = currentChessChessPiece;
+			Board = board;
 		}
 
 		public IChessPiece CurrentChessPiece
@@ -59,7 +59,10 @@ namespace Chess.Cells
 			get { return _bgc; }
 			set
 			{
-				if (Equals(_bgc, value)) return;
+				if (Equals(_bgc, value))
+				{
+					return;
+				}
 				_bgc = value;
 				OnPropertyChanged(nameof(Bgc));
 			}
@@ -67,10 +70,9 @@ namespace Chess.Cells
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void MoveToGraveyard()
+		private void MoveToGraveyard()
 		{
-			if (CurrentChessPiece == null) return;
-			_addToGraveyardAction.Invoke(this);
+			Board.AddToGraveYard(this);
 			CurrentChessPiece = null;
 		}
 
@@ -99,12 +101,12 @@ namespace Chess.Cells
 
 		public void StartColorize()
 		{
-			Bgc = Highlighted;
-
-			if (CurrentChessPiece.PathList == null || !CurrentChessPiece.PathList.Any())
+			if (CurrentChessPiece?.PathList == null || !CurrentChessPiece.PathList.Any())
 			{
 				return;
 			}
+
+			Bgc = HighlightedColor;
 
 			foreach (var path in CurrentChessPiece.PathList)
 			{
@@ -115,7 +117,7 @@ namespace Chess.Cells
 				}
 				else if (CurrentChessPiece is Knight)
 				{
-					_movements[path.GetStep()]?.ColorizeJump(path, CurrentChessPiece.IsWhite());
+					_movements[path.GetStep()]?.ColorizeJump(CurrentChessPiece.IsWhite());
 				}
 				else
 				{
@@ -124,15 +126,15 @@ namespace Chess.Cells
 			}
 		}
 
-		private void ColorizeJump(Path.Path path, bool isWhite)
+		private void ColorizeJump(bool isWhite)
 		{
 			if (CurrentChessPiece == null)
 			{
-				Bgc = Green;
+				Bgc = CanMoveHereColor;
 			}
 			else if (isWhite && CurrentChessPiece.IsBlack())
 			{
-				Bgc = Orange;
+				Bgc = CanEatColor;
 			}
 		}
 
@@ -147,7 +149,7 @@ namespace Chess.Cells
 		{
 			if (CurrentChessPiece != null)
 			{
-				Bgc = Orange;
+				Bgc = CanEatColor;
 				return;
 			}
 			if (path.GetStep() != Movement.Direction.Final)
@@ -162,7 +164,7 @@ namespace Chess.Cells
 			{
 				return;
 			}
-			Bgc = Green;
+			Bgc = CanMoveHereColor;
 			if (path.GetStep() != Movement.Direction.Final)
 			{
 				_movements[path.GetNextStep()]?.ColorizeMove(path);
@@ -175,16 +177,26 @@ namespace Chess.Cells
 
 		public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
 		{
-			if (startModel.CurrentChessPiece == null) return false;
+			if (startModel.CurrentChessPiece == null)
+			{
+				return false;
+			}
 			if (endModel.CurrentChessPiece != null &&
 			    ((startModel.CurrentChessPiece.IsWhite() && endModel.CurrentChessPiece.IsWhite()) ||
-			     (startModel.CurrentChessPiece.IsBlack() && endModel.CurrentChessPiece.IsBlack()))) return false;
-			if (!startModel.FindPathTo(endModel)) return false;
+			     (startModel.CurrentChessPiece.IsBlack() && endModel.CurrentChessPiece.IsBlack())))
+			{
+				return false;
+			}
+			if (!startModel.FindPathTo(endModel))
+			{
+				return false;
+			}
 
 			endModel.MoveToGraveyard();
 			endModel.CurrentChessPiece = startModel.CurrentChessPiece;
 			endModel.CurrentChessPiece.DidMove = true;
 			startModel.CurrentChessPiece = null;
+
 			return true;
 		}
 
