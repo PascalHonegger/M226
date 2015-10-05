@@ -122,44 +122,6 @@ namespace ChessTest
         }
 
         [Test]
-		public void EatPossible()
-        {
-            // Arrange
-            var pathList = new List<Path>
-            {
-                new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create()
-            };
-
-            var unitUnderTest = new Mock<ChessPieceBase>();
-            unitUnderTest
-                .Setup(mock => mock.IsWhite())
-                .Returns(true);
-            unitUnderTest
-                .Setup(mock => mock.IsBlack())
-                .Returns(false);
-            unitUnderTest
-                .Setup(mock => mock.PathList)
-                .Returns(pathList);
-
-			_board = new Board(false)
-            {
-                D4 = { CurrentChessPiece = unitUnderTest.Object }
-            };
-			var d3 = _board.D3.CurrentChessPiece;
-            var d4 = _board.D4.CurrentChessPiece;
-
-            // Act
-			CellViewModel.MoveModel(_board.D4, _board.D3);
-
-            // Assert
-			Assert.IsNull(_board.D4.CurrentChessPiece,
-				"There is still a ChessPiece on the CellViewModel D4, which should have moved away");
-			Assert.AreEqual(_board.D3.CurrentChessPiece, d4, "ChessPiece 'd4' didn't move to his new Location properly");
-			Assert.True(_board.GraveYard.Contains(d3), "ChessPiece 'toBeEaten' didn't move to the Graveyard properly");
-        }
-
-        [Test]
         public void MoveImpossible()
         {
             var pathList = new List<Path>
