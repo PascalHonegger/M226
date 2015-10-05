@@ -8,6 +8,8 @@ namespace Chess
 	{
 		private ObservableCollection<IChessPiece> _graveYard;
 
+		public IChessPiece SelectedChessPiece;
+
 		public Board(bool hasDefaultValues = true)
 		{
 			if (hasDefaultValues)
@@ -18,6 +20,7 @@ namespace Chess
 			{
 				CreateEmptyChessBoard();
 			}
+
 		}
 
 		public ObservableCollection<IChessPiece> GraveYard
