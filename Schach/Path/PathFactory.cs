@@ -25,7 +25,10 @@ namespace Chess.Path
 
 		public Path Create()
 		{
-			if (!_movementList.IsRecursive) _movementList.Add(Movement.Direction.Final);
+			if (!_movementList.IsRecursive)
+			{
+				_movementList.Add(Movement.Direction.Final);
+			}
 			return _movementList;
 		}
 	}

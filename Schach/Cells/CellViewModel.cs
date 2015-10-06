@@ -108,14 +108,24 @@ namespace Chess.Cells
 
 			Bgc = HighlightedColor;
 
-			foreach (var path in CurrentChessPiece.PathList)
+			var pawn = CurrentChessPiece as Pawn;
+			if (pawn != null)
 			{
-				if (CurrentChessPiece is Pawn)
+				foreach (var movePath in pawn.PathList)
 				{
-					_movements[path.GetStep()]?.ColorizeMove(path);
-					_movements[path.GetStep()]?.ColorizeEat(path, CurrentChessPiece.IsWhite());
+					_movements[movePath.GetStep()]?.ColorizeMove(movePath);
 				}
-				else if (CurrentChessPiece is Knight)
+				foreach (var eatPath in pawn.EatList)
+				{
+					_movements[eatPath.GetStep()]?.ColorizeEat(eatPath, CurrentChessPiece.IsWhite());
+				}
+
+				return;
+			}
+
+			foreach (var path in CurrentChessPiece.PathList.Select(p => p.Clone()))
+			{
+				if (CurrentChessPiece is Knight)
 				{
 					_movements[path.GetStep()]?.ColorizeJump(path, CurrentChessPiece.IsWhite());
 				}
@@ -128,20 +138,20 @@ namespace Chess.Cells
 
 		private void ColorizeJump(Path.Path path, bool isWhite)
 		{
-			if (path.GetStep() == Movement.Direction.Final)
+			if (path.GetNextStep() == Movement.Direction.Final)
 			{
 				if (CurrentChessPiece == null)
 				{
 					Bgc = CanMoveColor;
 				}
-				else if (isWhite && CurrentChessPiece.IsBlack())
+				else if (isWhite != CurrentChessPiece.IsWhite())
 				{
 					Bgc = CanEatColor;
 				}
 			}
 			else
 			{
-				_movements[path.GetNextStep()]?.ColorizeJump(path, isWhite);
+				_movements[path.GetStep()]?.ColorizeJump(path, isWhite);
 			}
 		}
 
@@ -191,7 +201,8 @@ namespace Chess.Cells
 			{
 				return false;
 			}
-			if (endModel.CurrentChessPiece != null && (startModel.CurrentChessPiece.IsWhite() == endModel.CurrentChessPiece.IsWhite()))
+			if (endModel.CurrentChessPiece != null &&
+			    (startModel.CurrentChessPiece.IsWhite() == endModel.CurrentChessPiece.IsWhite()))
 			{
 				return false;
 			}
@@ -199,6 +210,10 @@ namespace Chess.Cells
 			{
 				return false;
 			}
+
+			// Startmodel has a ChessPece
+			// Startmodel and Endmodel aren't the same color
+			// Startmodel was able to find a path to the Endmodel
 
 			endModel.MoveToGraveyard();
 			endModel.CurrentChessPiece = startModel.CurrentChessPiece;
@@ -208,31 +223,38 @@ namespace Chess.Cells
 			return true;
 		}
 
+		/// <summary>
+		///     Only checks for a valid Path. Doesn't check that both ChessPieces have to be a different color to be eaten.
+		/// </summary>
+		/// <param name="endModel"></param>
+		/// <returns></returns>
 		private bool FindPathTo(CellViewModel endModel)
 		{
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
 			{
-				return pawn.PathList.Any(path =>
+				return pawn.PathList.Select(p => p.Clone()).Any(path =>
 				{
 					var canMoveTo = _movements[path.GetStep()]?.MoveTo(path, endModel);
 					return canMoveTo != null && (bool) canMoveTo;
-				}) || pawn.EatList.Any(path =>
-				{
-					var canEatTo = _movements[path.GetStep()]?.EatTo(path, endModel);
-					return canEatTo != null && (bool) canEatTo;
-				});
+				})
+				       || pawn.EatList.Select(p => p.Clone()).Any(path =>
+				       {
+					       var canEatTo = _movements[path.GetStep()]?.EatTo(path, endModel);
+					       return canEatTo != null && (bool) canEatTo;
+				       });
 			}
+
 			if (CurrentChessPiece is Knight)
 			{
-				return CurrentChessPiece.PathList.Any(path =>
+				return CurrentChessPiece.PathList.Select(p => p.Clone()).Any(path =>
 				{
 					var canJumpTo = _movements[path.GetStep()]?.JumpEatTo(path, endModel);
 					return canJumpTo != null && (bool) canJumpTo;
 				});
 			}
 
-			return CurrentChessPiece != null && CurrentChessPiece.PathList.Any(path =>
+			return CurrentChessPiece != null && CurrentChessPiece.PathList.Select(p => p.Clone()).Any(path =>
 			{
 				var canMoveOrEat = _movements[path.GetStep()]?.MoveEatTo(path, endModel);
 				return canMoveOrEat != null && (bool) canMoveOrEat;
@@ -249,6 +271,7 @@ namespace Chess.Cells
 			{
 				return true;
 			}
+
 			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveTo(path, endModel);
 		}
 
@@ -262,6 +285,7 @@ namespace Chess.Cells
 			{
 				return false;
 			}
+
 			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].EatTo(path, endModel);
 		}
 
@@ -275,16 +299,18 @@ namespace Chess.Cells
 			{
 				return false;
 			}
+
 			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveEatTo(path, endModel);
 		}
 
 		private bool JumpEatTo(Path.Path path, CellViewModel endModel)
 		{
-			if (Equals(this, endModel))
+			if (path.GetNextStep() == Movement.Direction.Final && Equals(this, endModel))
 			{
 				return true;
 			}
-			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].JumpEatTo(path, endModel);
+
+			return _movements[path.GetStep()] != null && _movements[path.GetStep()].JumpEatTo(path, endModel);
 		}
 
 		#endregion

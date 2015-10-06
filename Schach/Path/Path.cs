@@ -45,6 +45,22 @@ namespace Chess.Path
 			return _path[0];
 		}
 
+		public Path Clone()
+		{
+			var factory = new PathFactory();
+
+			foreach (var direction in _path.Where(p => !p.Equals(Movement.Direction.Final)))
+			{
+				factory.AddToPath(direction);
+			}
+
+			factory.SetIsRecursive(IsRecursive);
+
+			return factory.Create();
+
+			// return (Path)MemberwiseClone();
+		}
+
 		public override bool Equals(object obj)
 		{
 			var other = obj as Path;

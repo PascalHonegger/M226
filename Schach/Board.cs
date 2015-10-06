@@ -7,7 +7,8 @@ namespace Chess
 {
 	public sealed class Board
 	{
-		private ObservableCollection<IChessPiece> _graveYard;
+		private ObservableCollection<IChessPiece> _whiteGraveYard;
+		private ObservableCollection<IChessPiece> _blackGraveYard;
 		private CellViewModel _selectedCellViewModel;
 
 		public CellViewModel SelectedCellViewModel
@@ -19,12 +20,6 @@ namespace Chess
 			set
 			{
 				ResetColors();
-
-				if (value.CurrentChessPiece is Pawn)
-				{
-					AddToGraveYard(value);
-					value.CurrentChessPiece = null;
-				}
 
 				if (_selectedCellViewModel != value && value != null && _selectedCellViewModel?.CurrentChessPiece != null)
 				{
@@ -70,8 +65,11 @@ namespace Chess
 
 		}
 
-		public ObservableCollection<IChessPiece> GraveYard
-			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
+		public ObservableCollection<IChessPiece> WhiteGraveYard
+			=> _blackGraveYard ?? (_blackGraveYard = new ObservableCollection<IChessPiece>());
+
+		public ObservableCollection<IChessPiece> BlackGraveYard
+			=> _whiteGraveYard ?? (_whiteGraveYard = new ObservableCollection<IChessPiece>());
 
 		public CellViewModel A8 { get; set; }
 		public CellViewModel B8 { get; set; }
@@ -298,7 +296,7 @@ namespace Chess
 			B8.CreateLink(null, null, C8, C7, B7, A7, A8, null);
 			C8.CreateLink(null, null, D8, D7, C7, B7, B8, null);
 			D8.CreateLink(null, null, E8, E7, D7, C7, C8, null);
-			E8.CreateLink(null, null, F8, F7, E7, D7, D7, null);
+			E8.CreateLink(null, null, F8, F7, E7, D7, D8, null);
 			F8.CreateLink(null, null, G8, G7, F7, E7, E8, null);
 			G8.CreateLink(null, null, H8, H7, G7, F7, F8, null);
 			H8.CreateLink(null, null, null, null, H7, G7, G8, null);
@@ -307,7 +305,7 @@ namespace Chess
 			B7.CreateLink(B8, C8, C7, C6, B6, A6, A7, A8);
 			C7.CreateLink(C8, D8, D7, D6, C6, B6, B7, B8);
 			D7.CreateLink(D8, E8, E7, E6, D6, C6, C7, C8);
-			E7.CreateLink(E8, F8, F7, F6, E6, D6, D6, D8);
+			E7.CreateLink(E8, F8, F7, F6, E6, D6, D7, D8);
 			F7.CreateLink(F8, G8, G7, G6, F6, E6, E7, E8);
 			G7.CreateLink(G8, H8, H7, H6, G6, F6, F7, F8);
 			H7.CreateLink(H8, null, null, null, H6, G6, G7, G8);
@@ -373,7 +371,14 @@ namespace Chess
 			{
 				return;
 			}
-			GraveYard.Add(cellViewModel.CurrentChessPiece);
+			if (cellViewModel.CurrentChessPiece.IsWhite())
+			{
+				WhiteGraveYard.Add(cellViewModel.CurrentChessPiece);
+			}
+			else
+			{
+				BlackGraveYard.Add(cellViewModel.CurrentChessPiece);
+			}
 		}
 
 	}
