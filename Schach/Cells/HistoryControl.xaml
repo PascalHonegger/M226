@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="Chess.Cells.HistoryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Chess.Cells"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="100">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<local:CellControl Grid.Column="0" Grid.Row="0" d:DataContext="{d:DesignInstance local:CellViewModel}" DataContextChanged="OnDataContextChangedFrom" x:Name="From" />
+        <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Source="/Chess;component/Resources/arrow.png" />
+        <local:CellControl Grid.Column="2" Grid.Row="0" d:DataContext="{d:DesignInstance local:CellViewModel}"
+		                   DataContextChanged="OnDataContextChangedTo" x:Name="To" />
+		<TextBlock Grid.Column="0" Grid.Row="1" x:Name="FromText"/>
+		<TextBlock Grid.Column="2" Grid.Row="1" x:Name="ToText"/>
+	</Grid>
+</UserControl>

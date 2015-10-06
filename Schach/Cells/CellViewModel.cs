@@ -25,9 +25,11 @@ namespace Chess.Cells
 		private SolidColorBrush _bgc;
 		private IChessPiece _currentChessPiece;
 		private BitmapSource _image;
+		public string name;
 
-		public CellViewModel(IChessPiece currentChessChessPiece, Board board)
+		public CellViewModel(IChessPiece currentChessChessPiece, Board board, string test = "")
 		{
+			name = test;
 			CurrentChessPiece = currentChessChessPiece;
 			Board = board;
 		}
@@ -197,15 +199,19 @@ namespace Chess.Cells
 
 		public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
 		{
-			if (startModel.CurrentChessPiece == null)
+			// No Chesspiece to move or one of the ViewModel's is empty
+			if (startModel == null || endModel == null || startModel.CurrentChessPiece == null)
 			{
 				return false;
 			}
+			// Same color
 			if (endModel.CurrentChessPiece != null &&
 			    (startModel.CurrentChessPiece.IsWhite() == endModel.CurrentChessPiece.IsWhite()))
 			{
 				return false;
 			}
+
+			// No Path to the destination / endModel
 			if (!startModel.FindPathTo(endModel))
 			{
 				return false;
@@ -214,6 +220,9 @@ namespace Chess.Cells
 			// Startmodel has a ChessPece
 			// Startmodel and Endmodel aren't the same color
 			// Startmodel was able to find a path to the Endmodel
+			// Start and Endmodel are not the same
+
+			startModel.Board.AddToHistory(startModel, endModel);
 
 			endModel.MoveToGraveyard();
 			endModel.CurrentChessPiece = startModel.CurrentChessPiece;

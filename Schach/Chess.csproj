@@ -101,6 +101,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Cells\HistoryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -114,7 +118,10 @@
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cells\CellViewModel.cs" />
-    <Compile Include="Cells\ToBitMapSourceExtension.cs" />
+    <Compile Include="Cells\HistoryControl.xaml.cs">
+      <DependentUpon>HistoryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\Extensions.cs" />
     <Compile Include="Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPieceBase.cs" />
@@ -201,7 +208,9 @@
     <Resource Include="Resources\WhiteBishop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\WhiteKing.png" />
+    <Resource Include="Resources\WhiteKing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\BlackPawn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -213,19 +222,32 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\BlackBishop.png" />
+    <Resource Include="Resources\BlackBishop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\blank.png" />
+    <Resource Include="Resources\blank.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icon.ico" />
+    <Resource Include="Resources\icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\table.png" />
+    <Resource Include="Resources\table.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,35 +7,48 @@ namespace Chess
 {
 	public sealed class Board
 	{
-		private ObservableCollection<IChessPiece> _whiteGraveYard;
-		private ObservableCollection<IChessPiece> _blackGraveYard;
+		private ObservableCollection<IChessPiece> _graveYard;
 		private CellViewModel _selectedCellViewModel;
+		private bool _whiteTurn;
 
 		public CellViewModel SelectedCellViewModel
 		{
-			get
-			{
-				return _selectedCellViewModel; 
-			}
 			set
 			{
 				ResetColors();
 
-				if (_selectedCellViewModel != value && value != null && _selectedCellViewModel?.CurrentChessPiece != null)
+				// NextTurn, when the ViewModel moved to the newly selected ViewModel
+				if (CellViewModel.MoveModel(_selectedCellViewModel, value))
 				{
-					CellViewModel.MoveModel(_selectedCellViewModel, value);
-					_selectedCellViewModel = null;
+					NextTurn();
 				}
-				else if (_selectedCellViewModel == value)
-				{
-					_selectedCellViewModel = null;
-				}
-				else
+				// Select ViewModel, if it's the players turn
+				else if (value?.CurrentChessPiece != null && WhiteTurn == value.CurrentChessPiece.IsWhite())
 				{
 					_selectedCellViewModel = value;
 
 					_selectedCellViewModel?.StartColorize();
 				}
+				else
+				{
+					_selectedCellViewModel = null;
+				}
+			}
+		}
+
+		private void NextTurn()
+		{
+			WhiteTurn = !WhiteTurn;
+		}
+
+		private bool WhiteTurn
+		{
+			get { return _whiteTurn; }
+			set
+			{
+				if (_whiteTurn == value) return;
+				_whiteTurn = value;
+				
 			}
 		}
 
@@ -63,13 +76,13 @@ namespace Chess
 				CreateEmptyChessBoard();
 			}
 
+			History = new ObservableCollection<HistoryControl>();
+
+			WhiteTurn = true;
 		}
 
-		public ObservableCollection<IChessPiece> WhiteGraveYard
-			=> _blackGraveYard ?? (_blackGraveYard = new ObservableCollection<IChessPiece>());
-
-		public ObservableCollection<IChessPiece> BlackGraveYard
-			=> _whiteGraveYard ?? (_whiteGraveYard = new ObservableCollection<IChessPiece>());
+		public ObservableCollection<IChessPiece> GraveYard
+			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
 
 		public CellViewModel A8 { get; set; }
 		public CellViewModel B8 { get; set; }
@@ -136,6 +149,8 @@ namespace Chess
 		public CellViewModel G1 { get; set; }
 		public CellViewModel H1 { get; set; }
 
+		public ObservableCollection<HistoryControl> History { get; private set; }
+
 		private void CreateDefaultChessBoard()
 		{
 			A8 = new CellViewModel(new Rook(false), this);
@@ -154,7 +169,7 @@ namespace Chess
 			E7 = new CellViewModel(new Pawn(false), this);
 			F7 = new CellViewModel(new Pawn(false), this);
 			G7 = new CellViewModel(new Pawn(false), this);
-			H7 = new CellViewModel(new Pawn(false), this);
+			H7 = new CellViewModel(new Pawn(false), this, "H7");
 
 			A6 = new CellViewModel(null, this);
 			B6 = new CellViewModel(null, this);
@@ -163,7 +178,7 @@ namespace Chess
 			E6 = new CellViewModel(null, this);
 			F6 = new CellViewModel(null, this);
 			G6 = new CellViewModel(null, this);
-			H6 = new CellViewModel(null, this);
+			H6 = new CellViewModel(null, this, "H6");
 
 			A5 = new CellViewModel(null, this);
 			B5 = new CellViewModel(null, this);
@@ -373,13 +388,51 @@ namespace Chess
 			}
 			if (cellViewModel.CurrentChessPiece.IsWhite())
 			{
-				WhiteGraveYard.Add(cellViewModel.CurrentChessPiece);
+				GraveYard.Add(cellViewModel.CurrentChessPiece);
 			}
 			else
 			{
-				BlackGraveYard.Add(cellViewModel.CurrentChessPiece);
+				GraveYard.Add(cellViewModel.CurrentChessPiece);
 			}
 		}
 
+		public void AddToHistory(CellViewModel startModel, CellViewModel endModel)
+		{
+			if (startModel == null || endModel == null)
+			{
+				return;
+			}
+
+			var from = new CellViewModel(startModel.CurrentChessPiece, startModel.Board);
+
+			var to = new CellViewModel(endModel.CurrentChessPiece, endModel.Board);
+
+			var historyControl = new HistoryControl
+			{
+				From = { DataContext = from },
+				To = { DataContext = to },
+				FromText = {Text = GetCellName(startModel) },
+				ToText = {Text = GetCellName(endModel) }
+			};
+
+			History.Add(historyControl);
+		}
+
+		private string GetCellName(CellViewModel nameNeeded)
+		{
+			for (var number = 1; number <= 8; number++)
+			{
+				for (int character = 'A'; character <= 'H'; character++)
+				{
+					var propertyName = (char)character + number.ToString();
+					var property = GetType().GetProperty(propertyName).GetValue(this);
+					if (property.Equals(nameNeeded))
+					{
+						return propertyName;
+					}
+				}
+			}
+			return "";
+		}
 	}
 }

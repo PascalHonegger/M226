@@ -7,36 +7,34 @@
         xmlns:cells="clr-namespace:Chess.Cells"
         xmlns:pieces="clr-namespace:Chess.ChessPieces"
         mc:Ignorable="d"
-        Title="SuperChess 2015 Gold Pre-Order Supreme-Deluxe Golden Season-Pass Edition! v1.0" Width="800" Height="800"
-        ResizeMode="CanResizeWithGrip">
+        Title="SuperChess 2015 Gold Pre-Order Supreme-Deluxe Golden Season-Pass Edition! v1.0" Width="1100" Height="900"
+        ResizeMode="CanMinimize">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="500" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="700" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.Background>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="800" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid.Background>
 			<ImageBrush ImageSource="Resources/table.png" Stretch="UniformToFill" />
 		</Grid.Background>
 		<Button Content="Start" Click="Button_Click" Cursor="Help"
 		        ToolTip="Das Spiel (neu-) starten" Grid.Column="0" Grid.Row="2" />
 		<DockPanel d:DataContext="{d:DesignInstance chess:Board}" LastChildFill="True" Grid.Column="1" Grid.Row="1">
-			<StackPanel Orientation="Vertical" FlowDirection="RightToLeft" Width="100" DockPanel.Dock="Left">
-				<ItemsControl ItemsSource="{Binding WhiteGraveYard}">
+			<StackPanel Orientation="Vertical" Width="150" DockPanel.Dock="Left">
+				<ItemsControl ItemsSource="{Binding History}">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
-							<WrapPanel ItemWidth="50" />
+							<WrapPanel ItemWidth="150" />
 						</ItemsPanelTemplate>
 					</ItemsControl.ItemsPanel>
 					<ItemsControl.ItemTemplate>
-						<DataTemplate DataType="pieces:ChessPieceBase">
-							<Image Source="{Binding Texture}" />
-						</DataTemplate>
+						<DataTemplate DataType="cells:HistoryControl" />
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 			</StackPanel>
@@ -129,8 +127,8 @@
 				<cells:CellControl Grid.Column="6" Grid.Row="7" DataContext="{Binding G1}" />
 				<cells:CellControl Grid.Column="7" Grid.Row="7" DataContext="{Binding H1}" />
 			</Grid>
-			<StackPanel Orientation="Vertical" Width="100" DockPanel.Dock="Left">
-				<ItemsControl ItemsSource="{Binding BlackGraveYard}">
+			<StackPanel Orientation="Vertical" Width="150" DockPanel.Dock="Left">
+				<ItemsControl ItemsSource="{Binding GraveYard}">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
 							<WrapPanel ItemWidth="50" />
