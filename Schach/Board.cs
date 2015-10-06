@@ -17,16 +17,6 @@ namespace Chess
 		{
 			AllCells = new Dictionary<string, CellViewModel>();
 
-			for (var number = 1; number <= 8; number++)
-			{
-				for (int character = 'A'; character <= 'H'; character++)
-				{
-					var propertyName = (char) character + number.ToString();
-					var property = (CellViewModel) GetType().GetProperty(propertyName).GetValue(this);
-					AllCells.Add(propertyName, property);
-				}
-			}
-
 			if (hasDefaultValues)
 			{
 				CreateDefaultChessBoard();
@@ -169,7 +159,7 @@ namespace Chess
 
 		private void ResetColors()
 		{
-			foreach (var kvp in AllCells.Where(kvp => !kvp.Value.Bgc.Equals(CellViewModel.IsCheckmateColor)))
+			foreach (var kvp in AllCells.Where(kvp => !Equals(kvp.Value.Bgc, CellViewModel.IsCheckmateColor)))
 			{
 				kvp.Value.Bgc = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 			}
@@ -402,6 +392,16 @@ namespace Chess
 			F1.CreateLink(F2, G2, G1, null, null, null, E1, E2);
 			G1.CreateLink(G2, H2, H1, null, null, null, F1, F2);
 			H1.CreateLink(H2, null, null, null, null, null, G1, G2);
+
+			for (var number = 1; number <= 8; number++)
+			{
+				for (int character = 'A'; character <= 'H'; character++)
+				{
+					var propertyName = (char)character + number.ToString();
+					var property = (CellViewModel)GetType().GetProperty(propertyName).GetValue(this);
+					AllCells.Add(propertyName, property);
+				}
+			}
 		}
 
 		public void AddToGraveYard(CellViewModel cellViewModel)
