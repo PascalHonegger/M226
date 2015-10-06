@@ -146,6 +146,8 @@ namespace Chess
 		{
 			WhiteTurn = !WhiteTurn;
 
+			CalculatePossibleSteps();
+
 			MarkCheck();
 
 			if (CalculateCheckmate())
@@ -154,12 +156,24 @@ namespace Chess
 			}
 		}
 
+		private void CalculatePossibleSteps()
+		{
+			foreach (var cell in AllCells.Select(kvp => kvp.Value).Where(cell => cell.CurrentChessPiece != null))
+			{
+				var dummyCellViewModel = new CellViewModel(new Queen(true), new Board(false));
+                cell.FindPathTo(dummyCellViewModel, true);
+			}
+		}
+
 		private void MarkCheck()
 		{
-			foreach (var king in AllCells.Where(kvp => kvp.Value.CurrentChessPiece is King))
+			foreach (var kingCell in AllCells
+				.Where(cell => cell.Value.CurrentChessPiece is King)
+				.Select(kvp => kvp.Value)
+				.Where(kingCell => kingCell.CanEatHere
+				.Any(path => path.IsWhite != kingCell.CurrentChessPiece.IsWhite())))
 			{
-				if(king)
-				kvp.Value.Bgc = CellViewModel.IsCheckmateColor;
+				kingCell.Bgc = CellViewModel.IsCheckmateColor;
 			}
 		}
 
@@ -167,7 +181,7 @@ namespace Chess
 		{
 
 
-			return true;
+			return false;
 		}
 
 		private void ResetColors()

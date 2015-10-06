@@ -32,6 +32,8 @@ namespace Chess.Cells
 			CurrentChessPiece = currentChessChessPiece;
 			Board = board;
 			Bgc = NothingColor;
+			CanEatHere = new List<Path.Path>();
+			CanMoveHere = new List<Path.Path>();
 		}
 
 		public IChessPiece CurrentChessPiece
@@ -56,7 +58,8 @@ namespace Chess.Cells
 			}
 		}
 
-		public IEnumerable<Path.Path> PathWhichPassedHere { get; set; } 
+		public List<Path.Path> CanEatHere { get; }
+		public List<Path.Path> CanMoveHere { get; }
 
 		public SolidColorBrush Bgc
 		{
@@ -235,23 +238,24 @@ namespace Chess.Cells
 		}
 
 		/// <summary>
-		///     Only checks for a valid Path. Doesn't check that both ChessPieces have to be a different color to be eaten.
+		///     Checks for a valid Path. Does check that both ChessPieces have to be a different color to be eaten.
 		/// </summary>
-		/// <param name="endModel"></param>
-		/// <returns></returns>
-		private bool FindPathTo(CellViewModel endModel)
+		/// <param name="endModel">The Model to move to</param>
+		/// <param name="markCanMove">If true, the two Lists MoveHere and EatHere, which are used for Check and Checkmate</param>
+		/// <returns>Ture, when a possible Path was found, either for walking or eating</returns>
+		public bool FindPathTo(CellViewModel endModel, bool markCanMove = false)
 		{
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
 			{
 				return pawn.PathList.Select(p => p.Clone()).Any(path =>
 				{
-					var canMoveTo = _movements[path.GetStep()]?.MoveTo(path, endModel);
+					var canMoveTo = _movements[path.GetStep()]?.ChecktMoveTo(path, endModel, markCanMove);
 					return canMoveTo != null && (bool) canMoveTo;
 				})
 				       || pawn.EatList.Select(p => p.Clone()).Any(path =>
 				       {
-					       var canEatTo = _movements[path.GetStep()]?.EatTo(path, endModel);
+					       var canEatTo = _movements[path.GetStep()]?.CheckEatTo(path, endModel, markCanMove);
 					       return canEatTo != null && (bool) canEatTo;
 				       });
 			}
@@ -260,22 +264,24 @@ namespace Chess.Cells
 			{
 				return CurrentChessPiece.PathList.Select(p => p.Clone()).Any(path =>
 				{
-					var canJumpTo = _movements[path.GetStep()]?.JumpEatTo(path, endModel);
+					var canJumpTo = _movements[path.GetStep()]?.CheckJumpEatTo(path, endModel, markCanMove);
 					return canJumpTo != null && (bool) canJumpTo;
 				});
 			}
 
 			return CurrentChessPiece != null && CurrentChessPiece.PathList.Select(p => p.Clone()).Any(path =>
 			{
-				var canMoveOrEat = _movements[path.GetStep()]?.MoveEatTo(path, endModel);
-				return canMoveOrEat != null && (bool) canMoveOrEat;
+				var canMoveTo = _movements[path.GetStep()]?.ChecktMoveTo(path, endModel, markCanMove);
+				var canEatTo = _movements[path.GetStep()]?.CheckEatTo(path, endModel, markCanMove);
+				return (canEatTo != null && (bool)canEatTo) || (canMoveTo != null && (bool)canMoveTo);
 			});
 		}
 
-		private bool MoveTo(Path.Path path, CellViewModel endModel)
+		private bool ChecktMoveTo(Path.Path path, CellViewModel endModel, bool markCanMove)
 		{
 			if (CurrentChessPiece != null)
 			{
+				CanMoveHere.Add(path);
 				return false;
 			}
 			if (Equals(this, endModel))
@@ -283,10 +289,10 @@ namespace Chess.Cells
 				return true;
 			}
 
-			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveTo(path, endModel);
+			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].ChecktMoveTo(path, endModel, markCanMove);
 		}
 
-		private bool EatTo(Path.Path path, CellViewModel endModel)
+		private bool CheckEatTo(Path.Path path, CellViewModel endModel, bool markCanMove)
 		{
 			if (Equals(this, endModel) && CurrentChessPiece != null)
 			{
@@ -297,31 +303,17 @@ namespace Chess.Cells
 				return false;
 			}
 
-			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].EatTo(path, endModel);
+			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].CheckEatTo(path, endModel, markCanMove);
 		}
 
-		private bool MoveEatTo(Path.Path path, CellViewModel endModel)
-		{
-			if (Equals(this, endModel))
-			{
-				return true;
-			}
-			if (CurrentChessPiece != null)
-			{
-				return false;
-			}
-
-			return _movements[path.GetNextStep()] != null && _movements[path.GetStep()].MoveEatTo(path, endModel);
-		}
-
-		private bool JumpEatTo(Path.Path path, CellViewModel endModel)
+		private bool CheckJumpEatTo(Path.Path path, CellViewModel endModel, bool markCanMove)
 		{
 			if (path.GetNextStep() == Movement.Direction.Final && Equals(this, endModel))
 			{
 				return true;
 			}
 
-			return _movements[path.GetStep()] != null && _movements[path.GetStep()].JumpEatTo(path, endModel);
+			return _movements[path.GetStep()] != null && _movements[path.GetStep()].CheckJumpEatTo(path, endModel, markCanMove);
 		}
 
 		#endregion
