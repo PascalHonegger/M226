@@ -111,11 +111,11 @@ namespace Chess.Cells
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
 			{
-				foreach (var movePath in pawn.PathList)
+				foreach (var movePath in pawn.PathList.Select(p => p.Clone()))
 				{
 					_movements[movePath.GetStep()]?.ColorizeMove(movePath);
 				}
-				foreach (var eatPath in pawn.EatList)
+				foreach (var eatPath in pawn.EatList.Select(p => p.Clone()))
 				{
 					_movements[eatPath.GetStep()]?.ColorizeEat(eatPath, CurrentChessPiece.IsWhite());
 				}
