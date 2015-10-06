@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media;
 using Chess.Cells;
 using Chess.ChessPieces;
@@ -10,6 +12,34 @@ namespace Chess
 		private ObservableCollection<IChessPiece> _graveYard;
 		private CellViewModel _selectedCellViewModel;
 		private bool _whiteTurn;
+
+		public Board(bool hasDefaultValues = true)
+		{
+			AllCells = new Dictionary<string, CellViewModel>();
+
+			for (var number = 1; number <= 8; number++)
+			{
+				for (int character = 'A'; character <= 'H'; character++)
+				{
+					var propertyName = (char) character + number.ToString();
+					var property = (CellViewModel) GetType().GetProperty(propertyName).GetValue(this);
+					AllCells.Add(propertyName, property);
+				}
+			}
+
+			if (hasDefaultValues)
+			{
+				CreateDefaultChessBoard();
+			}
+			else
+			{
+				CreateEmptyChessBoard();
+			}
+
+			History = new ObservableCollection<HistoryControl>();
+
+			WhiteTurn = true;
+		}
 
 		public CellViewModel SelectedCellViewModel
 		{
@@ -36,49 +66,18 @@ namespace Chess
 			}
 		}
 
-		private void NextTurn()
-		{
-			WhiteTurn = !WhiteTurn;
-		}
-
+		// ReSharper disable once ConvertToAutoProperty
 		private bool WhiteTurn
 		{
 			get { return _whiteTurn; }
 			set
 			{
-				if (_whiteTurn == value) return;
 				_whiteTurn = value;
-				
-			}
-		}
 
-		private void ResetColors()
-		{
-			for (var number = 1; number <= 8; number++)
-			{
-				for (int character = 'A'; character <= 'H'; character++)
-				{
-					var propertyName = (char)character + number.ToString();
-					var property = (CellViewModel) GetType().GetProperty(propertyName).GetValue(this);
-					property.Bgc = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-				}
-			}
-		}
+				//TODO Track time for each Player
 
-		public Board(bool hasDefaultValues = true)
-		{
-			if (hasDefaultValues)
-			{
-				CreateDefaultChessBoard();
+				//TODO Give GUI-Feedback, that the turn counted and the other Color has to play
 			}
-			else
-			{
-				CreateEmptyChessBoard();
-			}
-
-			History = new ObservableCollection<HistoryControl>();
-
-			WhiteTurn = true;
 		}
 
 		public ObservableCollection<IChessPiece> GraveYard
@@ -149,7 +148,32 @@ namespace Chess
 		public CellViewModel G1 { get; set; }
 		public CellViewModel H1 { get; set; }
 
-		public ObservableCollection<HistoryControl> History { get;}
+		public ObservableCollection<HistoryControl> History { get; }
+
+		public Dictionary<string, CellViewModel> AllCells { get; }
+
+		private void NextTurn()
+		{
+			WhiteTurn = !WhiteTurn;
+
+			if (CalculateCheckmate())
+			{
+				//TODO GameOver
+			}
+		}
+
+		private bool CalculateCheckmate()
+		{
+			return true;
+		}
+
+		private void ResetColors()
+		{
+			foreach (var kvp in AllCells.Where(kvp => !kvp.Value.Bgc.Equals(CellViewModel.IsCheckmateColor)))
+			{
+				kvp.Value.Bgc = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+			}
+		}
 
 		private void CreateDefaultChessBoard()
 		{
@@ -409,10 +433,10 @@ namespace Chess
 
 			var historyControl = new HistoryControl
 			{
-				From = { DataContext = from },
-				To = { DataContext = to },
-				FromText = {Text = GetCellName(startModel) },
-				ToText = {Text = GetCellName(endModel) }
+				From = {DataContext = from},
+				To = {DataContext = to},
+				FromText = {Text = GetCellName(startModel)},
+				ToText = {Text = GetCellName(endModel)}
 			};
 
 			History.Add(historyControl);
@@ -420,19 +444,7 @@ namespace Chess
 
 		private string GetCellName(CellViewModel nameNeeded)
 		{
-			for (var number = 1; number <= 8; number++)
-			{
-				for (int character = 'A'; character <= 'H'; character++)
-				{
-					var propertyName = (char)character + number.ToString();
-					var property = GetType().GetProperty(propertyName).GetValue(this);
-					if (property.Equals(nameNeeded))
-					{
-						return propertyName;
-					}
-				}
-			}
-			return "";
+			return AllCells.FirstOrDefault(kp => kp.Value.Equals(nameNeeded)).Key;
 		}
 	}
 }

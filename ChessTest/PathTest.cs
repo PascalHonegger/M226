@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
@@ -15,14 +17,13 @@ namespace ChessTest
 		private static void CompareBoards(Board board1, Board board2)
 		{
 			Assert.That(board1.GraveYard, Is.EqualTo(board2.GraveYard));
-			for (var number = 1; number <= 8; number++)
+
+
+			foreach (var keyvalue1 in board1.AllCells)
 			{
-				for (int character = 'A'; character <= 'H'; character++)
+				foreach (var keyvalue2 in board2.AllCells.Where(keyvalue2 => keyvalue1.Key == keyvalue2.Key))
 				{
-					var propertyName = (char) character + number.ToString();
-					var property1 = board1.GetType().GetProperty(propertyName).GetValue(board1);
-					var property2 = board2.GetType().GetProperty(propertyName).GetValue(board2);
-					Assert.That(property1, Is.EqualTo(property2), "Property {0} war nicht gleich!", propertyName);
+					Assert.That(keyvalue1.Value, Is.EqualTo(keyvalue2.Value), "Property {0} war nicht gleich!", keyvalue1.Key);
 				}
 			}
 		}
