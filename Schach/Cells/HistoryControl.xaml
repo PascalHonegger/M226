@@ -16,10 +16,9 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		<local:CellControl Grid.Column="0" Grid.Row="0" d:DataContext="{d:DesignInstance local:CellViewModel}" DataContextChanged="OnDataContextChangedFrom" x:Name="From" />
+		<Image Grid.Column="0" Grid.Row="0" d:DataContext="{d:DesignInstance local:CellViewModel}" x:Name="From" Source="{Binding Image}"/>
         <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Source="/Chess;component/Resources/arrow.png" />
-        <local:CellControl Grid.Column="2" Grid.Row="0" d:DataContext="{d:DesignInstance local:CellViewModel}"
-		                   DataContextChanged="OnDataContextChangedTo" x:Name="To" />
+        <Image Grid.Column="2" Grid.Row="0" d:DataContext="{d:DesignInstance local:CellViewModel}" x:Name="To" Source="{Binding Image}"/>
 		<TextBlock Grid.Column="0" Grid.Row="1" x:Name="FromText"/>
 		<TextBlock Grid.Column="2" Grid.Row="1" x:Name="ToText"/>
 	</Grid>

@@ -26,19 +26,21 @@
 		<Button Content="Start" Click="Button_Click" Cursor="Help"
 		        ToolTip="Das Spiel (neu-) starten" Grid.Column="0" Grid.Row="2" />
 		<DockPanel d:DataContext="{d:DesignInstance chess:Board}" LastChildFill="True" Grid.Column="1" Grid.Row="1">
-			<StackPanel Orientation="Vertical" Width="150" DockPanel.Dock="Left">
-				<ItemsControl ItemsSource="{Binding History}">
-					<ItemsControl.ItemsPanel>
-						<ItemsPanelTemplate>
-							<WrapPanel ItemWidth="150" />
-						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-					<ItemsControl.ItemTemplate>
-						<DataTemplate DataType="cells:HistoryControl" />
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-			</StackPanel>
-			<Grid DockPanel.Dock="Left" Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" Height="500">
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical" Width="150" DockPanel.Dock="Left">
+                    <ItemsControl ItemsSource="{Binding History}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemWidth="150" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="cells:HistoryControl" />
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+            <Grid DockPanel.Dock="Left" Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" Height="500">
 				<Grid.Background>
 					<ImageBrush ImageSource="Resources/chessboard.jpg" />
 				</Grid.Background>

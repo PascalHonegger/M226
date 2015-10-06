@@ -20,21 +20,9 @@ namespace Chess.Cells
 	/// </summary>
 	public partial class HistoryControl
 	{
-		public int test { get; set; }
-
 		public HistoryControl()
 		{
 			InitializeComponent();
-		}
-
-		private void OnDataContextChangedTo(object sender, DependencyPropertyChangedEventArgs e)
-		{
-			//throw new NotImplementedException();
-		}
-
-		private void OnDataContextChangedFrom(object sender, DependencyPropertyChangedEventArgs e)
-		{
-			//throw new NotImplementedException();
 		}
 	}
 }

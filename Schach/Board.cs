@@ -149,7 +149,7 @@ namespace Chess
 		public CellViewModel G1 { get; set; }
 		public CellViewModel H1 { get; set; }
 
-		public ObservableCollection<HistoryControl> History { get; private set; }
+		public ObservableCollection<HistoryControl> History { get;}
 
 		private void CreateDefaultChessBoard()
 		{
@@ -169,7 +169,7 @@ namespace Chess
 			E7 = new CellViewModel(new Pawn(false), this);
 			F7 = new CellViewModel(new Pawn(false), this);
 			G7 = new CellViewModel(new Pawn(false), this);
-			H7 = new CellViewModel(new Pawn(false), this, "H7");
+			H7 = new CellViewModel(new Pawn(false), this);
 
 			A6 = new CellViewModel(null, this);
 			B6 = new CellViewModel(null, this);
@@ -178,7 +178,7 @@ namespace Chess
 			E6 = new CellViewModel(null, this);
 			F6 = new CellViewModel(null, this);
 			G6 = new CellViewModel(null, this);
-			H6 = new CellViewModel(null, this, "H6");
+			H6 = new CellViewModel(null, this);
 
 			A5 = new CellViewModel(null, this);
 			B5 = new CellViewModel(null, this);
