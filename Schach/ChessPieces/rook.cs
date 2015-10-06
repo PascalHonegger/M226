@@ -14,16 +14,16 @@ namespace Chess.ChessPieces
 
 			PathList.Add(
 				new PathFactory().AddToPath
-					(Movement.Direction.Top).SetIsRecursive(true).Create());
+					(Movement.Direction.Top).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
 				new PathFactory().AddToPath
-					(Movement.Direction.Left).SetIsRecursive(true).Create());
+					(Movement.Direction.Left).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
 				new PathFactory().AddToPath
-					(Movement.Direction.Bottom).SetIsRecursive(true).Create());
+					(Movement.Direction.Bottom).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
 				new PathFactory().AddToPath
-					(Movement.Direction.Right).SetIsRecursive(true).Create());
+					(Movement.Direction.Right).SetIsRecursive(true).Create(isWhite));
 		}
 	}
 }

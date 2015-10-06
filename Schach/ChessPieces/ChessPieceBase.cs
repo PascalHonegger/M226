@@ -32,10 +32,10 @@ namespace Chess.ChessPieces
 				{
 					PathList.RemoveAll(
 						path =>
-							path.Equals(new PathFactory().AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.Top).Create()));
+							path.Equals(new PathFactory().AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.Top).Create(true)));
 					PathList.RemoveAll(
 						path =>
-							path.Equals(new PathFactory().AddToPath(Movement.Direction.Bottom).AddToPath(Movement.Direction.Bottom).Create()));
+							path.Equals(new PathFactory().AddToPath(Movement.Direction.Bottom).AddToPath(Movement.Direction.Bottom).Create(false)));
 				}
 				_didMove = value;
 			}

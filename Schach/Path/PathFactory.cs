@@ -23,12 +23,15 @@ namespace Chess.Path
 			return this;
 		}
 
-		public Path Create()
+		public Path Create(bool isWhite)
 		{
 			if (!_movementList.IsRecursive)
 			{
 				_movementList.Add(Movement.Direction.Final);
 			}
+
+			_movementList.IsWhite = isWhite;
+
 			return _movementList;
 		}
 	}

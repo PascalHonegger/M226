@@ -16,6 +16,8 @@ namespace Chess.Path
 
 		public bool IsRecursive { get; set; }
 
+		public bool IsWhite { get; set; }
+
 		IEnumerator<Movement.Direction> IEnumerable<Movement.Direction>.GetEnumerator()
 		{
 			return _path.GetEnumerator();
@@ -56,7 +58,7 @@ namespace Chess.Path
 
 			factory.SetIsRecursive(IsRecursive);
 
-			return factory.Create();
+			return factory.Create(IsWhite);
 
 			// return (Path)MemberwiseClone();
 		}

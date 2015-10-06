@@ -146,14 +146,27 @@ namespace Chess
 		{
 			WhiteTurn = !WhiteTurn;
 
+			MarkCheck();
+
 			if (CalculateCheckmate())
 			{
 				//TODO GameOver
 			}
 		}
 
+		private void MarkCheck()
+		{
+			foreach (var king in AllCells.Where(kvp => kvp.Value.CurrentChessPiece is King))
+			{
+				if(king)
+				kvp.Value.Bgc = CellViewModel.IsCheckmateColor;
+			}
+		}
+
 		private bool CalculateCheckmate()
 		{
+
+
 			return true;
 		}
 
@@ -161,7 +174,7 @@ namespace Chess
 		{
 			foreach (var kvp in AllCells.Where(kvp => !Equals(kvp.Value.Bgc, CellViewModel.IsCheckmateColor)))
 			{
-				kvp.Value.Bgc = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+				kvp.Value.Bgc = CellViewModel.NothingColor;
 			}
 		}
 

@@ -16,6 +16,7 @@ namespace Chess.Cells
 		public static readonly SolidColorBrush IsCheckmateColor = new SolidColorBrush(Color.FromArgb(205, 255, 0, 0));
 		private static readonly SolidColorBrush CanEatColor = new SolidColorBrush(Color.FromArgb(205, 255, 171, 0));
 		private static readonly SolidColorBrush HighlightedColor = new SolidColorBrush(Color.FromArgb(205, 91, 100, 113));
+		public static readonly SolidColorBrush NothingColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
 		private readonly Dictionary<Movement.Direction, CellViewModel> _movements =
 			new Dictionary<Movement.Direction, CellViewModel>();
@@ -25,13 +26,12 @@ namespace Chess.Cells
 		private SolidColorBrush _bgc;
 		private IChessPiece _currentChessPiece;
 		private BitmapSource _image;
-		public string name;
 
-		public CellViewModel(IChessPiece currentChessChessPiece, Board board, string test = "")
+		public CellViewModel(IChessPiece currentChessChessPiece, Board board)
 		{
-			name = test;
 			CurrentChessPiece = currentChessChessPiece;
 			Board = board;
+			Bgc = NothingColor;
 		}
 
 		public IChessPiece CurrentChessPiece
@@ -55,6 +55,8 @@ namespace Chess.Cells
 				OnPropertyChanged(nameof(Image));
 			}
 		}
+
+		public IEnumerable<Path.Path> PathWhichPassedHere { get; set; } 
 
 		public SolidColorBrush Bgc
 		{
