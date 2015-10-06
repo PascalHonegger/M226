@@ -18,6 +18,8 @@ namespace Chess.Path
 
 		public bool IsWhite { get; set; }
 
+		public CellViewModel StartCell { get; set; }
+
 		IEnumerator<Movement.Direction> IEnumerable<Movement.Direction>.GetEnumerator()
 		{
 			return _path.GetEnumerator();

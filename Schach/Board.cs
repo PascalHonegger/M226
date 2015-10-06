@@ -28,7 +28,9 @@ namespace Chess
 
 			History = new ObservableCollection<HistoryControl>();
 
-			WhiteTurn = true;
+			WhiteTurn = false;
+
+			NextTurn();
 		}
 
 		public CellViewModel SelectedCellViewModel
@@ -146,6 +148,12 @@ namespace Chess
 		{
 			WhiteTurn = !WhiteTurn;
 
+			foreach (var cell in AllCells.Select(kvp => kvp.Value))
+			{
+				cell.CanEatHere.Clear();
+				cell.CanMoveHere.Clear();
+			}
+
 			CalculatePossibleSteps();
 
 			MarkCheck();
@@ -160,8 +168,7 @@ namespace Chess
 		{
 			foreach (var cell in AllCells.Select(kvp => kvp.Value).Where(cell => cell.CurrentChessPiece != null))
 			{
-				var dummyCellViewModel = new CellViewModel(new Queen(true), new Board(false));
-                cell.FindPathTo(dummyCellViewModel, true);
+				cell.MarkPaths();
 			}
 		}
 
