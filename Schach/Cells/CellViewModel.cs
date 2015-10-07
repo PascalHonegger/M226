@@ -19,10 +19,9 @@ namespace Chess.Cells
 		private static readonly SolidColorBrush HighlightedColor = new SolidColorBrush(Color.FromArgb(205, 91, 100, 113));
 		public static readonly SolidColorBrush NothingColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
-		private readonly Dictionary<Movement.Direction, CellViewModel> _movements =
-			new Dictionary<Movement.Direction, CellViewModel>();
-
 		public readonly Board Board;
+
+		public Dictionary<Movement.Direction, CellViewModel> Movements { get; } = new Dictionary<Movement.Direction, CellViewModel>();
 
 		private SolidColorBrush _bgc;
 		private IChessPiece _currentChessPiece;
@@ -36,6 +35,8 @@ namespace Chess.Cells
 			CanEatHere = new List<Path.Path>();
 			CanMoveHere = new List<Path.Path>();
 		}
+
+		public string Name { get; set; }
 
 		public IChessPiece CurrentChessPiece
 		{
@@ -88,15 +89,15 @@ namespace Chess.Cells
 		public void CreateLink(CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
 			CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
 		{
-			_movements.Add(Movement.Direction.Top, top);
-			_movements.Add(Movement.Direction.TopRight, topright);
-			_movements.Add(Movement.Direction.Right, right);
-			_movements.Add(Movement.Direction.BottomRight, bottomright);
-			_movements.Add(Movement.Direction.Bottom, bottom);
-			_movements.Add(Movement.Direction.BottomLeft, bottomleft);
-			_movements.Add(Movement.Direction.Left, left);
-			_movements.Add(Movement.Direction.TopLeft, topleft);
-			_movements.Add(Movement.Direction.Final, null);
+			Movements.Add(Movement.Direction.Top, top);
+			Movements.Add(Movement.Direction.TopRight, topright);
+			Movements.Add(Movement.Direction.Right, right);
+			Movements.Add(Movement.Direction.BottomRight, bottomright);
+			Movements.Add(Movement.Direction.Bottom, bottom);
+			Movements.Add(Movement.Direction.BottomLeft, bottomleft);
+			Movements.Add(Movement.Direction.Left, left);
+			Movements.Add(Movement.Direction.TopLeft, topleft);
+			Movements.Add(Movement.Direction.Final, null);
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -121,11 +122,11 @@ namespace Chess.Cells
 			{
 				foreach (var movePath in pawn.PathList.Select(p => p.Clone()))
 				{
-					_movements[movePath.GetStep()]?.ColorizeMove(movePath);
+					Movements[movePath.GetStep()]?.ColorizeMove(movePath);
 				}
 				foreach (var eatPath in pawn.EatList.Select(p => p.Clone()))
 				{
-					_movements[eatPath.GetStep()]?.ColorizeEat(eatPath, CurrentChessPiece.IsWhite());
+					Movements[eatPath.GetStep()]?.ColorizeEat(eatPath, CurrentChessPiece.IsWhite());
 				}
 
 				return;
@@ -135,11 +136,11 @@ namespace Chess.Cells
 			{
 				if (CurrentChessPiece is Knight)
 				{
-					_movements[path.GetStep()]?.ColorizeJump(path, CurrentChessPiece.IsWhite());
+					Movements[path.GetStep()]?.ColorizeJump(path, CurrentChessPiece.IsWhite());
 				}
 				else
 				{
-					_movements[path.GetStep()]?.ColorizeMoveEat(path, CurrentChessPiece.IsWhite());
+					Movements[path.GetStep()]?.ColorizeMoveEat(path, CurrentChessPiece.IsWhite());
 				}
 			}
 		}
@@ -159,7 +160,7 @@ namespace Chess.Cells
 			}
 			else
 			{
-				_movements[path.GetStep()]?.ColorizeJump(path, isWhite);
+				Movements[path.GetStep()]?.ColorizeJump(path, isWhite);
 			}
 		}
 
@@ -182,7 +183,7 @@ namespace Chess.Cells
 			}
 			if (path.GetStep() != Movement.Direction.Final)
 			{
-				_movements[path.GetNextStep()]?.ColorizeEat(path, isWhite);
+				Movements[path.GetNextStep()]?.ColorizeEat(path, isWhite);
 			}
 		}
 
@@ -195,7 +196,7 @@ namespace Chess.Cells
 			Bgc = CanMoveColor;
 			if (path.GetStep() != Movement.Direction.Final)
 			{
-				_movements[path.GetNextStep()]?.ColorizeMove(path);
+				Movements[path.GetNextStep()]?.ColorizeMove(path);
 			}
 		}
 
@@ -252,12 +253,12 @@ namespace Chess.Cells
 				foreach (var path in pawn.PathList.Select(p => p.Clone()))
 				{
 					path.StartCell = this;
-					_movements[path.GetStep()]?.MarkMoveTo(path);
+					Movements[path.GetStep()]?.MarkMoveTo(path);
 				}
 				foreach (var path in pawn.EatList.Select(p => p.Clone()))
 				{
 					path.StartCell = this;
-					_movements[path.GetStep()]?.MarkEatTo(path);
+					Movements[path.GetStep()]?.MarkEatTo(path);
 				}
 			}
 			else if (CurrentChessPiece is Knight)
@@ -265,17 +266,22 @@ namespace Chess.Cells
 				foreach (var path in CurrentChessPiece.PathList.Select(p => p.Clone()))
 				{
 					path.StartCell = this;
-					_movements[path.GetStep()]?.CheckJumpEatTo(path);
+					Movements[path.GetStep()]?.CheckJumpEatTo(path);
 				}
 			}
 			else
 			{
-				foreach (var path in CurrentChessPiece.PathList.Select(p => p.Clone()))
+				var enumerable = CurrentChessPiece.PathList?.Select(p => p.Clone());
+				if (enumerable == null)
 				{
-					path.StartCell = this;
-					_movements[path.GetStep()]?.MarkMoveTo(path);
-					_movements[path.GetStep()]?.MarkEatTo(path);
+					return;
 				}
+					foreach (var path in enumerable)
+					{
+						path.StartCell = this;
+						Movements[path.GetStep()]?.MarkMoveTo(path);
+						Movements[path.GetStep()]?.MarkEatTo(path);
+					}
 			}
 		}
 
@@ -288,9 +294,9 @@ namespace Chess.Cells
 
 			CanMoveHere.Add(path);
 
-			if (_movements[path.GetNextStep()] != null)
+			if (Movements[path.GetNextStep()] != null)
 			{
-				_movements[path.GetStep()].MarkMoveTo(path);
+				Movements[path.GetStep()].MarkMoveTo(path);
 			}
 		}
 
@@ -302,9 +308,9 @@ namespace Chess.Cells
 				return;
 			}
 
-			if (_movements[path.GetNextStep()] != null)
+			if (Movements[path.GetNextStep()] != null)
 			{
-				_movements[path.GetStep()].MarkEatTo(path);
+				Movements[path.GetStep()].MarkEatTo(path);
 			}
 		}
 
@@ -317,9 +323,9 @@ namespace Chess.Cells
 				return;
 			}
 
-			if (_movements[path.GetStep()] != null)
+			if (Movements[path.GetStep()] != null)
 			{
-				_movements[path.GetStep()].CheckJumpEatTo(path);
+				Movements[path.GetStep()].CheckJumpEatTo(path);
 			}
 		}
 

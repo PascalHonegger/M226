@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
@@ -9,13 +10,13 @@ using NUnit.Framework;
 namespace ChessTest
 {
 	[TestFixture]
-	public class CellViewModelTest
+	public class CellViewModelTest : TestBase
 	{
 		private Board _board;
-		private readonly Mock<ChessPieceBase> _whiteChessPieceMock;
-		private readonly Mock<ChessPieceBase> _blackChessPieceMock;
+		private Mock<ChessPieceBase> _whiteChessPieceMock;
+		private Mock<ChessPieceBase> _blackChessPieceMock;
 
-		public CellViewModelTest()
+		public override void DoSetUp()
 		{
 			_blackChessPieceMock = new Mock<ChessPieceBase>();
 			_blackChessPieceMock
@@ -34,15 +35,33 @@ namespace ChessTest
 				.Returns(false);
 		}
 
+		public override void DoTearDown()
+		{
+		}
+
+		private static void CompareBoards(Board board1, Board board2)
+		{
+			Assert.That(board1.GraveYard, Is.EqualTo(board2.GraveYard));
+
+
+			foreach (var keyvalue1 in board1.AllCells)
+			{
+				foreach (var keyvalue2 in board2.AllCells.Where(keyvalue2 => keyvalue1 == keyvalue2))
+				{
+					Assert.That(keyvalue1, Is.EqualTo(keyvalue2), "Property {0} war nicht gleich!", keyvalue1.Name);
+				}
+			}
+		}
+
 		[Test]
 		public void EatImpossible()
 		{
 			// Arrange
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(),
-				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create()
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(true),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(true),
+				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create(true)
 			};
 
 			var chessPieceMock = new Mock<ChessPieceBase>();
@@ -53,7 +72,7 @@ namespace ChessTest
 				.Setup(mock => mock.PathList)
 				.Returns(pathList);
 
-			_board = new Board
+			_board = new Board(false)
 			{
 				D5 = {CurrentChessPiece = chessPieceMock.Object},
 				D4 = {CurrentChessPiece = _blackChessPieceMock.Object},
@@ -68,6 +87,7 @@ namespace ChessTest
 			var b3 = _board.B3.CurrentChessPiece;
 
 			// Act
+			_board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D5, _board.D3);
 			CellViewModel.MoveModel(_board.D5, _board.D3);
 			CellViewModel.MoveModel(_board.D5, _board.B5);
@@ -89,8 +109,8 @@ namespace ChessTest
 			// Arrange
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create()
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(true),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(true)
 			};
 
 			var unitUnderTest = new Mock<ChessPieceBase>();
@@ -104,7 +124,7 @@ namespace ChessTest
 				.Setup(mock => mock.PathList)
 				.Returns(pathList);
 
-			_board = new Board
+			_board = new Board(false)
 			{
 				D4 = {CurrentChessPiece = unitUnderTest.Object},
 				D3 = {CurrentChessPiece = _blackChessPieceMock.Object}
@@ -113,6 +133,7 @@ namespace ChessTest
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act
+			_board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D4, _board.D3);
 
 			// Assert
@@ -127,8 +148,8 @@ namespace ChessTest
 		{
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(),
-				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create()
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(true),
+				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create(true)
 			};
 
 			var unitUnderTest = new Mock<ChessPieceBase>();
@@ -152,6 +173,7 @@ namespace ChessTest
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act
+			_board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D5, _board.D3);
 			CellViewModel.MoveModel(_board.D5, _board.B3);
 			CellViewModel.MoveModel(_board.D5, _board.B5);
@@ -173,15 +195,15 @@ namespace ChessTest
 		{
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(true),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(true),
 				new PathFactory().AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Top)
 					.SetIsRecursive(false)
-					.Create()
+					.Create(true)
 			};
 
 			var chessPieceMock = new Mock<ChessPieceBase>();
@@ -200,6 +222,7 @@ namespace ChessTest
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act
+			_board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D4, _board.H5);
 
 			// Assert
@@ -211,6 +234,8 @@ namespace ChessTest
 		[Test]
 		public void TestPathFinding()
 		{
+			//TODO this
+
 			// Arrange
 
 
@@ -218,6 +243,8 @@ namespace ChessTest
 
 
 			// Assert
+
+			Assert.IsTrue(true);
 		}
 	}
 }

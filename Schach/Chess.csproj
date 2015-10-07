@@ -122,6 +122,7 @@
       <DependentUpon>HistoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cells\Extensions.cs" />
+    <Compile Include="Cells\HistoryViewModel.cs" />
     <Compile Include="Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />
     <Compile Include="ChessPieces\ChessPieceBase.cs" />
