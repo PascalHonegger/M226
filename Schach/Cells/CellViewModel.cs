@@ -220,7 +220,10 @@ namespace Chess.Cells
 				return;
 			}
 
-			CanMoveHere.Add(path);
+			if (Board.ValidateMovement(path.StartCell, this))
+			{
+				CanMoveHere.Add(path);
+			}
 
 			if (Movements[path.GetNextStep()] != null)
 			{
@@ -232,7 +235,7 @@ namespace Chess.Cells
 		{
 			if (CurrentChessPiece != null)
 			{
-				if (CurrentChessPiece.IsWhite() != path.IsWhite)
+				if (CurrentChessPiece.IsWhite() != path.IsWhite && Board.ValidateMovement(path.StartCell, this))
 				{
 					CanEatHere.Add(path);
 				}
@@ -249,11 +252,11 @@ namespace Chess.Cells
 		{
 			if (path.GetNextStep() == Movement.Direction.Final)
 			{
-				if (CurrentChessPiece == null)
+				if (CurrentChessPiece == null && Board.ValidateMovement(path.StartCell, this))
 				{
 					CanMoveHere.Add(path);
 				}
-				else if (CurrentChessPiece.IsWhite() != path.IsWhite)
+				else if (CurrentChessPiece?.IsWhite() != path.IsWhite && Board.ValidateMovement(path.StartCell, this))
 				{
 					CanEatHere.Add(path);
 				}

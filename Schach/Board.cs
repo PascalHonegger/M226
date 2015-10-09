@@ -14,9 +14,9 @@ namespace Chess
 	public sealed class Board : INotifyPropertyChanged
 	{
 		private ObservableCollection<IChessPiece> _graveYard;
+		private bool _isNotCheckmated;
 		private CellViewModel _selectedCellViewModel;
 		private bool _whiteTurn;
-		private bool _isNotCheckmated;
 
 		public Board(bool hasDefaultValues = true)
 		{
@@ -36,29 +36,6 @@ namespace Chess
 			WhiteTurn = false;
 
 			NextTurn();
-		}
-
-		public void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
-		{
-			ResetColors();
-
-			if (mouseButtonState.LeftButton == MouseButtonState.Pressed)
-			{
-				// Select CellViewModel, => Do Turn
-				SelectedCellViewModel = cellThatGotClicked;
-			}
-			else if (mouseButtonState.RightButton == MouseButtonState.Pressed)
-			{
-				// Mark CellViewModel's which can move here, just colorisation
-				foreach (var canMoveHere in cellThatGotClicked.CanMoveHere)
-				{
-					canMoveHere.StartCell.Bgc = CellViewModel.CanMoveHereColor;
-				}
-				foreach (var canEathere in cellThatGotClicked.CanEatHere)
-				{
-					canEathere.StartCell.Bgc = CellViewModel.CanEatHereColor;
-				}
-			}
 		}
 
 		private CellViewModel SelectedCellViewModel
@@ -182,7 +159,32 @@ namespace Chess
 			}
 		}
 
-		private void  NextTurn()
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
+		{
+			ResetColors();
+
+			if (mouseButtonState.LeftButton == MouseButtonState.Pressed)
+			{
+				// Select CellViewModel, => Do Turn
+				SelectedCellViewModel = cellThatGotClicked;
+			}
+			else if (mouseButtonState.RightButton == MouseButtonState.Pressed)
+			{
+				// Mark CellViewModel's which can move here, just colorisation
+				foreach (var canMoveHere in cellThatGotClicked.CanMoveHere)
+				{
+					canMoveHere.StartCell.Bgc = CellViewModel.CanMoveHereColor;
+				}
+				foreach (var canEathere in cellThatGotClicked.CanEatHere)
+				{
+					canEathere.StartCell.Bgc = CellViewModel.CanEatHereColor;
+				}
+			}
+		}
+
+		private void NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;
 
@@ -210,8 +212,10 @@ namespace Chess
 
 			var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();
 
-			AllCells.ForEach(cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
-			AllCells.ForEach(cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+			AllCells.ForEach(
+				cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+			AllCells.ForEach(
+				cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
 
 			var values = possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
 
@@ -235,14 +239,14 @@ namespace Chess
 			foreach (var kingCell in AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
 				.Where(kingCell => kingCell.CanEatHere
-				.Any(path => path.IsWhite != kingCell.CurrentChessPiece.IsWhite())))
+					.Any(path => path.IsWhite != kingCell.CurrentChessPiece.IsWhite())))
 			{
 				kingCell.Bgc = CellViewModel.IsCheckmateColor;
 			}
 		}
 
 		/// <summary>
-		/// Calculated, wheter a player is checkmated or not
+		///     Calculated, wheter a player is checkmated or not
 		/// </summary>
 		/// <returns>True, when the current player is checkmated</returns>
 		private bool CalculateCheckmated()
@@ -254,26 +258,35 @@ namespace Chess
 				return false;
 			}
 
-				var checkedKing = AllCells
+			var checkedKing = AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
-				.Where(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn).FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
+				.Where(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn)
+				.FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
 
 			if (checkedKing == null)
 			{
 				return false;
 			}
 
-			foreach (var cellViewModel in checkedKing.Movements.Select(o => o.Value))
+			foreach (var cellViewModel in checkedKing.Movements.Select(o => o.Value).Where(o => o != null))
 			{
-				if (!cellViewModel.CanEatHere.Any() && cellViewModel.CanMoveHere.Any(o => o.StartCell.Equals(checkedKing)))
+				if (cellViewModel.CanMoveHere.Any(o => o.StartCell.Equals(checkedKing)) &&
+				    cellViewModel.CanMoveHere.Any(o => o.IsWhite == checkedKing.CurrentChessPiece.IsWhite()) &&
+				    cellViewModel.CanEatHere.All(o => o.StartCell.Equals(checkedKing)))
 				{
 					return false;
 				}
 			}
 
-			
 
 			return false;
+		}
+
+		public bool ValidateMovement(CellViewModel from, CellViewModel to)
+		{
+			var tmpAllCells = AllCells.ToList();
+
+			return true;
 		}
 
 		private void ResetColors()
@@ -516,8 +529,8 @@ namespace Chess
 			{
 				for (int character = 'A'; character <= 'H'; character++)
 				{
-					var propertyName = (char)character + number.ToString();
-					var property = (CellViewModel)GetType().GetProperty(propertyName).GetValue(this);
+					var propertyName = (char) character + number.ToString();
+					var property = (CellViewModel) GetType().GetProperty(propertyName).GetValue(this);
 					property.Name = propertyName;
 					AllCells.Add(property);
 				}
@@ -551,7 +564,7 @@ namespace Chess
 
 			var to = new CellViewModel(endModel.CurrentChessPiece, endModel.Board);
 
-			var historyViewModel = new HistoryViewModel()
+			var historyViewModel = new HistoryViewModel
 			{
 				FromImage = from.Image,
 				ToImage = to.Image,
@@ -561,8 +574,6 @@ namespace Chess
 
 			History.Add(historyViewModel);
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
