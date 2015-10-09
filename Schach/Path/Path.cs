@@ -69,22 +69,12 @@ namespace Chess.Path
 		{
 			var other = obj as Path;
 
-			if (other == null)
+			if (other?.IsRecursive != IsRecursive)
 			{
 				return false;
 			}
 
-			if (other.IsRecursive != IsRecursive)
-			{
-				return false;
-			}
-
-			if (other.Count() != this.Count())
-			{
-				return false;
-			}
-
-			return true;
+			return other.Count() == this.Count();
 		}
 
 		public override int GetHashCode()

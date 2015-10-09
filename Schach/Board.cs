@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -68,6 +69,7 @@ namespace Chess
 				if (CellViewModel.MoveModel(_selectedCellViewModel, value))
 				{
 					NextTurn();
+					ResetColors();
 				}
 				// Select ViewModel, if it's the players turn
 				else if (value?.CurrentChessPiece != null && WhiteTurn == value.CurrentChessPiece.IsWhite())
@@ -79,6 +81,7 @@ namespace Chess
 				else
 				{
 					_selectedCellViewModel = null;
+					ResetColors();
 				}
 			}
 		}
@@ -179,7 +182,7 @@ namespace Chess
 			}
 		}
 
-		private void NextTurn()
+		private void  NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;
 
@@ -194,6 +197,29 @@ namespace Chess
 			MarkCheck();
 
 			IsNotCheckmated = !CalculateCheckmated();
+
+			if (!WhiteTurn)
+			{
+				DoRandomStep();
+			}
+		}
+
+		private void DoRandomStep()
+		{
+			var random = new Random();
+
+			var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();
+
+			AllCells.ForEach(cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+			AllCells.ForEach(cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+
+			var values = possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
+
+			var randomStep = values[random.Next(values.Count)];
+
+			SelectedCellViewModel = randomStep.Value.StartCell;
+
+			SelectedCellViewModel = randomStep.Key;
 		}
 
 		public void CalculatePossibleSteps()
