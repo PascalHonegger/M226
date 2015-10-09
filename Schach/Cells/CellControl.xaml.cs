@@ -16,7 +16,7 @@ namespace Chess.Cells
 
 		private new void MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			MyDataCellViewModel.Board.SelectedCellViewModel = MyDataCellViewModel;
+			MyDataCellViewModel.Board.CellViewModelOnMouseDown(e, MyDataCellViewModel);
 		}
 	}
 }

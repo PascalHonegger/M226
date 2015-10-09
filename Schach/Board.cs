@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Media;
+using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
 using Chess.ChessPieces;
@@ -37,12 +37,33 @@ namespace Chess
 			NextTurn();
 		}
 
-		public CellViewModel SelectedCellViewModel
+		public void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
+		{
+			ResetColors();
+
+			if (mouseButtonState.LeftButton == MouseButtonState.Pressed)
+			{
+				// Select CellViewModel, => Do Turn
+				SelectedCellViewModel = cellThatGotClicked;
+			}
+			else if (mouseButtonState.RightButton == MouseButtonState.Pressed)
+			{
+				// Mark CellViewModel's which can move here, just colorisation
+				foreach (var canMoveHere in cellThatGotClicked.CanMoveHere)
+				{
+					canMoveHere.StartCell.Bgc = CellViewModel.CanMoveHereColor;
+				}
+				foreach (var canEathere in cellThatGotClicked.CanEatHere)
+				{
+					canEathere.StartCell.Bgc = CellViewModel.CanEatHereColor;
+				}
+			}
+		}
+
+		private CellViewModel SelectedCellViewModel
 		{
 			set
 			{
-				ResetColors();
-
 				// NextTurn, when the ViewModel moved to the newly selected ViewModel
 				if (CellViewModel.MoveModel(_selectedCellViewModel, value))
 				{
@@ -200,9 +221,16 @@ namespace Chess
 		/// <returns>True, when the current player is checkmated</returns>
 		private bool CalculateCheckmated()
 		{
-			var checkedKing = AllCells
+			if (
+				AllCells.Where(cell => cell.CurrentChessPiece is King)
+					.All(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn))
+			{
+				return false;
+			}
+
+				var checkedKing = AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
-				.Where(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn).First(kingCell => kingCell.CanEatHere.Any());
+				.Where(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn).FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
 
 			if (checkedKing == null)
 			{

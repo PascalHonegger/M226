@@ -13,10 +13,12 @@ namespace Chess.Cells
 {
 	public class CellViewModel : INotifyPropertyChanged
 	{
-		private static readonly SolidColorBrush CanMoveColor = new SolidColorBrush(Color.FromArgb(205, 9, 140, 0));
-		public static readonly SolidColorBrush IsCheckmateColor = new SolidColorBrush(Color.FromArgb(205, 255, 0, 0));
-		private static readonly SolidColorBrush CanEatColor = new SolidColorBrush(Color.FromArgb(205, 255, 171, 0));
+		private static readonly SolidColorBrush CanMoveToColor = new SolidColorBrush(Color.FromArgb(205, 9, 140, 0));
+		public static readonly SolidColorBrush IsCheckmateColor = new SolidColorBrush(Color.FromArgb(250, 255, 0, 0));
+		private static readonly SolidColorBrush CanEatToColor = new SolidColorBrush(Color.FromArgb(205, 255, 101, 0));
 		private static readonly SolidColorBrush HighlightedColor = new SolidColorBrush(Color.FromArgb(205, 91, 100, 113));
+		public static readonly SolidColorBrush CanMoveHereColor = new SolidColorBrush(Color.FromArgb(205, 192, 255, 0));
+		public static readonly SolidColorBrush CanEatHereColor = new SolidColorBrush(Color.FromArgb(205, 255, 153, 0));
 		public static readonly SolidColorBrush NothingColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
 		public readonly Board Board;
@@ -106,101 +108,28 @@ namespace Chess.Cells
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		#region Coloring
-
 		public void StartColorize()
 		{
-			if (CurrentChessPiece?.PathList == null || !CurrentChessPiece.PathList.Any())
+			var pawn = CurrentChessPiece as Pawn;
+			if (CurrentChessPiece?.PathList == null || !CurrentChessPiece.PathList.Any() || pawn != null && !pawn.EatList.Any())
 			{
 				return;
 			}
 
 			Bgc = HighlightedColor;
 
-			var pawn = CurrentChessPiece as Pawn;
-			if (pawn != null)
+			foreach (var cell in Board.AllCells)
 			{
-				foreach (var movePath in pawn.PathList.Select(p => p.Clone()))
+				if (cell.CanMoveHere.Select(p => p.StartCell).Contains(this))
 				{
-					Movements[movePath.GetStep()]?.ColorizeMove(movePath);
+					cell.Bgc = CanMoveToColor;
 				}
-				foreach (var eatPath in pawn.EatList.Select(p => p.Clone()))
+				else if (cell.CanEatHere.Select(p => p.StartCell).Contains(this))
 				{
-					Movements[eatPath.GetStep()]?.ColorizeEat(eatPath, CurrentChessPiece.IsWhite());
-				}
-
-				return;
-			}
-
-			foreach (var path in CurrentChessPiece.PathList.Select(p => p.Clone()))
-			{
-				if (CurrentChessPiece is Knight)
-				{
-					Movements[path.GetStep()]?.ColorizeJump(path, CurrentChessPiece.IsWhite());
-				}
-				else
-				{
-					Movements[path.GetStep()]?.ColorizeMoveEat(path, CurrentChessPiece.IsWhite());
+					cell.Bgc = CanEatToColor;
 				}
 			}
 		}
-
-		private void ColorizeJump(Path.Path path, bool isWhite)
-		{
-			if (path.GetNextStep() == Movement.Direction.Final)
-			{
-				if (CurrentChessPiece == null)
-				{
-					Bgc = CanMoveColor;
-				}
-				else if (isWhite != CurrentChessPiece.IsWhite())
-				{
-					Bgc = CanEatColor;
-				}
-			}
-			else
-			{
-				Movements[path.GetStep()]?.ColorizeJump(path, isWhite);
-			}
-		}
-
-
-		private void ColorizeMoveEat(Path.Path path, bool isWhite)
-		{
-			ColorizeMove(path);
-			ColorizeEat(path, isWhite);
-		}
-
-		private void ColorizeEat(Path.Path path, bool isWhite)
-		{
-			if (CurrentChessPiece != null)
-			{
-				if (isWhite != CurrentChessPiece.IsWhite())
-				{
-					Bgc = CanEatColor;
-				}
-				return;
-			}
-			if (path.GetStep() != Movement.Direction.Final)
-			{
-				Movements[path.GetNextStep()]?.ColorizeEat(path, isWhite);
-			}
-		}
-
-		private void ColorizeMove(Path.Path path)
-		{
-			if (CurrentChessPiece != null)
-			{
-				return;
-			}
-			Bgc = CanMoveColor;
-			if (path.GetStep() != Movement.Direction.Final)
-			{
-				Movements[path.GetNextStep()]?.ColorizeMove(path);
-			}
-		}
-
-		#endregion
 
 		#region Movement
 
@@ -240,12 +169,11 @@ namespace Chess.Cells
 		}
 
 		/// <summary>
-		///     Checks for a valid Path. Does check that both ChessPieces have to be a different color to be eaten.
+		/// Fills in the CanMoveHere and CanEatHere Lists, which are used for the Logic of this Game
 		/// </summary>
-		/// <returns>Ture, when a possible Path was found, either for walking or eating</returns>
 		public void MarkPaths()
 		{
-			Assert.IsNotNull(CurrentChessPiece, "CurrentChessPiece  HAS TO EXIST");
+			Assert.IsNotNull(CurrentChessPiece, "CurrentChessPiece HAS TO EXIST");
 
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
@@ -302,9 +230,12 @@ namespace Chess.Cells
 
 		private void MarkEatTo(Path.Path path)
 		{
-			if (CurrentChessPiece != null && CurrentChessPiece.IsWhite() != path.IsWhite)
+			if (CurrentChessPiece != null)
 			{
-				CanEatHere.Add(path);
+				if (CurrentChessPiece.IsWhite() != path.IsWhite)
+				{
+					CanEatHere.Add(path);
+				}
 				return;
 			}
 
@@ -318,8 +249,14 @@ namespace Chess.Cells
 		{
 			if (path.GetNextStep() == Movement.Direction.Final)
 			{
-				CanMoveHere.Add(path);
-				CanEatHere.Add(path);
+				if (CurrentChessPiece == null)
+				{
+					CanMoveHere.Add(path);
+				}
+				else if (CurrentChessPiece.IsWhite() != path.IsWhite)
+				{
+					CanEatHere.Add(path);
+				}
 				return;
 			}
 

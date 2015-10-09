@@ -44,7 +44,7 @@ namespace ChessTest
 						
 					}
 
-					_board.AllCells.Where(o => o.Name.Equals(tmpName));
+					_board.AllCells.Where(o => o.Name.Equals("test"));
 
 					Assert.IsTrue(result);
 
