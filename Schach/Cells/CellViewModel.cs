@@ -22,9 +22,7 @@ namespace Chess.Cells
 		public static readonly SolidColorBrush CanEatHereColor = new SolidColorBrush(Color.FromArgb(205, 255, 153, 0));
 		public static readonly SolidColorBrush NothingColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
-		public readonly IBoard Board;
-
-		public Dictionary<Movement.Direction, CellViewModel> Movements { get; } = new Dictionary<Movement.Direction, CellViewModel>();
+		public IBoard Board;
 
 		private SolidColorBrush _bgc;
 		private IChessPiece _currentChessPiece;
@@ -38,6 +36,9 @@ namespace Chess.Cells
 			CanEatHere = new List<Path.Path>();
 			CanMoveHere = new List<Path.Path>();
 		}
+
+		public Dictionary<Movement.Direction, CellViewModel> Movements { get; } =
+			new Dictionary<Movement.Direction, CellViewModel>();
 
 		public string Name { get; set; }
 
@@ -80,6 +81,25 @@ namespace Chess.Cells
 			}
 		}
 
+		public object Clone()
+		{
+			var newCellViewModel = new CellViewModel(CurrentChessPiece, Board);
+
+			newCellViewModel.CanEatHere.Clear();
+			newCellViewModel.CanMoveHere.Clear();
+			newCellViewModel.Movements.Clear();
+
+
+			newCellViewModel.CanEatHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
+			newCellViewModel.CanMoveHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
+			
+			newCellViewModel.Bgc = Bgc;
+
+			newCellViewModel.Name = Name;
+
+			return newCellViewModel;
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private void MoveToGraveyard()
@@ -88,6 +108,26 @@ namespace Chess.Cells
 			CurrentChessPiece = null;
 		}
 
+		public override bool Equals(object obj)
+		{
+			var otherCell = obj as CellViewModel;
+			if (otherCell == null)
+			{
+				return false;
+			}
+
+			if (!string.Equals(otherCell.Name, Name))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode();
+		}
 
 		public void CreateLink(CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
 			CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
@@ -132,6 +172,11 @@ namespace Chess.Cells
 			}
 		}
 
+		public CellViewModel CloneCellViewModel()
+		{
+			return Clone() as CellViewModel;
+		}
+
 		#region Movement
 
 		public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
@@ -149,7 +194,8 @@ namespace Chess.Cells
 			}
 
 			// No Path to the destination / endModel
-			if (!endModel.CanMoveHere.Any(o => o.StartCell.Equals(startModel)) && !endModel.CanEatHere.Any(o => o.StartCell.Equals(startModel)))
+			if (!endModel.CanMoveHere.Any(o => o.StartCell.Equals(startModel)) &&
+			    !endModel.CanEatHere.Any(o => o.StartCell.Equals(startModel)))
 			{
 				return false;
 			}
@@ -170,9 +216,9 @@ namespace Chess.Cells
 		}
 
 		/// <summary>
-		/// Fills in the CanMoveHere and CanEatHere Lists, which are used for the Logic of this Game
+		///     Fills in the CanMoveHere and CanEatHere Lists, which are used for the Logic of this Game
 		/// </summary>
-		public void MarkPaths()
+		public void MarkPaths(bool ignoreValidateMovement)
 		{
 			Assert.IsNotNull(CurrentChessPiece, "CurrentChessPiece HAS TO EXIST");
 
@@ -182,12 +228,12 @@ namespace Chess.Cells
 				foreach (var path in pawn.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.MarkMoveTo(path);
+					Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
 				}
 				foreach (var path in pawn.EatList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.MarkEatTo(path);
+					Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
 				}
 			}
 			else if (CurrentChessPiece is Knight)
@@ -195,7 +241,7 @@ namespace Chess.Cells
 				foreach (var path in CurrentChessPiece.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.CheckJumpEatTo(path);
+					Movements[path.GetStep()]?.CheckJumpEatTo(path, ignoreValidateMovement);
 				}
 			}
 			else
@@ -205,38 +251,39 @@ namespace Chess.Cells
 				{
 					return;
 				}
-					foreach (var path in enumerable)
-					{
-						path.StartCell = this;
-						Movements[path.GetStep()]?.MarkMoveTo(path);
-						Movements[path.GetStep()]?.MarkEatTo(path);
-					}
+				foreach (var path in enumerable)
+				{
+					path.StartCell = this;
+					Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
+					Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
+				}
 			}
 		}
 
-		private void MarkMoveTo(Path.Path path)
+		private void MarkMoveTo(Path.Path path, bool ignoreValidateMovement)
 		{
 			if (CurrentChessPiece != null)
 			{
 				return;
 			}
 
-			if (Board.ValidateMovement(path.StartCell, this))
+			if (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this))
 			{
 				CanMoveHere.Add(path);
 			}
 
 			if (Movements[path.GetNextStep()] != null)
 			{
-				Movements[path.GetStep()].MarkMoveTo(path);
+				Movements[path.GetStep()].MarkMoveTo(path, ignoreValidateMovement);
 			}
 		}
 
-		private void MarkEatTo(Path.Path path)
+		private void MarkEatTo(Path.Path path, bool ignoreValidateMovement)
 		{
 			if (CurrentChessPiece != null)
 			{
-				if (CurrentChessPiece.IsWhite() != path.IsWhite && Board.ValidateMovement(path.StartCell, this))
+				if (CurrentChessPiece.IsWhite() != path.IsWhite &&
+				    (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanEatHere.Add(path);
 				}
@@ -245,19 +292,19 @@ namespace Chess.Cells
 
 			if (Movements[path.GetNextStep()] != null)
 			{
-				Movements[path.GetStep()].MarkEatTo(path);
+				Movements[path.GetStep()].MarkEatTo(path, ignoreValidateMovement);
 			}
 		}
 
-		private void CheckJumpEatTo(Path.Path path)
+		private void CheckJumpEatTo(Path.Path path, bool ignoreValidateMovement)
 		{
 			if (path.GetNextStep() == Movement.Direction.Final)
 			{
-				if (CurrentChessPiece == null && Board.ValidateMovement(path.StartCell, this))
+				if (CurrentChessPiece == null && (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanMoveHere.Add(path);
 				}
-				else if (CurrentChessPiece?.IsWhite() != path.IsWhite && Board.ValidateMovement(path.StartCell, this))
+				else if (CurrentChessPiece?.IsWhite() != path.IsWhite && (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanEatHere.Add(path);
 				}
@@ -266,35 +313,10 @@ namespace Chess.Cells
 
 			if (Movements[path.GetStep()] != null)
 			{
-				Movements[path.GetStep()].CheckJumpEatTo(path);
+				Movements[path.GetStep()].CheckJumpEatTo(path, ignoreValidateMovement);
 			}
 		}
 
 		#endregion
-
-		public object Clone()
-		{
-			var newCellViewModel = new CellViewModel(CurrentChessPiece, Board);
-
-			newCellViewModel.CanEatHere.Clear();
-			newCellViewModel.CanMoveHere.Clear();
-			newCellViewModel.Movements.Clear();
-
-
-			newCellViewModel.CanEatHere.AddRange(CanEatHere);
-			newCellViewModel.CanMoveHere.AddRange(CanEatHere);
-			foreach (var kvp in Movements)
-			{
-				newCellViewModel.Movements.Add(kvp.Key, kvp.Value);
-			}
-			newCellViewModel.Bgc = Bgc;
-
-			return newCellViewModel;
-		}
-
-		public CellViewModel CloneCellViewModel()
-		{
-			return Clone() as CellViewModel;
-		}
 	}
 }

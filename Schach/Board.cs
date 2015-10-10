@@ -9,7 +9,6 @@ using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
 using Chess.ChessPieces;
-using Moq;
 
 namespace Chess
 {
@@ -79,9 +78,6 @@ namespace Chess
 			}
 		}
 
-		public ObservableCollection<IChessPiece> GraveYard
-			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
-
 		public CellViewModel A8 { get; set; }
 		public CellViewModel B8 { get; set; }
 		public CellViewModel C8 { get; set; }
@@ -147,6 +143,18 @@ namespace Chess
 		public CellViewModel G1 { get; set; }
 		public CellViewModel H1 { get; set; }
 
+		public object GameOverIsVisible
+		{
+			get
+			{
+				var converter = new BooleanToVisibilityConverter();
+				return converter.Convert(IsNotCheckmated, null, null, null);
+			}
+		}
+
+		public ObservableCollection<IChessPiece> GraveYard
+			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
+
 		public ObservableCollection<HistoryViewModel> History { get; }
 
 		public List<CellViewModel> AllCells { get; }
@@ -157,41 +165,23 @@ namespace Chess
 			private set
 			{
 				_isNotCheckmated = value;
-				OnPropertyChanged(nameof(IsNotCheckmated));
-			}
-		}
-
-		public object GameOverIsVisible
-		{
-			get
-			{
-				var converter = new BooleanToVisibilityConverter();
-				return converter.Convert(IsNotCheckmated, null, null, null);
+				OnPropertyChanged();
 			}
 		}
 
 		public object Clone()
 		{
-			//TODO make this a true Copy, but somehow change the Function ValideMovement in the clone to automatically return true!
+			//TODO Clone Board
+			var cloneBoard = new Board(false);
 
-			var cloneBoard = new Mock<IBoard>();
+			AllCells.ForEach(cell => cloneBoard.GetType().GetProperty(cell.Name).SetValue(cloneBoard, cell.CloneCellViewModel()));
+			
+			cloneBoard.CreateLink();
 
-			cloneBoard.Setup(o => o.AllCells)
-				.Returns(AllCells.Select(cell => cell.CloneCellViewModel()).ToList());
+			cloneBoard.AllCells.ForEach(cell => cell.Board = cloneBoard);
 
-			cloneBoard.Setup(o => o.History)
-				.Returns(History);
-
-			cloneBoard.Setup(o => o.ValidateMovement(It.IsAny<CellViewModel>(), It.IsAny<CellViewModel>()))
-				.Returns(true);
-
-			cloneBoard.Setup(o => o.GraveYard)
-				.Returns(GraveYard);
-
-			return cloneBoard.Object;
+			return cloneBoard;
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
 		{
@@ -216,6 +206,97 @@ namespace Chess
 			}
 		}
 
+		public void CalculatePossibleSteps(bool ignoreValidateMovement = false)
+		{
+			foreach (var cell in AllCells.Where(cell => cell.CurrentChessPiece != null))
+			{
+				cell.MarkPaths(ignoreValidateMovement);
+			}
+		}
+
+		/// <summary>
+		///     Calculated, wheter a player is checkmated or not
+		/// </summary>
+		/// <returns>True, when the current player is checkmated</returns>
+		public bool CalculateCheckmated()
+		{
+			//TODO Fix
+			var checkedKingCell = AllCells
+				.Where(cell => cell.CurrentChessPiece is King)
+				.FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
+
+			if (checkedKingCell == null)
+			{
+				return false;
+			}
+
+			if(AllCells.Any(cell => cell.CanMoveHere.Select(path => path.StartCell).Contains(checkedKingCell)) || AllCells.Any(cell => cell.CanEatHere.Select(path => path.StartCell).Contains(checkedKingCell)))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool ValidateMovement(CellViewModel from, CellViewModel to)
+		{
+			var tmpBoard = CloneBoard();
+
+			tmpBoard._whiteTurn = _whiteTurn;
+
+			var tmpFrom = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(from));
+			var tmpTo = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(to));
+
+			CellViewModel.MoveModel(tmpFrom, tmpTo);
+
+			tmpBoard.CalculatePossibleSteps(true);
+
+			var tmp = !tmpBoard.CalculateCheckmated();
+
+
+			return tmp;
+		}
+
+		public void AddToGraveYard(CellViewModel cellViewModel)
+		{
+			if (cellViewModel?.CurrentChessPiece == null)
+			{
+				return;
+			}
+			if (cellViewModel.CurrentChessPiece.IsWhite())
+			{
+				GraveYard.Add(cellViewModel.CurrentChessPiece);
+			}
+			else
+			{
+				GraveYard.Add(cellViewModel.CurrentChessPiece);
+			}
+		}
+
+		public void AddToHistory(CellViewModel startModel, CellViewModel endModel)
+		{
+			if (startModel == null || endModel == null)
+			{
+				return;
+			}
+
+			var from = new CellViewModel(startModel.CurrentChessPiece, startModel.Board);
+
+			var to = new CellViewModel(endModel.CurrentChessPiece, endModel.Board);
+
+			var historyViewModel = new HistoryViewModel
+			{
+				FromImage = from.Image,
+				ToImage = to.Image,
+				FromText = startModel.Name,
+				ToText = endModel.Name
+			};
+
+			History.Add(historyViewModel);
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		private void NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;
@@ -232,10 +313,12 @@ namespace Chess
 
 			IsNotCheckmated = !CalculateCheckmated();
 
+			/*
 			if (!WhiteTurn)
 			{
 				DoRandomStep();
 			}
+			*/
 		}
 
 		private void DoRandomStep()
@@ -258,14 +341,6 @@ namespace Chess
 			SelectedCellViewModel = randomStep.Key;
 		}
 
-		public void CalculatePossibleSteps()
-		{
-			foreach (var cell in AllCells.Where(cell => cell.CurrentChessPiece != null))
-			{
-				cell.MarkPaths();
-			}
-		}
-
 		private void MarkCheck()
 		{
 			foreach (var kingCell in AllCells
@@ -275,56 +350,6 @@ namespace Chess
 			{
 				kingCell.Bgc = CellViewModel.IsCheckmateColor;
 			}
-		}
-
-		/// <summary>
-		///     Calculated, wheter a player is checkmated or not
-		/// </summary>
-		/// <returns>True, when the current player is checkmated</returns>
-		public bool CalculateCheckmated()
-		{
-			if (
-				AllCells.Where(cell => cell.CurrentChessPiece is King)
-					.All(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn))
-			{
-				return false;
-			}
-
-			var checkedKingCell = AllCells
-				.Where(cell => cell.CurrentChessPiece is King)
-				.Where(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn)
-				.FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
-
-			if (checkedKingCell == null)
-			{
-				return false;
-			}
-
-			foreach (var cellViewModel in checkedKingCell.Movements.Select(o => o.Value).Where(o => o != null))
-			{
-				if (cellViewModel.CanMoveHere.Any(o => ValidateMovement(o.StartCell, checkedKingCell)) &&
-				    cellViewModel.CanEatHere.Any(o => ValidateMovement(o.StartCell, checkedKingCell)))
-				{
-					return false;
-				}
-			}
-
-
-			return false;
-		}
-
-		public bool ValidateMovement(CellViewModel from, CellViewModel to)
-		{
-			var tmpBoard = CloneBoard();
-
-			var tmpFrom = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(from));
-			var tmpTo = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(to));
-
-			CellViewModel.MoveModel(tmpFrom, tmpTo);
-
-			tmpBoard.CalculatePossibleSteps();
-
-			return !tmpBoard.CalculateCheckmated();
 		}
 
 		private void ResetColors()
@@ -489,7 +514,7 @@ namespace Chess
 			CreateLink();
 		}
 
-		public void CreateLink()
+		private void CreateLink()
 		{
 			A8.CreateLink(null, null, B8, B7, A7, null, null, null);
 			B8.CreateLink(null, null, C8, C7, B7, A7, A8, null);
@@ -575,53 +600,15 @@ namespace Chess
 			}
 		}
 
-		public void AddToGraveYard(CellViewModel cellViewModel)
-		{
-			if (cellViewModel?.CurrentChessPiece == null)
-			{
-				return;
-			}
-			if (cellViewModel.CurrentChessPiece.IsWhite())
-			{
-				GraveYard.Add(cellViewModel.CurrentChessPiece);
-			}
-			else
-			{
-				GraveYard.Add(cellViewModel.CurrentChessPiece);
-			}
-		}
-
-		public void AddToHistory(CellViewModel startModel, CellViewModel endModel)
-		{
-			if (startModel == null || endModel == null)
-			{
-				return;
-			}
-
-			var from = new CellViewModel(startModel.CurrentChessPiece, startModel.Board);
-
-			var to = new CellViewModel(endModel.CurrentChessPiece, endModel.Board);
-
-			var historyViewModel = new HistoryViewModel
-			{
-				FromImage = from.Image,
-				ToImage = to.Image,
-				FromText = startModel.Name,
-				ToText = endModel.Name
-			};
-
-			History.Add(historyViewModel);
-		}
-
 		[NotifyPropertyChangedInvocator]
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private IBoard CloneBoard()
+		private Board CloneBoard()
 		{
-			return Clone() as IBoard;
+			return Clone() as Board;
 		}
 	}
 }

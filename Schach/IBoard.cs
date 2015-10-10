@@ -16,7 +16,7 @@ namespace Chess
 		bool IsNotCheckmated { get; }
 		event PropertyChangedEventHandler PropertyChanged;
 		void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
-		void CalculatePossibleSteps();
+		void CalculatePossibleSteps(bool ignoreValidateMovement = false);
 		bool ValidateMovement(CellViewModel from, CellViewModel to);
 		void AddToGraveYard(CellViewModel cellViewModel);
 		void AddToHistory(CellViewModel startModel, CellViewModel endModel);

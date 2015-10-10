@@ -7,7 +7,6 @@ namespace Chess
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private IBoard _board;
 
 		public MainWindow()
 		{
@@ -16,8 +15,7 @@ namespace Chess
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			_board = new Board();
-			DataContext = _board;
+			DataContext = new Board();
 		}
 	}
 }
