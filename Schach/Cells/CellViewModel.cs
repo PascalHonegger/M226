@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,7 +12,7 @@ using NUnit.Framework;
 
 namespace Chess.Cells
 {
-	public class CellViewModel : INotifyPropertyChanged
+	public class CellViewModel : INotifyPropertyChanged, ICloneable
 	{
 		private static readonly SolidColorBrush CanMoveToColor = new SolidColorBrush(Color.FromArgb(205, 9, 140, 0));
 		public static readonly SolidColorBrush IsCheckmateColor = new SolidColorBrush(Color.FromArgb(250, 255, 0, 0));
@@ -21,7 +22,7 @@ namespace Chess.Cells
 		public static readonly SolidColorBrush CanEatHereColor = new SolidColorBrush(Color.FromArgb(205, 255, 153, 0));
 		public static readonly SolidColorBrush NothingColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
-		public readonly Board Board;
+		public readonly IBoard Board;
 
 		public Dictionary<Movement.Direction, CellViewModel> Movements { get; } = new Dictionary<Movement.Direction, CellViewModel>();
 
@@ -29,7 +30,7 @@ namespace Chess.Cells
 		private IChessPiece _currentChessPiece;
 		private BitmapSource _image;
 
-		public CellViewModel(IChessPiece currentChessChessPiece, Board board)
+		public CellViewModel(IChessPiece currentChessChessPiece, IBoard board)
 		{
 			CurrentChessPiece = currentChessChessPiece;
 			Board = board;
@@ -178,12 +179,12 @@ namespace Chess.Cells
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
 			{
-				foreach (var path in pawn.PathList.Select(p => p.Clone()))
+				foreach (var path in pawn.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
 					Movements[path.GetStep()]?.MarkMoveTo(path);
 				}
-				foreach (var path in pawn.EatList.Select(p => p.Clone()))
+				foreach (var path in pawn.EatList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
 					Movements[path.GetStep()]?.MarkEatTo(path);
@@ -191,7 +192,7 @@ namespace Chess.Cells
 			}
 			else if (CurrentChessPiece is Knight)
 			{
-				foreach (var path in CurrentChessPiece.PathList.Select(p => p.Clone()))
+				foreach (var path in CurrentChessPiece.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
 					Movements[path.GetStep()]?.CheckJumpEatTo(path);
@@ -199,7 +200,7 @@ namespace Chess.Cells
 			}
 			else
 			{
-				var enumerable = CurrentChessPiece.PathList?.Select(p => p.Clone());
+				var enumerable = CurrentChessPiece.PathList?.Select(p => p.ClonePath());
 				if (enumerable == null)
 				{
 					return;
@@ -270,5 +271,30 @@ namespace Chess.Cells
 		}
 
 		#endregion
+
+		public object Clone()
+		{
+			var newCellViewModel = new CellViewModel(CurrentChessPiece, Board);
+
+			newCellViewModel.CanEatHere.Clear();
+			newCellViewModel.CanMoveHere.Clear();
+			newCellViewModel.Movements.Clear();
+
+
+			newCellViewModel.CanEatHere.AddRange(CanEatHere);
+			newCellViewModel.CanMoveHere.AddRange(CanEatHere);
+			foreach (var kvp in Movements)
+			{
+				newCellViewModel.Movements.Add(kvp.Key, kvp.Value);
+			}
+			newCellViewModel.Bgc = Bgc;
+
+			return newCellViewModel;
+		}
+
+		public CellViewModel CloneCellViewModel()
+		{
+			return Clone() as CellViewModel;
+		}
 	}
 }

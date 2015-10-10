@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Chess.Cells;
 
 namespace Chess.Path
 {
-	public class Path : IEnumerable<Movement.Direction>
+	public class Path : IEnumerable<Movement.Direction>, ICloneable
 	{
 		private readonly List<Movement.Direction> _path;
 
@@ -49,22 +50,6 @@ namespace Chess.Path
 			return _path[0];
 		}
 
-		public Path Clone()
-		{
-			var factory = new PathFactory();
-
-			foreach (var direction in _path.Where(p => !p.Equals(Movement.Direction.Final)))
-			{
-				factory.AddToPath(direction);
-			}
-
-			factory.SetIsRecursive(IsRecursive);
-
-			return factory.Create(IsWhite);
-
-			// return (Path)MemberwiseClone();
-		}
-
 		public override bool Equals(object obj)
 		{
 			var other = obj as Path;
@@ -80,6 +65,25 @@ namespace Chess.Path
 		public override int GetHashCode()
 		{
 			return _path.GetHashCode();
+		}
+
+		public object Clone()
+		{
+			var factory = new PathFactory();
+
+			foreach (var direction in _path.Where(p => !p.Equals(Movement.Direction.Final)))
+			{
+				factory.AddToPath(direction);
+			}
+
+			factory.SetIsRecursive(IsRecursive);
+
+			return factory.Create(IsWhite);
+		}
+
+		public Path ClonePath()
+		{
+			return Clone() as Path;
 		}
 	}
 }

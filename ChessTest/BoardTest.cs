@@ -10,7 +10,7 @@ namespace ChessTest
 	[TestFixture]
 	public class BoardTest : TestBase
 	{
-		private Board _board;
+		private IBoard _board;
 
 		public override void DoSetUp()
 		{

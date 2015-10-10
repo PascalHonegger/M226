@@ -4,14 +4,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
 using Chess.ChessPieces;
+using Moq;
 
 namespace Chess
 {
-	public sealed class Board : INotifyPropertyChanged
+	public class Board : INotifyPropertyChanged, IBoard
 	{
 		private ObservableCollection<IChessPiece> _graveYard;
 		private bool _isNotCheckmated;
@@ -155,8 +157,38 @@ namespace Chess
 			private set
 			{
 				_isNotCheckmated = value;
-				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsNotCheckmated));
 			}
+		}
+
+		public object GameOverIsVisible
+		{
+			get
+			{
+				var converter = new BooleanToVisibilityConverter();
+				return converter.Convert(IsNotCheckmated, null, null, null);
+			}
+		}
+
+		public object Clone()
+		{
+			//TODO make this a true Copy, but somehow change the Function ValideMovement in the clone to automatically return true!
+
+			var cloneBoard = new Mock<IBoard>();
+
+			cloneBoard.Setup(o => o.AllCells)
+				.Returns(AllCells.Select(cell => cell.CloneCellViewModel()).ToList());
+
+			cloneBoard.Setup(o => o.History)
+				.Returns(History);
+
+			cloneBoard.Setup(o => o.ValidateMovement(It.IsAny<CellViewModel>(), It.IsAny<CellViewModel>()))
+				.Returns(true);
+
+			cloneBoard.Setup(o => o.GraveYard)
+				.Returns(GraveYard);
+
+			return cloneBoard.Object;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -249,7 +281,7 @@ namespace Chess
 		///     Calculated, wheter a player is checkmated or not
 		/// </summary>
 		/// <returns>True, when the current player is checkmated</returns>
-		private bool CalculateCheckmated()
+		public bool CalculateCheckmated()
 		{
 			if (
 				AllCells.Where(cell => cell.CurrentChessPiece is King)
@@ -258,21 +290,20 @@ namespace Chess
 				return false;
 			}
 
-			var checkedKing = AllCells
+			var checkedKingCell = AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
 				.Where(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn)
 				.FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
 
-			if (checkedKing == null)
+			if (checkedKingCell == null)
 			{
 				return false;
 			}
 
-			foreach (var cellViewModel in checkedKing.Movements.Select(o => o.Value).Where(o => o != null))
+			foreach (var cellViewModel in checkedKingCell.Movements.Select(o => o.Value).Where(o => o != null))
 			{
-				if (cellViewModel.CanMoveHere.Any(o => o.StartCell.Equals(checkedKing)) &&
-				    cellViewModel.CanMoveHere.Any(o => o.IsWhite == checkedKing.CurrentChessPiece.IsWhite()) &&
-				    cellViewModel.CanEatHere.All(o => o.StartCell.Equals(checkedKing)))
+				if (cellViewModel.CanMoveHere.Any(o => ValidateMovement(o.StartCell, checkedKingCell)) &&
+				    cellViewModel.CanEatHere.Any(o => ValidateMovement(o.StartCell, checkedKingCell)))
 				{
 					return false;
 				}
@@ -284,9 +315,16 @@ namespace Chess
 
 		public bool ValidateMovement(CellViewModel from, CellViewModel to)
 		{
-			var tmpAllCells = AllCells.ToList();
+			var tmpBoard = CloneBoard();
 
-			return true;
+			var tmpFrom = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(from));
+			var tmpTo = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(to));
+
+			CellViewModel.MoveModel(tmpFrom, tmpTo);
+
+			tmpBoard.CalculatePossibleSteps();
+
+			return !tmpBoard.CalculateCheckmated();
 		}
 
 		private void ResetColors()
@@ -297,7 +335,7 @@ namespace Chess
 			}
 		}
 
-		private void CreateDefaultChessBoard()
+		public void CreateDefaultChessBoard()
 		{
 			A8 = new CellViewModel(new Rook(false), this);
 			B8 = new CellViewModel(new Knight(false), this);
@@ -374,7 +412,7 @@ namespace Chess
 			CreateLink();
 		}
 
-		private void CreateEmptyChessBoard()
+		public void CreateEmptyChessBoard()
 		{
 			A8 = new CellViewModel(null, this);
 			B8 = new CellViewModel(null, this);
@@ -451,7 +489,7 @@ namespace Chess
 			CreateLink();
 		}
 
-		private void CreateLink()
+		public void CreateLink()
 		{
 			A8.CreateLink(null, null, B8, B7, A7, null, null, null);
 			B8.CreateLink(null, null, C8, C7, B7, A7, A8, null);
@@ -579,6 +617,11 @@ namespace Chess
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private IBoard CloneBoard()
+		{
+			return Clone() as IBoard;
 		}
 	}
 }

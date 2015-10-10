@@ -39,7 +39,7 @@ namespace ChessTest
 		{
 		}
 
-		private static void CompareBoards(Board board1, Board board2)
+		private static void CompareBoards(IBoard board1, IBoard board2)
 		{
 			Assert.That(board1.GraveYard, Is.EqualTo(board2.GraveYard));
 
