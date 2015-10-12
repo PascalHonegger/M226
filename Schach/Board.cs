@@ -5,45 +5,30 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
 using Chess.ChessPieces;
-using Moq;
 
 namespace Chess
 {
 	public class Board : INotifyPropertyChanged, IBoard
 	{
+		private Task _createLink;
 		private ObservableCollection<IChessPiece> _graveYard;
 		private bool _isNotCheckmated;
 		private bool _whiteTurn;
 
 		public Board()
 		{
-			AllCells = new List<CellViewModel>();
+			AllCells = new List<CellViewModel>(64);
 
 			History = new ObservableCollection<HistoryViewModel>();
 		}
 
-		public async Task CreateValues(bool hasDefaultValues = true)
-		{
-			if (hasDefaultValues)
-			{
-				await CreateDefaultChessBoard();
-				await NextTurn();
-			}
-			else
-			{
-				await CreateEmptyChessBoard();
-			}
-		}
-
 		private CellViewModel SelectedCellViewModel { get; set; }
 
-		// ReSharper disable once ConvertToAutoProperty
-		private bool WhiteTurn
+		public bool WhiteTurn
 		{
 			get { return _whiteTurn; }
 			set
@@ -121,15 +106,6 @@ namespace Chess
 		public CellViewModel G1 { get; set; }
 		public CellViewModel H1 { get; set; }
 
-		public object GameOverIsVisible
-		{
-			get
-			{
-				var converter = new BooleanToVisibilityConverter();
-				return converter.Convert(IsNotCheckmated, null, null, null);
-			}
-		}
-
 		public ObservableCollection<IChessPiece> GraveYard
 			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
 
@@ -145,24 +121,6 @@ namespace Chess
 				_isNotCheckmated = value;
 				OnPropertyChanged();
 			}
-		}
-
-		private async Task<Board> CloneBoard()
-		{
-			//TODO Clone Board
-			var cloneBoard = new Board();
-
-			await cloneBoard.CreateValues(false);
-
-			AllCells.ForEach(cell => cloneBoard.GetType().GetProperty(cell.Name).SetValue(cloneBoard, cell.CloneCellViewModel()));
-			
-			await cloneBoard.CreateLink();
-
-			cloneBoard.AllCells.ForEach(cell => cell.Board = cloneBoard);
-
-			cloneBoard.WhiteTurn = WhiteTurn;
-
-			return cloneBoard;
 		}
 
 		public async Task CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
@@ -187,28 +145,6 @@ namespace Chess
 			}
 		}
 
-		private async Task OnSelect(CellViewModel cellThatGotClicked)
-		{
-			ResetColors();
-
-			// NextTurn, when the ViewModel moved to the newly selected ViewModel
-			if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
-			{
-				await NextTurn();
-				SelectedCellViewModel = null;
-			}
-			// Select ViewModel, if it's the players turn
-			else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
-			{
-				SelectedCellViewModel = cellThatGotClicked;
-				SelectedCellViewModel?.StartColorize();
-			}
-			else
-			{
-				SelectedCellViewModel = null;
-			}
-		}
-		
 		public async Task CalculatePossibleSteps(bool ignoreValidateMovement = false)
 		{
 			foreach (var cell in AllCells.Where(cell => cell.CurrentChessPiece != null))
@@ -231,7 +167,7 @@ namespace Chess
 		}
 
 		/// <summary>
-		/// Validates a step
+		///     Validates a step
 		/// </summary>
 		/// <param name="from"></param>
 		/// <param name="to"></param>
@@ -292,6 +228,202 @@ namespace Chess
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		public async Task CreateValues(bool hasDefaultValues = true)
+		{
+			if (hasDefaultValues)
+			{
+				await CreateDefaultChessBoard();
+				await NextTurn();
+			}
+			else
+			{
+				await CreateEmptyChessBoard();
+			}
+		}
+
+		private async Task CreateChessBoardWithTemplate(IList<CellViewModel> cellList)
+		{
+			A8 = cellList[0];
+			B8 = cellList[1];
+			C8 = cellList[2];
+			D8 = cellList[3];
+			E8 = cellList[4];
+			F8 = cellList[5];
+			G8 = cellList[6];
+			H8 = cellList[7];
+
+			A7 = cellList[8];
+			B7 = cellList[9];
+			C7 = cellList[10];
+			D7 = cellList[11];
+			E7 = cellList[12];
+			F7 = cellList[13];
+			G7 = cellList[14];
+			H7 = cellList[15];
+
+			A6 = cellList[16];
+			B6 = cellList[17];
+			C6 = cellList[18];
+			D6 = cellList[19];
+			E6 = cellList[20];
+			F6 = cellList[21];
+			G6 = cellList[22];
+			H6 = cellList[23];
+
+			A5 = cellList[24];
+			B5 = cellList[25];
+			C5 = cellList[26];
+			D5 = cellList[27];
+			E5 = cellList[28];
+			F5 = cellList[29];
+			G5 = cellList[30];
+			H5 = cellList[31];
+
+			A4 = cellList[32];
+			B4 = cellList[33];
+			C4 = cellList[34];
+			D4 = cellList[35];
+			E4 = cellList[36];
+			F4 = cellList[37];
+			G4 = cellList[38];
+			H4 = cellList[39];
+
+			A3 = cellList[40];
+			B3 = cellList[41];
+			C3 = cellList[42];
+			D3 = cellList[43];
+			E3 = cellList[44];
+			F3 = cellList[45];
+			G3 = cellList[46];
+			H3 = cellList[47];
+
+			A2 = cellList[48];
+			B2 = cellList[49];
+			C2 = cellList[50];
+			D2 = cellList[51];
+			E2 = cellList[52];
+			F2 = cellList[53];
+			G2 = cellList[54];
+			H2 = cellList[55];
+
+			A1 = cellList[56];
+			B1 = cellList[57];
+			C1 = cellList[58];
+			D1 = cellList[59];
+			E1 = cellList[60];
+			F1 = cellList[61];
+			G1 = cellList[62];
+			H1 = cellList[63];
+
+			await CreateLink();
+		}
+
+		private async Task<Board> CloneBoard()
+		{
+			var cloneBoard = new Board();
+
+			var cellList = new List<CellViewModel>(6)
+			{
+				A8.CloneCellViewModel(),
+				B8.CloneCellViewModel(),
+				C8.CloneCellViewModel(),
+				D8.CloneCellViewModel(),
+				E8.CloneCellViewModel(),
+				F8.CloneCellViewModel(),
+				G8.CloneCellViewModel(),
+				H8.CloneCellViewModel(),
+				A7.CloneCellViewModel(),
+				B7.CloneCellViewModel(),
+				C7.CloneCellViewModel(),
+				D7.CloneCellViewModel(),
+				E7.CloneCellViewModel(),
+				F7.CloneCellViewModel(),
+				G7.CloneCellViewModel(),
+				H7.CloneCellViewModel(),
+				A6.CloneCellViewModel(),
+				B6.CloneCellViewModel(),
+				C6.CloneCellViewModel(),
+				D6.CloneCellViewModel(),
+				E6.CloneCellViewModel(),
+				F6.CloneCellViewModel(),
+				G6.CloneCellViewModel(),
+				H6.CloneCellViewModel(),
+				A5.CloneCellViewModel(),
+				B5.CloneCellViewModel(),
+				C5.CloneCellViewModel(),
+				D5.CloneCellViewModel(),
+				E5.CloneCellViewModel(),
+				F5.CloneCellViewModel(),
+				G5.CloneCellViewModel(),
+				H5.CloneCellViewModel(),
+				A4.CloneCellViewModel(),
+				B4.CloneCellViewModel(),
+				C4.CloneCellViewModel(),
+				D4.CloneCellViewModel(),
+				E4.CloneCellViewModel(),
+				F4.CloneCellViewModel(),
+				G4.CloneCellViewModel(),
+				H4.CloneCellViewModel(),
+				A3.CloneCellViewModel(),
+				B3.CloneCellViewModel(),
+				C3.CloneCellViewModel(),
+				D3.CloneCellViewModel(),
+				E3.CloneCellViewModel(),
+				F3.CloneCellViewModel(),
+				G3.CloneCellViewModel(),
+				H3.CloneCellViewModel(),
+				A2.CloneCellViewModel(),
+				B2.CloneCellViewModel(),
+				C2.CloneCellViewModel(),
+				D2.CloneCellViewModel(),
+				E2.CloneCellViewModel(),
+				F2.CloneCellViewModel(),
+				G2.CloneCellViewModel(),
+				H2.CloneCellViewModel(),
+				A1.CloneCellViewModel(),
+				B1.CloneCellViewModel(),
+				C1.CloneCellViewModel(),
+				D1.CloneCellViewModel(),
+				E1.CloneCellViewModel(),
+				F1.CloneCellViewModel(),
+				G1.CloneCellViewModel(),
+				H1.CloneCellViewModel()
+			};
+
+			cloneBoard.WhiteTurn = WhiteTurn;
+
+			foreach (var cell in cellList)
+			{
+				cell.Board = cloneBoard;
+			}
+
+			await cloneBoard.CreateChessBoardWithTemplate(cellList);
+
+			return cloneBoard;
+		}
+
+		private async Task OnSelect(CellViewModel cellThatGotClicked)
+		{
+			ResetColors();
+
+			// NextTurn, when the ViewModel moved to the newly selected ViewModel
+			if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
+			{
+				await NextTurn();
+				SelectedCellViewModel = null;
+			}
+			// Select ViewModel, if it's the players turn
+			else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
+			{
+				SelectedCellViewModel = cellThatGotClicked;
+				SelectedCellViewModel?.StartColorize();
+			}
+			else
+			{
+				SelectedCellViewModel = null;
+			}
+		}
+
 		private async Task NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;
@@ -328,7 +460,7 @@ namespace Chess
 			var values = possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
 
 			var randomStep = values[random.Next(values.Count)];
-			
+
 			SelectedCellViewModel = null;
 
 			await OnSelect(randomStep.Value.StartCell);
@@ -585,31 +717,143 @@ namespace Chess
 				H1.CreateLink(H2, null, null, null, null, null, G1, G2);
 			});
 
+			A8.Name = @"A8";
+			B8.Name = @"B8";
+			C8.Name = @"C8";
+			D8.Name = @"D8";
+			E8.Name = @"E8";
+			F8.Name = @"F8";
+			G8.Name = @"G8";
+			H8.Name = @"H8";
+			A7.Name = @"A7";
+			B7.Name = @"B7";
+			C7.Name = @"C7";
+			D7.Name = @"D7";
+			E7.Name = @"E7";
+			F7.Name = @"F7";
+			G7.Name = @"G7";
+			H7.Name = @"H7";
+			A6.Name = @"A6";
+			B6.Name = @"B6";
+			C6.Name = @"C6";
+			D6.Name = @"D6";
+			E6.Name = @"E6";
+			F6.Name = @"F6";
+			G6.Name = @"G6";
+			H6.Name = @"H6";
+			A5.Name = @"A5";
+			B5.Name = @"B5";
+			C5.Name = @"C5";
+			D5.Name = @"D5";
+			E5.Name = @"E5";
+			F5.Name = @"F5";
+			G5.Name = @"G5";
+			H5.Name = @"H5";
+			A4.Name = @"A4";
+			B4.Name = @"B4";
+			C4.Name = @"C4";
+			D4.Name = @"D4";
+			E4.Name = @"E4";
+			F4.Name = @"F4";
+			G4.Name = @"G4";
+			H4.Name = @"H4";
+			A3.Name = @"A3";
+			B3.Name = @"B3";
+			C3.Name = @"C3";
+			D3.Name = @"D3";
+			E3.Name = @"E3";
+			F3.Name = @"F3";
+			G3.Name = @"G3";
+			H3.Name = @"H3";
+			A2.Name = @"A2";
+			B2.Name = @"B2";
+			C2.Name = @"C2";
+			D2.Name = @"D2";
+			E2.Name = @"E2";
+			F2.Name = @"F2";
+			G2.Name = @"G2";
+			H2.Name = @"H2";
+			A1.Name = @"A1";
+			B1.Name = @"B1";
+			C1.Name = @"C1";
+			D1.Name = @"D1";
+			E1.Name = @"E1";
+			F1.Name = @"F1";
+			G1.Name = @"G1";
+			H1.Name = @"H1";
+
 			await _createLink;
 
-			for (var number = 1; number <= 8; number++)
-			{
-				for (int character = 'A'; character <= 'H'; character++)
-				{
-					var propertyName = (char) character + number.ToString();
-					var property = (CellViewModel) GetType().GetProperty(propertyName).GetValue(this);
-					property.Name = propertyName;
-					AllCells.Add(property);
-				}
-			}
+			AllCells.Add(A8);
+			AllCells.Add(B8);
+			AllCells.Add(C8);
+			AllCells.Add(D8);
+			AllCells.Add(E8);
+			AllCells.Add(F8);
+			AllCells.Add(G8);
+			AllCells.Add(H8);
+			AllCells.Add(A7);
+			AllCells.Add(B7);
+			AllCells.Add(C7);
+			AllCells.Add(D7);
+			AllCells.Add(E7);
+			AllCells.Add(F7);
+			AllCells.Add(G7);
+			AllCells.Add(H7);
+			AllCells.Add(A6);
+			AllCells.Add(B6);
+			AllCells.Add(C6);
+			AllCells.Add(D6);
+			AllCells.Add(E6);
+			AllCells.Add(F6);
+			AllCells.Add(G6);
+			AllCells.Add(H6);
+			AllCells.Add(A5);
+			AllCells.Add(B5);
+			AllCells.Add(C5);
+			AllCells.Add(D5);
+			AllCells.Add(E5);
+			AllCells.Add(F5);
+			AllCells.Add(G5);
+			AllCells.Add(H5);
+			AllCells.Add(A4);
+			AllCells.Add(B4);
+			AllCells.Add(C4);
+			AllCells.Add(D4);
+			AllCells.Add(E4);
+			AllCells.Add(F4);
+			AllCells.Add(G4);
+			AllCells.Add(H4);
+			AllCells.Add(A3);
+			AllCells.Add(B3);
+			AllCells.Add(C3);
+			AllCells.Add(D3);
+			AllCells.Add(E3);
+			AllCells.Add(F3);
+			AllCells.Add(G3);
+			AllCells.Add(H3);
+			AllCells.Add(A2);
+			AllCells.Add(B2);
+			AllCells.Add(C2);
+			AllCells.Add(D2);
+			AllCells.Add(E2);
+			AllCells.Add(F2);
+			AllCells.Add(G2);
+			AllCells.Add(H2);
+			AllCells.Add(A1);
+			AllCells.Add(B1);
+			AllCells.Add(C1);
+			AllCells.Add(D1);
+			AllCells.Add(E1);
+			AllCells.Add(F1);
+			AllCells.Add(G1);
+			AllCells.Add(H1);
 		}
-
-		private Task _createLink;
 
 		[NotifyPropertyChangedInvocator]
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		private Board CloneBoard2()
-		{
-			return null;
 		}
 	}
 }

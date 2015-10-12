@@ -195,8 +195,8 @@ namespace Chess.Cells
 			}
 
 			// No Path to the destination / endModel
-			if (!endModel.CanMoveHere.Any(o => o.StartCell.Equals(startModel)) &&
-			    !endModel.CanEatHere.Any(o => o.StartCell.Equals(startModel)))
+			if (!endModel.CanMoveHere.Any(o => Equals(o.StartCell, startModel)) &&
+			    !endModel.CanEatHere.Any(o => Equals(o.StartCell, startModel)))
 			{
 				return false;
 			}
@@ -226,17 +226,21 @@ namespace Chess.Cells
 			{
 				foreach (var path in pawn.PathList.Select(p => p.ClonePath()))
 				{
-					path.StartCell = this;
+					path.StartCell = ignoreValidateMovement ? CloneCellViewModel() : this;
 					var markMoveTo = Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
 					if (markMoveTo != null)
+					{
 						await markMoveTo;
+					}
 				}
 				foreach (var path in pawn.EatList.Select(p => p.ClonePath()))
 				{
-					path.StartCell = this;
+					path.StartCell = ignoreValidateMovement ? CloneCellViewModel() : this;
 					var markEatTo = Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
 					if (markEatTo != null)
+					{
 						await markEatTo;
+					}
 				}
 			}
 			else if (CurrentChessPiece is Knight)
@@ -276,9 +280,7 @@ namespace Chess.Cells
 				return;
 			}
 
-			var tmp = ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this);
-
-			if (tmp)
+			if (ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this))
 			{
 				CanMoveHere.Add(path);
 			}

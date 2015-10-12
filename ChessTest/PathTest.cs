@@ -3,6 +3,7 @@ using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
 using Chess.Path;
+using Moq;
 using NUnit.Framework;
 
 namespace ChessTest
@@ -11,13 +12,34 @@ namespace ChessTest
 	public class PathTest : TestBase
 	{
 		[SetUp]
-		public override async void DoSetUp()
+		public async void DoSetUpAsync()
 		{
 			_board = new Board();
 			await _board.CreateValues(false);
 		}
 
+		public override void DoSetUp()
+		{
+			_blackChessPieceMock = new Mock<ChessPieceBase>();
+			_blackChessPieceMock
+				.Setup(mock => mock.IsWhite())
+				.Returns(false);
+			_blackChessPieceMock
+				.Setup(mock => mock.IsBlack())
+				.Returns(true);
+
+			_whiteChessPieceMock = new Mock<ChessPieceBase>();
+			_whiteChessPieceMock
+				.Setup(mock => mock.IsWhite())
+				.Returns(true);
+			_whiteChessPieceMock
+				.Setup(mock => mock.IsBlack())
+				.Returns(false);
+		}
+
 		private Board _board;
+		private Mock<ChessPieceBase> _whiteChessPieceMock;
+		private Mock<ChessPieceBase> _blackChessPieceMock;
 
 		public override void DoTearDown()
 		{
@@ -50,8 +72,8 @@ namespace ChessTest
 			_board.B6.CurrentChessPiece = new Pawn(false);
 			_board.D6.CurrentChessPiece = new Pawn(false);
 			_board.E6.CurrentChessPiece = new Pawn(false);
-			_board.C5.CurrentChessPiece = new Pawn(true);
-			_board.F5.CurrentChessPiece = new Pawn(true);
+			_board.C5.CurrentChessPiece = _whiteChessPieceMock.Object;
+			_board.F5.CurrentChessPiece = _whiteChessPieceMock.Object;
 
 			//Act
 			await _board.CalculatePossibleSteps();
@@ -165,8 +187,8 @@ namespace ChessTest
 			_board.B3.CurrentChessPiece = new Pawn(true);
 			_board.E5.CurrentChessPiece = new Pawn(true);
 			_board.G4.CurrentChessPiece = new Pawn(true);
-			_board.D6.CurrentChessPiece = new Pawn(false);
-			_board.H5.CurrentChessPiece = new Pawn(false);
+			_board.D6.CurrentChessPiece = _blackChessPieceMock.Object;
+			_board.H5.CurrentChessPiece = _blackChessPieceMock.Object;
 
 			//Act
 			await _board.CalculatePossibleSteps();

@@ -17,8 +17,8 @@
 			<RowDefinition Height="150" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200" />
-			<ColumnDefinition Width="800" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="850" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		<Grid.Background>
