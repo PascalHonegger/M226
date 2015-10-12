@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Chess.Annotations;
@@ -47,7 +48,6 @@ namespace Chess
 				if (CellViewModel.MoveModel(_selectedCellViewModel, value))
 				{
 					NextTurn();
-					ResetColors();
 				}
 				// Select ViewModel, if it's the players turn
 				else if (value?.CurrentChessPiece != null && WhiteTurn == value.CurrentChessPiece.IsWhite())
@@ -59,7 +59,6 @@ namespace Chess
 				else
 				{
 					_selectedCellViewModel = null;
-					ResetColors();
 				}
 			}
 		}
@@ -180,6 +179,8 @@ namespace Chess
 
 			cloneBoard.AllCells.ForEach(cell => cell.Board = cloneBoard);
 
+			cloneBoard.WhiteTurn = WhiteTurn;
+
 			return cloneBoard;
 		}
 
@@ -206,11 +207,11 @@ namespace Chess
 			}
 		}
 
-		public void CalculatePossibleSteps(bool ignoreValidateMovement = false)
+		public async Task CalculatePossibleSteps(bool ignoreValidateMovement = false)
 		{
 			foreach (var cell in AllCells.Where(cell => cell.CurrentChessPiece != null))
 			{
-				cell.MarkPaths(ignoreValidateMovement);
+				await cell.MarkPaths(ignoreValidateMovement);
 			}
 		}
 
@@ -220,39 +221,31 @@ namespace Chess
 		/// <returns>True, when the current player is checkmated</returns>
 		public bool CalculateCheckmated()
 		{
-			//TODO Fix
-			var checkedKingCell = AllCells
+			var checkedKing = AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
-				.FirstOrDefault(kingCell => kingCell.CanEatHere.Any());
+				.FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn);
 
-			if (checkedKingCell == null)
-			{
-				return false;
-			}
-
-			if(AllCells.Any(cell => cell.CanMoveHere.Select(path => path.StartCell).Contains(checkedKingCell)) || AllCells.Any(cell => cell.CanEatHere.Select(path => path.StartCell).Contains(checkedKingCell)))
-			{
-				return true;
-			}
-
-			return false;
+			return checkedKing != null && checkedKing.CanEatHere.Any();
 		}
 
-		public bool ValidateMovement(CellViewModel from, CellViewModel to)
+		/// <summary>
+		/// Validates a step
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		/// <returns>True, when the step doesn't put the own king into checkmate</returns>
+		public async Task<bool> ValidateMovement(CellViewModel from, CellViewModel to)
 		{
 			var tmpBoard = CloneBoard();
-
-			tmpBoard._whiteTurn = _whiteTurn;
 
 			var tmpFrom = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(from));
 			var tmpTo = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(to));
 
 			CellViewModel.MoveModel(tmpFrom, tmpTo);
 
-			tmpBoard.CalculatePossibleSteps(true);
+			await tmpBoard.CalculatePossibleSteps(true);
 
 			var tmp = !tmpBoard.CalculateCheckmated();
-
 
 			return tmp;
 		}
@@ -297,7 +290,7 @@ namespace Chess
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NextTurn()
+		private async void NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;
 
@@ -307,7 +300,7 @@ namespace Chess
 				cell.CanMoveHere.Clear();
 			}
 
-			CalculatePossibleSteps();
+			await CalculatePossibleSteps();
 
 			MarkCheck();
 
@@ -345,8 +338,7 @@ namespace Chess
 		{
 			foreach (var kingCell in AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
-				.Where(kingCell => kingCell.CanEatHere
-					.Any(path => path.IsWhite != kingCell.CurrentChessPiece.IsWhite())))
+				.Where(kingCell => kingCell.CanEatHere.Any()))
 			{
 				kingCell.Bgc = CellViewModel.IsCheckmateColor;
 			}

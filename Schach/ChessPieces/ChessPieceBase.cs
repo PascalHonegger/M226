@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using Chess.Cells;
 using Chess.Path;
 
 namespace Chess.ChessPieces
 {
-	public abstract class ChessPieceBase : IChessPiece
+	public abstract class ChessPieceBase : IChessPiece, ICloneable
 	{
 		private readonly bool _colorIsWhite;
 
@@ -54,5 +57,14 @@ namespace Chess.ChessPieces
 		public BitmapSource Texture { get; set; }
 
 		public virtual List<Path.Path> PathList { get; }
+		public object Clone()
+		{
+			if (this is Pawn)
+			{
+				return new Pawn(true);
+			}
+
+			return null;
+		}
 	}
 }

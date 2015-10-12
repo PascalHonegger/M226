@@ -23,7 +23,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void Bishop()
+		public async void Bishop()
 		{
 			// Arrange
 			_board.A3.CurrentChessPiece = new Bishop(true);
@@ -32,7 +32,7 @@ namespace ChessTest
 			_board.A6.CurrentChessPiece = new Bishop(false);
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 
 			// Assert
 			Assert.IsTrue(CellViewModel.MoveModel(_board.A3, _board.D6));
@@ -42,7 +42,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void BlackPawn()
+		public async void BlackPawn()
 		{
 			// Arrange
 			_board.A6.CurrentChessPiece = new Pawn(false);
@@ -53,7 +53,7 @@ namespace ChessTest
 			_board.F5.CurrentChessPiece = new Pawn(true);
 
 			//Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 
 			// Assert
 			Assert.IsTrue(CellViewModel.MoveModel(_board.A6, _board.A5));
@@ -64,7 +64,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void Knight()
+		public async void Knight()
 		{
 			// Arrange
 			_board.A6.CurrentChessPiece = new Knight(false);
@@ -77,7 +77,7 @@ namespace ChessTest
 			_board.D6.CurrentChessPiece = new Knight(true);
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 
 			// Assert
 			Assert.IsTrue(CellViewModel.MoveModel(_board.A6, _board.B4));
@@ -111,7 +111,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void Queen()
+		public async void Queen()
 		{
 			// Arrange
 			_board.A3.CurrentChessPiece = new Queen(false);
@@ -124,7 +124,7 @@ namespace ChessTest
 			_board.H6.CurrentChessPiece = new Queen(true);
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 
 			// Assert
 			Assert.IsTrue(CellViewModel.MoveModel(_board.A3, _board.C5));
@@ -138,7 +138,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void Rook()
+		public async void Rook()
 		{
 			// Arrange
 			_board.C5.CurrentChessPiece = new Rook(false);
@@ -147,7 +147,7 @@ namespace ChessTest
 			_board.G6.CurrentChessPiece = new Rook(true);
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 
 			// Assert
 			Assert.IsTrue(CellViewModel.MoveModel(_board.C5, _board.A5));
@@ -157,7 +157,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void WhitePawn()
+		public async void WhitePawn()
 		{
 			// Arrange
 			_board.A3.CurrentChessPiece = new Pawn(true);
@@ -168,7 +168,7 @@ namespace ChessTest
 			_board.H5.CurrentChessPiece = new Pawn(false);
 
 			//Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 
 			//Assert
 			Assert.IsTrue(CellViewModel.MoveModel(_board.A3, _board.A4));

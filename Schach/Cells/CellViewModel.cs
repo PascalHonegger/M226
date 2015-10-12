@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Chess.Annotations;
@@ -94,8 +95,8 @@ namespace Chess.Cells
 			newCellViewModel.CanMoveHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
 			
 			newCellViewModel.Bgc = Bgc;
-
 			newCellViewModel.Name = Name;
+			//newCellViewModel.CurrentChessPiece = CurrentChessPiece.CloneChessPiece();
 
 			return newCellViewModel;
 		}
@@ -218,22 +219,24 @@ namespace Chess.Cells
 		/// <summary>
 		///     Fills in the CanMoveHere and CanEatHere Lists, which are used for the Logic of this Game
 		/// </summary>
-		public void MarkPaths(bool ignoreValidateMovement)
+		public async Task MarkPaths(bool ignoreValidateMovement)
 		{
-			Assert.IsNotNull(CurrentChessPiece, "CurrentChessPiece HAS TO EXIST");
-
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
 			{
 				foreach (var path in pawn.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
+					var markMoveTo = Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
+					if (markMoveTo != null)
+						await markMoveTo;
 				}
 				foreach (var path in pawn.EatList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
+					var markEatTo = Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
+					if (markEatTo != null)
+						await markEatTo;
 				}
 			}
 			else if (CurrentChessPiece is Knight)
@@ -241,7 +244,9 @@ namespace Chess.Cells
 				foreach (var path in CurrentChessPiece.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.CheckJumpEatTo(path, ignoreValidateMovement);
+					var checkJumpEatTo = Movements[path.GetStep()]?.CheckJumpEatTo(path, ignoreValidateMovement);
+					if (checkJumpEatTo != null)
+						await checkJumpEatTo;
 				}
 			}
 			else
@@ -254,36 +259,42 @@ namespace Chess.Cells
 				foreach (var path in enumerable)
 				{
 					path.StartCell = this;
-					Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
-					Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
+					var markMoveTo = Movements[path.GetStep()]?.MarkMoveTo(path, ignoreValidateMovement);
+					if (markMoveTo != null)
+						await markMoveTo;
+					var markEatTo = Movements[path.GetStep()]?.MarkEatTo(path, ignoreValidateMovement);
+					if (markEatTo != null)
+						await markEatTo;
 				}
 			}
 		}
 
-		private void MarkMoveTo(Path.Path path, bool ignoreValidateMovement)
+		private async Task MarkMoveTo(Path.Path path, bool ignoreValidateMovement)
 		{
 			if (CurrentChessPiece != null)
 			{
 				return;
 			}
 
-			if (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this))
+			var tmp = ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this);
+
+			if (tmp)
 			{
 				CanMoveHere.Add(path);
 			}
 
 			if (Movements[path.GetNextStep()] != null)
 			{
-				Movements[path.GetStep()].MarkMoveTo(path, ignoreValidateMovement);
+				await Movements[path.GetStep()].MarkMoveTo(path, ignoreValidateMovement);
 			}
 		}
 
-		private void MarkEatTo(Path.Path path, bool ignoreValidateMovement)
+		private async Task MarkEatTo(Path.Path path, bool ignoreValidateMovement)
 		{
 			if (CurrentChessPiece != null)
 			{
 				if (CurrentChessPiece.IsWhite() != path.IsWhite &&
-				    (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this)))
+				    (ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanEatHere.Add(path);
 				}
@@ -292,19 +303,19 @@ namespace Chess.Cells
 
 			if (Movements[path.GetNextStep()] != null)
 			{
-				Movements[path.GetStep()].MarkEatTo(path, ignoreValidateMovement);
+				await Movements[path.GetStep()].MarkEatTo(path, ignoreValidateMovement);
 			}
 		}
 
-		private void CheckJumpEatTo(Path.Path path, bool ignoreValidateMovement)
+		private async Task CheckJumpEatTo(Path.Path path, bool ignoreValidateMovement)
 		{
 			if (path.GetNextStep() == Movement.Direction.Final)
 			{
-				if (CurrentChessPiece == null && (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this)))
+				if (CurrentChessPiece == null && (ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanMoveHere.Add(path);
 				}
-				else if (CurrentChessPiece?.IsWhite() != path.IsWhite && (ignoreValidateMovement || Board.ValidateMovement(path.StartCell, this)))
+				else if (CurrentChessPiece?.IsWhite() != path.IsWhite && (ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanEatHere.Add(path);
 				}
@@ -313,7 +324,7 @@ namespace Chess.Cells
 
 			if (Movements[path.GetStep()] != null)
 			{
-				Movements[path.GetStep()].CheckJumpEatTo(path, ignoreValidateMovement);
+				await Movements[path.GetStep()].CheckJumpEatTo(path, ignoreValidateMovement);
 			}
 		}
 

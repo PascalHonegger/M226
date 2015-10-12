@@ -54,7 +54,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void EatImpossible()
+		public async void EatImpossible()
 		{
 			// Arrange
 			var pathList = new List<Path>
@@ -87,7 +87,7 @@ namespace ChessTest
 			var b3 = _board.B3.CurrentChessPiece;
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D5, _board.D3);
 			CellViewModel.MoveModel(_board.D5, _board.D3);
 			CellViewModel.MoveModel(_board.D5, _board.B5);
@@ -104,7 +104,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void EatPossible()
+		public async void EatPossible()
 		{
 			// Arrange
 			var pathList = new List<Path>
@@ -133,7 +133,7 @@ namespace ChessTest
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D4, _board.D3);
 
 			// Assert
@@ -144,7 +144,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void MoveImpossible()
+		public async void MoveImpossible()
 		{
 			var pathList = new List<Path>
 			{
@@ -173,7 +173,7 @@ namespace ChessTest
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D5, _board.D3);
 			CellViewModel.MoveModel(_board.D5, _board.B3);
 			CellViewModel.MoveModel(_board.D5, _board.B5);
@@ -191,7 +191,7 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void MovePossible()
+		public async void MovePossible()
 		{
 			var pathList = new List<Path>
 			{
@@ -222,7 +222,7 @@ namespace ChessTest
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act
-			_board.CalculatePossibleSteps();
+			await _board.CalculatePossibleSteps();
 			CellViewModel.MoveModel(_board.D4, _board.H5);
 
 			// Assert
