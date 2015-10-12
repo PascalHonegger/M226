@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Chess
 {
@@ -14,11 +15,10 @@ namespace Chess
 			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			_board = null;
-			DataContext = null;
 			_board = new Board();
+			await _board.CreateValues();
             DataContext = _board;
 		}
 	}

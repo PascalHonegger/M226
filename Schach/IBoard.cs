@@ -9,14 +9,14 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-	public interface IBoard : ICloneable
+	public interface IBoard// : ICloneable
 	{
 		ObservableCollection<IChessPiece> GraveYard { get; }
 		ObservableCollection<HistoryViewModel> History { get; }
 		List<CellViewModel> AllCells { get; }
 		bool IsNotCheckmated { get; }
 		event PropertyChangedEventHandler PropertyChanged;
-		void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
+		Task CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
 		Task CalculatePossibleSteps(bool ignoreValidateMovement = false);
 		Task<bool> ValidateMovement(CellViewModel from, CellViewModel to);
 		void AddToGraveYard(CellViewModel cellViewModel);
