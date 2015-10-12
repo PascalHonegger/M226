@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Chess;
 using Chess.Cells;
@@ -21,8 +20,16 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void TestAllCellDictionairy()
+		public async void TestAllCellDictionairy()
 		{
+			//TODO Delete or make usefull
+			_board = new Board();
+
+			Assert.That(_board.AllCells, Is.Empty);
+
+			await _board.CreateValues();
+
+			Assert.That(_board.AllCells.Count, Is.EqualTo(64));
 		}
 
 		[Test]
@@ -35,7 +42,7 @@ namespace ChessTest
 			{
 				for (int character = 'A'; character <= 'H'; character++)
 				{
-					var cellUnderTest = (CellViewModel) _board.GetType().GetProperty((char) character + number.ToString()).GetValue(_board);
+					var cellUnderTest = (CellViewModel) _board.GetType().GetProperty((char)character + number.ToString()).GetValue(_board);
 
 					foreach (var kvp in cellUnderTest.Movements.Where(kvp => kvp.Value != null))
 					{
@@ -43,35 +50,37 @@ namespace ChessTest
 						switch (kvp.Key)
 						{
 							case Movement.Direction.Top:
-								rightPropertyName = (char) character + number++.ToString();
+								rightPropertyName = (char)character + (number + 1).ToString();
 								break;
 							case Movement.Direction.TopLeft:
-								rightPropertyName = (char) character-- + number++.ToString();
+								rightPropertyName = (char)(character-1) + (number+1).ToString();
 								break;
 							case Movement.Direction.Left:
-								rightPropertyName = (char)character++ + number.ToString();
+								rightPropertyName = (char)(character-1) + number.ToString();
 								break;
 							case Movement.Direction.BottomLeft:
-								rightPropertyName = (char)character-- + number--.ToString();
+								rightPropertyName = (char)(character-1) + (number-1).ToString();
 								break;
 							case Movement.Direction.Bottom:
-								rightPropertyName = (char)character + number--.ToString();
+								rightPropertyName = (char)character + (number-1).ToString();
 								break;
 							case Movement.Direction.BottomRight:
-								rightPropertyName = (char)character++ + number--.ToString();
+								rightPropertyName = (char)(character+1) + (number-1).ToString();
 								break;
 							case Movement.Direction.Right:
-								rightPropertyName = (char)character++ + number.ToString();
+								rightPropertyName = (char)(character+1) + number.ToString();
 								break;
 							case Movement.Direction.TopRight:
-								rightPropertyName = (char)character++ + number++.ToString();
+								rightPropertyName = (char)(character+1) + (number+1).ToString();
 								break;
 							case Movement.Direction.Final:
 								break;
 							default:
 								throw new ArgumentOutOfRangeException();
 						}
-						Assert.That(kvp.Value.Name, Is.EqualTo(rightPropertyName));
+						var tmp = kvp.Value.Name.Equals(rightPropertyName) || string.IsNullOrEmpty(kvp.Value.Name);
+
+						Assert.That(tmp);
 					}
 				}
 			}
@@ -82,13 +91,28 @@ namespace ChessTest
 		{
 			_board = new Board();
 			await _board.CreateValues(false);
+
+			Assert.That(_board.AllCells.Count, Is.EqualTo(64));
+
+			foreach (var cell in _board.AllCells)
+			{
+				Assert.That(cell.CurrentChessPiece, Is.Null);
+			}
 		}
 
 		[Test]
 		public async void TestCreateDefaultBoardTrue()
 		{
+			//TODO Finish Test
 			_board = new Board();
 			await _board.CreateValues();
+
+			Assert.That(_board.AllCells.Count, Is.EqualTo(64));
+
+			foreach (var cell in _board.AllCells.Where(cell => !cell.Name.Substring(1).Equals("1") && !cell.Name.Substring(1).Equals("2") && !cell.Name.Substring(1).Equals("7") && !cell.Name.Substring(1).Equals("8")))
+			{
+				Assert.That(cell.CurrentChessPiece, Is.Null);
+			}
 		}
 	}
 }
