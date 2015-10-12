@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
 using Chess.ChessPieces;
+using Moq;
 
 namespace Chess
 {
@@ -31,13 +32,12 @@ namespace Chess
 			if (hasDefaultValues)
 			{
 				await CreateDefaultChessBoard();
+				await NextTurn();
 			}
 			else
 			{
 				await CreateEmptyChessBoard();
 			}
-
-			await NextTurn();
 		}
 
 		private CellViewModel SelectedCellViewModel { get; set; }
@@ -49,7 +49,7 @@ namespace Chess
 			set
 			{
 				_whiteTurn = value;
-
+				OnPropertyChanged();
 				//TODO Track time for each Player
 
 				//TODO Give GUI-Feedback, that the turn counted and the other Color has to play
@@ -171,22 +171,7 @@ namespace Chess
 
 			if (mouseButtonState.LeftButton == MouseButtonState.Pressed)
 			{
-				// NextTurn, when the ViewModel moved to the newly selected ViewModel
-				if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
-				{
-					await NextTurn();
-				}
-				// Select ViewModel, if it's the players turn
-				else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
-				{
-					SelectedCellViewModel = cellThatGotClicked;
-
-					SelectedCellViewModel?.StartColorize();
-				}
-				else
-				{
-					SelectedCellViewModel = null;
-				}
+				await OnSelect(cellThatGotClicked);
 			}
 			else if (mouseButtonState.RightButton == MouseButtonState.Pressed)
 			{
@@ -202,6 +187,28 @@ namespace Chess
 			}
 		}
 
+		private async Task OnSelect(CellViewModel cellThatGotClicked)
+		{
+			ResetColors();
+
+			// NextTurn, when the ViewModel moved to the newly selected ViewModel
+			if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
+			{
+				await NextTurn();
+				SelectedCellViewModel = null;
+			}
+			// Select ViewModel, if it's the players turn
+			else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
+			{
+				SelectedCellViewModel = cellThatGotClicked;
+				SelectedCellViewModel?.StartColorize();
+			}
+			else
+			{
+				SelectedCellViewModel = null;
+			}
+		}
+		
 		public async Task CalculatePossibleSteps(bool ignoreValidateMovement = false)
 		{
 			foreach (var cell in AllCells.Where(cell => cell.CurrentChessPiece != null))
@@ -301,15 +308,13 @@ namespace Chess
 
 			IsNotCheckmated = !CalculateCheckmated();
 
-			/*
 			if (!WhiteTurn)
 			{
-				DoRandomStep();
+				await DoRandomStep();
 			}
-			*/
 		}
 
-		private void DoRandomStep()
+		private async Task DoRandomStep()
 		{
 			var random = new Random();
 
@@ -324,9 +329,14 @@ namespace Chess
 
 			var randomStep = values[random.Next(values.Count)];
 
-			SelectedCellViewModel = randomStep.Value.StartCell;
+			var tmp = new Mock<MouseButtonEventArgs>();
 
-			SelectedCellViewModel = randomStep.Key;
+			
+			SelectedCellViewModel = null;
+
+			await OnSelect(randomStep.Value.StartCell);
+
+			await OnSelect(randomStep.Key);
 		}
 
 		private void MarkCheck()
