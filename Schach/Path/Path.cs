@@ -54,7 +54,7 @@ namespace Chess.Path
 		{
 			var other = obj as Path;
 
-			if (other?.IsRecursive != IsRecursive || !other.StartCell.Equals(StartCell))
+			if (other?.IsRecursive != IsRecursive || !Equals(other.StartCell, StartCell))
 			{
 				return false;
 			}

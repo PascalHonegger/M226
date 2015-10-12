@@ -96,7 +96,7 @@ namespace Chess.Cells
 			
 			newCellViewModel.Bgc = Bgc;
 			newCellViewModel.Name = Name;
-			newCellViewModel.CurrentChessPiece = CurrentChessPiece.CloneChessPiece();
+			//newCellViewModel.CurrentChessPiece = CurrentChessPiece.Clone();
 
 			return newCellViewModel;
 		}
