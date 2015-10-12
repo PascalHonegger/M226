@@ -22,5 +22,6 @@ namespace Chess
 		void AddToGraveYard(CellViewModel cellViewModel);
 		void AddToHistory(CellViewModel startModel, CellViewModel endModel);
 		bool CalculateCheckmated();
+		Task CreateValues(bool hasDefaultValues = true);
 	}
 }

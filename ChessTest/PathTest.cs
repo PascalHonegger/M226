@@ -11,9 +11,10 @@ namespace ChessTest
 	public class PathTest : TestBase
 	{
 		[SetUp]
-		public override void DoSetUp()
+		public override async void DoSetUp()
 		{
-			_board = new Board(false);
+			_board = new Board();
+			await _board.CreateValues(false);
 		}
 
 		private Board _board;

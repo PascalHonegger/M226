@@ -16,6 +16,13 @@ namespace ChessTest
 		private Mock<ChessPieceBase> _whiteChessPieceMock;
 		private Mock<ChessPieceBase> _blackChessPieceMock;
 
+		[SetUp]
+		public async void DoSetUpAsync()
+		{
+			_board = new Board();
+			await _board.CreateValues(false);
+		}
+
 		public override void DoSetUp()
 		{
 			_blackChessPieceMock = new Mock<ChessPieceBase>();
@@ -72,14 +79,11 @@ namespace ChessTest
 				.Setup(mock => mock.PathList)
 				.Returns(pathList);
 
-			_board = new Board(false)
-			{
-				D5 = {CurrentChessPiece = chessPieceMock.Object},
-				D4 = {CurrentChessPiece = _blackChessPieceMock.Object},
-				D3 = {CurrentChessPiece = _blackChessPieceMock.Object},
-				B5 = {CurrentChessPiece = _blackChessPieceMock.Object},
-				B3 = {CurrentChessPiece = _blackChessPieceMock.Object}
-			};
+			_board.D5.CurrentChessPiece = chessPieceMock.Object;
+			_board.D4.CurrentChessPiece = _blackChessPieceMock.Object;
+			_board.D3.CurrentChessPiece = _blackChessPieceMock.Object;
+			_board.B5.CurrentChessPiece = _blackChessPieceMock.Object;
+			_board.B3.CurrentChessPiece = _blackChessPieceMock.Object;
 			var d5 = _board.D5.CurrentChessPiece;
 			var d4 = _board.D4.CurrentChessPiece;
 			var d3 = _board.D3.CurrentChessPiece;
@@ -124,11 +128,9 @@ namespace ChessTest
 				.Setup(mock => mock.PathList)
 				.Returns(pathList);
 
-			_board = new Board(false)
-			{
-				D4 = {CurrentChessPiece = unitUnderTest.Object},
-				D3 = {CurrentChessPiece = _blackChessPieceMock.Object}
-			};
+			_board.D4.CurrentChessPiece = unitUnderTest.Object;
+			_board.D3.CurrentChessPiece = _blackChessPieceMock.Object;
+
 			var d3 = _board.D3.CurrentChessPiece;
 			var d4 = _board.D4.CurrentChessPiece;
 
@@ -164,11 +166,9 @@ namespace ChessTest
 				.Returns(pathList);
 
 			// Arrange
-			_board = new Board(false)
-			{
-				D5 = {CurrentChessPiece = unitUnderTest.Object},
-				D4 = {CurrentChessPiece = unitUnderTest.Object}
-			};
+
+			_board.D5.CurrentChessPiece = unitUnderTest.Object;
+			_board.D4.CurrentChessPiece = unitUnderTest.Object;
 			var d5 = _board.D5.CurrentChessPiece;
 			var d4 = _board.D4.CurrentChessPiece;
 
@@ -215,10 +215,7 @@ namespace ChessTest
 				.Returns(pathList);
 
 			// Arrange
-			_board = new Board(false)
-			{
-				D4 = {CurrentChessPiece = chessPieceMock.Object}
-			};
+			_board.D4.CurrentChessPiece = chessPieceMock.Object;
 			var d4 = _board.D4.CurrentChessPiece;
 
 			// Act

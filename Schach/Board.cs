@@ -20,7 +20,7 @@ namespace Chess
 		private bool _isNotCheckmated;
 		private bool _whiteTurn;
 
-		public Board(bool hasDefaultValues = true)
+		public Board()
 		{
 			AllCells = new List<CellViewModel>();
 
@@ -328,9 +328,6 @@ namespace Chess
 			var values = possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
 
 			var randomStep = values[random.Next(values.Count)];
-
-			var tmp = new Mock<MouseButtonEventArgs>();
-
 			
 			SelectedCellViewModel = null;
 

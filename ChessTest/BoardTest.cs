@@ -26,9 +26,10 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void TestCellCreation()
+		public async void TestCellCreation()
 		{
-			_board = new Board(false);
+			_board = new Board();
+			await _board.CreateValues(false);
 
 			for (var number = 1; number <= 8; number++)
 			{
@@ -77,15 +78,17 @@ namespace ChessTest
 		}
 
 		[Test]
-		public void TestCreateDefaultBoardFalse()
+		public async void TestCreateDefaultBoardFalse()
 		{
-			_board = new Board(false);
+			_board = new Board();
+			await _board.CreateValues(false);
 		}
 
 		[Test]
-		public void TestCreateDefaultBoardTrue()
+		public async void TestCreateDefaultBoardTrue()
 		{
 			_board = new Board();
+			await _board.CreateValues();
 		}
 	}
 }
