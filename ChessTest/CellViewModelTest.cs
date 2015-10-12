@@ -46,20 +46,6 @@ namespace ChessTest
 		{
 		}
 
-		private static void CompareBoards(IBoard board1, IBoard board2)
-		{
-			Assert.That(board1.GraveYard, Is.EqualTo(board2.GraveYard));
-
-
-			foreach (var keyvalue1 in board1.AllCells)
-			{
-				foreach (var keyvalue2 in board2.AllCells.Where(keyvalue2 => keyvalue1 == keyvalue2))
-				{
-					Assert.That(keyvalue1, Is.EqualTo(keyvalue2), "Property {0} war nicht gleich!", keyvalue1.Name);
-				}
-			}
-		}
-
 		[Test]
 		public async void EatImpossible()
 		{

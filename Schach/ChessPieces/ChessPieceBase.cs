@@ -8,7 +8,7 @@ using Chess.Path;
 
 namespace Chess.ChessPieces
 {
-	public abstract class ChessPieceBase : IChessPiece, ICloneable
+	public abstract class ChessPieceBase : IChessPiece
 	{
 		private readonly bool _colorIsWhite;
 
@@ -61,7 +61,11 @@ namespace Chess.ChessPieces
 		{
 			if (this is Pawn)
 			{
-				return new Pawn(true);
+				return new Pawn(IsWhite());
+			}
+			if (this is King)
+			{
+				return new King(IsWhite());
 			}
 
 			return null;

@@ -54,9 +54,17 @@ namespace Chess.Path
 		{
 			var other = obj as Path;
 
-			if (other?.IsRecursive != IsRecursive)
+			if (other?.IsRecursive != IsRecursive || !other.StartCell.Equals(StartCell))
 			{
 				return false;
+			}
+
+			for (var i = 0; i < _path.Count; i++)
+			{
+				if (!_path[i].Equals(other._path[i]))
+				{
+					return false;
+				}
 			}
 
 			return other.Count() == this.Count();
