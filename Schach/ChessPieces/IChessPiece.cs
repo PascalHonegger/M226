@@ -11,5 +11,6 @@ namespace Chess.ChessPieces
 		bool DidMove { get; set; }
 		bool IsBlack();
 		bool IsWhite();
+		IChessPiece CloneChessPiece();
 	}
 }

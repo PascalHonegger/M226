@@ -93,10 +93,11 @@ namespace Chess.Cells
 
 			newCellViewModel.CanEatHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
 			newCellViewModel.CanMoveHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
-			
+
 			newCellViewModel.Bgc = Bgc;
 			newCellViewModel.Name = Name;
-			//newCellViewModel.CurrentChessPiece = CurrentChessPiece.Clone();
+
+			newCellViewModel.CurrentChessPiece = CurrentChessPiece?.CloneChessPiece();
 
 			return newCellViewModel;
 		}

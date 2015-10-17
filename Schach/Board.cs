@@ -16,7 +16,7 @@ namespace Chess
 	{
 		private Task _createLink;
 		private ObservableCollection<IChessPiece> _graveYard;
-		private bool _isNotCheckmated;
+		private bool _isNotCheckmated = true;
 		private bool _whiteTurn;
 
 		public Board()
@@ -24,11 +24,13 @@ namespace Chess
 			AllCells = new List<CellViewModel>(64);
 
 			History = new ObservableCollection<HistoryViewModel>();
+
+			_graveYard = new ObservableCollection<IChessPiece>();
 		}
 
 		private CellViewModel SelectedCellViewModel { get; set; }
 
-		public bool WhiteTurn
+		private bool WhiteTurn
 		{
 			get { return _whiteTurn; }
 			set
@@ -161,7 +163,7 @@ namespace Chess
 		{
 			var checkedKing = AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
-				.FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() != WhiteTurn);
+				.FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn);
 
 			return checkedKing != null && checkedKing.CanEatHere.Any();
 		}
@@ -179,13 +181,13 @@ namespace Chess
 			var tmpFrom = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(from));
 			var tmpTo = tmpBoard.AllCells.FirstOrDefault(cell => cell.Equals(to));
 
+			await tmpBoard.CalculatePossibleSteps(true);
+
 			CellViewModel.MoveModel(tmpFrom, tmpTo);
 
 			await tmpBoard.CalculatePossibleSteps(true);
 
-			var tmp = !tmpBoard.CalculateCheckmated();
-
-			return tmp;
+			return !tmpBoard.CalculateCheckmated();
 		}
 
 		public void AddToGraveYard(CellViewModel cellViewModel)
@@ -438,7 +440,7 @@ namespace Chess
 
 			MarkCheck();
 
-			IsNotCheckmated = !CalculateCheckmated();
+			// IsNotCheckmated = !CalculateCheckmated();
 
 			if (!WhiteTurn)
 			{
@@ -448,6 +450,7 @@ namespace Chess
 
 		private async Task DoRandomStep()
 		{
+			return;
 			var random = new Random();
 
 			var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();

@@ -7,15 +7,11 @@ namespace Chess.ChessPieces
 {
 	public sealed class Pawn : ChessPieceBase
 	{
-		public readonly List<Path.Path> EatList;
-
 		public Pawn(bool isWhite) : base(isWhite)
 		{
 			Texture = isWhite
 				? Resources.WhitePawn.ToBitmapSource()
 				: Resources.BlackPawn.ToBitmapSource();
-
-			EatList = new List<Path.Path>();
 
 			if (IsBlack())
 			{

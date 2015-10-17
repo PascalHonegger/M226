@@ -59,12 +59,9 @@ namespace Chess.Path
 				return false;
 			}
 
-			for (var i = 0; i < _path.Count; i++)
+			if (_path.Where((t, i) => !t.Equals(other._path[i])).Any())
 			{
-				if (!_path[i].Equals(other._path[i]))
-				{
-					return false;
-				}
+				return false;
 			}
 
 			return other.Count() == this.Count();
