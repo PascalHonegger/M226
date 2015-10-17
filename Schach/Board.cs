@@ -450,7 +450,6 @@ namespace Chess
 
 		private async Task DoRandomStep()
 		{
-			return;
 			var random = new Random();
 
 			var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();

@@ -16,15 +16,12 @@ namespace Chess.ChessPieces
 
 		protected ChessPieceBase()
 		{
-			PathList = new List<Path.Path>();
-			EatList = new List<Path.Path>();
+			
 		}
 
 		protected ChessPieceBase(bool isWhite)
 		{
 			_colorIsWhite = isWhite;
-			PathList = new List<Path.Path>();
-			EatList = new List<Path.Path>();
 		}
 
 		public bool DidMove
@@ -64,11 +61,11 @@ namespace Chess.ChessPieces
 
 		public BitmapSource Texture { get; set; }
 
-		public List<Path.Path> PathList { get; private set; }
+		public virtual List<Path.Path> PathList { get; protected set; } = new List<Path.Path>();
 		/// <summary>
 		/// Only used in Pawn!
 		/// </summary>
-		public List<Path.Path> EatList { get; private set; }
+		public List<Path.Path> EatList { get; private set; } = new List<Path.Path>();
 
 		public object Clone()
 		{
