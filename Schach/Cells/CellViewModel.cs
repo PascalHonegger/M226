@@ -50,7 +50,7 @@ namespace Chess.Cells
 			{
 				_currentChessPiece = value;
 
-				Image = _currentChessPiece?.Texture ?? Resources.blank.ToBitmapSource();
+				Image = _currentChessPiece?.Texture;
 			}
 		}
 
@@ -59,7 +59,6 @@ namespace Chess.Cells
 			get { return _image; }
 			private set
 			{
-				if (Equals(_image, value) || value == null) return;
 				_image = value;
 				OnPropertyChanged(nameof(Image));
 			}

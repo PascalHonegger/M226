@@ -12,7 +12,7 @@ namespace Chess.ChessPieces
 			Texture = isWhite
 				? Resources.WhitePawn.ToBitmapSource()
 				: Resources.BlackPawn.ToBitmapSource();
-
+				
 			if (IsBlack())
 			{
 				PathList.Add(
