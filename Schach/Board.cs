@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
@@ -12,7 +13,7 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-	public class Board : INotifyPropertyChanged, IBoard
+	public class Board : INotifyPropertyChanged, IBoard, IDisposable
 	{
 		private Task _createLink;
 		private ObservableCollection<IChessPiece> _graveYard;
@@ -854,6 +855,92 @@ namespace Chess
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposing) return;
+
+			A8 = null;
+			B8 = null;
+			C8 = null;
+			D8 = null;
+			E8 = null;
+			F8 = null;
+			G8 = null;
+			H8 = null;
+
+			A7 = null;
+			B7 = null;
+			C7 = null;
+			D7 = null;
+			E7 = null;
+			F7 = null;
+			G7 = null;
+			H7 = null;
+
+			A6 = null;
+			B6 = null;
+			C6 = null;
+			D6 = null;
+			E6 = null;
+			F6 = null;
+			G6 = null;
+			H6 = null;
+
+			A5 = null;
+			B5 = null;
+			C5 = null;
+			D5 = null;
+			E5 = null;
+			F5 = null;
+			G5 = null;
+			H5 = null;
+
+			A4 = null;
+			B4 = null;
+			C4 = null;
+			D4 = null;
+			E4 = null;
+			F4 = null;
+			G4 = null;
+			H4 = null;
+
+			A3 = null;
+			B3 = null;
+			C3 = null;
+			D3 = null;
+			E3 = null;
+			F3 = null;
+			G3 = null;
+			H3 = null;
+
+			A2 = null;
+			B2 = null;
+			C2 = null;
+			D2 = null;
+			E2 = null;
+			F2 = null;
+			G2 = null;
+			H2 = null;
+
+			A1 = null;
+			B1 = null;
+			C1 = null;
+			D1 = null;
+			E1 = null;
+			F1 = null;
+			G1 = null;
+			H1 = null;
+
+			_createLink = null;
+			_graveYard = null;
 		}
 	}
 }

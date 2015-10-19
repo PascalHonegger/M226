@@ -108,7 +108,6 @@ namespace ChessTest
 			await _board.CreateValues();
 
 			Assert.That(_board.AllCells.Count, Is.EqualTo(64));
-
 			foreach (var cell in _board.AllCells.Where(cell => !cell.Name.Substring(1).Equals("1") && !cell.Name.Substring(1).Equals("2") && !cell.Name.Substring(1).Equals("7") && !cell.Name.Substring(1).Equals("8")))
 			{
 				Assert.That(cell.CurrentChessPiece, Is.Null);
