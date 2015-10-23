@@ -7,7 +7,7 @@ namespace Chess
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private Board _board;
+		private IBoard _board;
 
 		public MainWindow()
 		{

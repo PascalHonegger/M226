@@ -16,39 +16,39 @@ namespace Chess.ChessPieces
 			if (IsBlack())
 			{
 				PathList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.Bottom).AddToPath
 						(Movement.Direction.Bottom).SetIsRecursive(false).Create(isWhite));
 
 				PathList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.Bottom).SetIsRecursive(false).Create(isWhite));
 
 				EatList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.BottomLeft).SetIsRecursive(false).Create(isWhite));
 
 				EatList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.BottomRight).SetIsRecursive(false).Create(isWhite));
 			}
 			else
 			{
 				PathList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.Top).AddToPath
 						(Movement.Direction.Top).SetIsRecursive(false).Create(isWhite));
 
 				PathList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.Top).SetIsRecursive(false).Create(isWhite));
 
 				EatList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.TopLeft).SetIsRecursive(false).Create(isWhite));
 
 				EatList.Add(
-					new PathFactory().AddToPath
+					PathFactory.AddToPath
 						(Movement.Direction.TopRight).SetIsRecursive(false).Create(isWhite));
 			}
 		}

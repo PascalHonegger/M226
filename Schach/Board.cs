@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using Chess.Annotations;
 using Chess.Cells;
@@ -13,7 +12,7 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-	public class Board : INotifyPropertyChanged, IBoard, IDisposable
+	public class Board : INotifyPropertyChanged, IBoard
 	{
 		private Task _createLink;
 		private ObservableCollection<IChessPiece> _graveYard;
@@ -31,7 +30,7 @@ namespace Chess
 
 		private CellViewModel SelectedCellViewModel { get; set; }
 
-		private bool WhiteTurn
+		public bool WhiteTurn
 		{
 			get { return _whiteTurn; }
 			set
@@ -126,7 +125,7 @@ namespace Chess
 			}
 		}
 
-		public async Task CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
+		public async void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
 		{
 			ResetColors();
 
@@ -154,6 +153,83 @@ namespace Chess
 			{
 				await cell.MarkPaths(ignoreValidateMovement);
 			}
+		}
+
+		public async Task CreateChessBoardWithTemplate(List<CellViewModel> cellList)
+		{
+			A8 = cellList[0];
+			B8 = cellList[1];
+			C8 = cellList[2];
+			D8 = cellList[3];
+			E8 = cellList[4];
+			F8 = cellList[5];
+			G8 = cellList[6];
+			H8 = cellList[7];
+
+			A7 = cellList[8];
+			B7 = cellList[9];
+			C7 = cellList[10];
+			D7 = cellList[11];
+			E7 = cellList[12];
+			F7 = cellList[13];
+			G7 = cellList[14];
+			H7 = cellList[15];
+
+			A6 = cellList[16];
+			B6 = cellList[17];
+			C6 = cellList[18];
+			D6 = cellList[19];
+			E6 = cellList[20];
+			F6 = cellList[21];
+			G6 = cellList[22];
+			H6 = cellList[23];
+
+			A5 = cellList[24];
+			B5 = cellList[25];
+			C5 = cellList[26];
+			D5 = cellList[27];
+			E5 = cellList[28];
+			F5 = cellList[29];
+			G5 = cellList[30];
+			H5 = cellList[31];
+
+			A4 = cellList[32];
+			B4 = cellList[33];
+			C4 = cellList[34];
+			D4 = cellList[35];
+			E4 = cellList[36];
+			F4 = cellList[37];
+			G4 = cellList[38];
+			H4 = cellList[39];
+
+			A3 = cellList[40];
+			B3 = cellList[41];
+			C3 = cellList[42];
+			D3 = cellList[43];
+			E3 = cellList[44];
+			F3 = cellList[45];
+			G3 = cellList[46];
+			H3 = cellList[47];
+
+			A2 = cellList[48];
+			B2 = cellList[49];
+			C2 = cellList[50];
+			D2 = cellList[51];
+			E2 = cellList[52];
+			F2 = cellList[53];
+			G2 = cellList[54];
+			H2 = cellList[55];
+
+			A1 = cellList[56];
+			B1 = cellList[57];
+			C1 = cellList[58];
+			D1 = cellList[59];
+			E1 = cellList[60];
+			F1 = cellList[61];
+			G1 = cellList[62];
+			H1 = cellList[63];
+
+			await CreateLink();
 		}
 
 		/// <summary>
@@ -244,86 +320,9 @@ namespace Chess
 			}
 		}
 
-		private async Task CreateChessBoardWithTemplate(IList<CellViewModel> cellList)
+		private async Task<IBoard> CloneBoard()
 		{
-			A8 = cellList[0];
-			B8 = cellList[1];
-			C8 = cellList[2];
-			D8 = cellList[3];
-			E8 = cellList[4];
-			F8 = cellList[5];
-			G8 = cellList[6];
-			H8 = cellList[7];
-
-			A7 = cellList[8];
-			B7 = cellList[9];
-			C7 = cellList[10];
-			D7 = cellList[11];
-			E7 = cellList[12];
-			F7 = cellList[13];
-			G7 = cellList[14];
-			H7 = cellList[15];
-
-			A6 = cellList[16];
-			B6 = cellList[17];
-			C6 = cellList[18];
-			D6 = cellList[19];
-			E6 = cellList[20];
-			F6 = cellList[21];
-			G6 = cellList[22];
-			H6 = cellList[23];
-
-			A5 = cellList[24];
-			B5 = cellList[25];
-			C5 = cellList[26];
-			D5 = cellList[27];
-			E5 = cellList[28];
-			F5 = cellList[29];
-			G5 = cellList[30];
-			H5 = cellList[31];
-
-			A4 = cellList[32];
-			B4 = cellList[33];
-			C4 = cellList[34];
-			D4 = cellList[35];
-			E4 = cellList[36];
-			F4 = cellList[37];
-			G4 = cellList[38];
-			H4 = cellList[39];
-
-			A3 = cellList[40];
-			B3 = cellList[41];
-			C3 = cellList[42];
-			D3 = cellList[43];
-			E3 = cellList[44];
-			F3 = cellList[45];
-			G3 = cellList[46];
-			H3 = cellList[47];
-
-			A2 = cellList[48];
-			B2 = cellList[49];
-			C2 = cellList[50];
-			D2 = cellList[51];
-			E2 = cellList[52];
-			F2 = cellList[53];
-			G2 = cellList[54];
-			H2 = cellList[55];
-
-			A1 = cellList[56];
-			B1 = cellList[57];
-			C1 = cellList[58];
-			D1 = cellList[59];
-			E1 = cellList[60];
-			F1 = cellList[61];
-			G1 = cellList[62];
-			H1 = cellList[63];
-
-			await CreateLink();
-		}
-
-		private async Task<Board> CloneBoard()
-		{
-			var cloneBoard = new Board();
+			IBoard cloneBoard = new Board();
 
 			var cellList = new List<CellViewModel>(6)
 			{
@@ -441,7 +440,7 @@ namespace Chess
 
 			MarkCheck();
 
-			// IsNotCheckmated = !CalculateCheckmated();
+			IsNotCheckmated = AllPossibleSteps.Any();
 
 			if (!WhiteTurn)
 			{
@@ -449,18 +448,29 @@ namespace Chess
 			}
 		}
 
+		private List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
+		{
+			get
+			{
+				var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();
+
+				AllCells.ForEach(
+				cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+				AllCells.ForEach(
+					cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+
+				return possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
+			}
+		}
+
 		private async Task DoRandomStep()
 		{
+			if (!IsNotCheckmated)
+			{
+				return;}
 			var random = new Random();
 
-			var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();
-
-			AllCells.ForEach(
-				cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
-			AllCells.ForEach(
-				cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
-
-			var values = possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
+			var values = AllPossibleSteps;
 
 			var randomStep = values[random.Next(values.Count)];
 

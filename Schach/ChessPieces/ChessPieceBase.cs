@@ -14,6 +14,8 @@ namespace Chess.ChessPieces
 
 		private bool _didMove;
 
+		protected readonly PathFactory PathFactory = new PathFactory();
+
 		protected ChessPieceBase()
 		{
 			
@@ -34,11 +36,11 @@ namespace Chess.ChessPieces
 				{
 					PathList.RemoveAll(
 						path =>
-							path.Equals(new PathFactory().AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.Top).Create(true)));
+							path.Equals(PathFactory.AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.Top).Create(true)));
 					PathList.RemoveAll(
 						path =>
 							path.Equals(
-								new PathFactory().AddToPath(Movement.Direction.Bottom).AddToPath(Movement.Direction.Bottom).Create(false)));
+								PathFactory.AddToPath(Movement.Direction.Bottom).AddToPath(Movement.Direction.Bottom).Create(false)));
 				}
 				_didMove = value;
 			}

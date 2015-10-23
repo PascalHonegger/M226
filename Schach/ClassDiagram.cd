@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Chess.Board">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+  <Class Name="Chess.Board" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AMA3CAT7AAAAAAIAAAgAgv0+AAAAwP8/AAAAwP8fAAA=</HashCode>
+      <HashCode>AMC3CAT7ASAgAAIAYAwQg/2+oAEAxP+/IAACwP8fIAA=</HashCode>
       <FileName>Board.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Chess.ChessPieces.Bishop" Collapsed="true">
     <Position X="0.5" Y="3.5" Width="1.5" />
@@ -17,7 +18,7 @@
   <Class Name="Chess.ChessPieces.ChessPieceBase" Collapsed="true">
     <Position X="6" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAEAABAAAAAAAAAAoARAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAAAAAAAIAAEAABAAAAAAAAAAoARIAAABA=</HashCode>
       <FileName>ChessPieces\ChessPieceBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -39,7 +40,7 @@
   <Class Name="Chess.ChessPieces.Pawn" Collapsed="true">
     <Position X="11.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ChessPieces\Pawn.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,22 +58,22 @@
       <FileName>ChessPieces\Rook.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chess.Path.Path">
-    <Position X="2.75" Y="4.5" Width="1.5" />
+  <Class Name="Chess.Path.Path" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIACAAAAAASABAAAAAAACAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <HashCode>AAIECAAAAAASABAAgAAAECAAAAAAAIAAAAAAAAAAIJA=</HashCode>
       <FileName>Path\Path.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Chess.Path.PathFactory">
-    <Position X="5" Y="4.5" Width="1.5" />
+  <Class Name="Chess.Path.PathFactory" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAwAAAAAAAAAAAAAEAAACAAAAAAAAA=</HashCode>
       <FileName>Path\PathFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chess.Cells.CellControl" BaseTypeListCollapsed="true">
+  <Class Name="Chess.Cells.CellControl" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="7.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAA=</HashCode>
@@ -80,10 +81,10 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Chess.Cells.CellViewModel" BaseTypeListCollapsed="true">
+  <Class Name="Chess.Cells.CellViewModel" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="9.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAEAAQAAAhgAIACCIAgAgAAYSBgAAAAAEFAAAAA=</HashCode>
+      <HashCode>DAAAAAAAAAEAAEgApAACABwggABQYJAAQSAEEOAAEBQ=</HashCode>
       <FileName>Cells\CellViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -99,7 +100,7 @@
     <Position X="2.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cells\ToBitMapSourceExtension.cs</FileName>
+      <FileName>Cells\Extensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chess.MainWindow" Collapsed="true">
@@ -113,7 +114,7 @@
   <Interface Name="Chess.ChessPieces.IChessPiece" Collapsed="true">
     <Position X="6" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAIARAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAEAABAAAAAAAAAAIARAAAAAA=</HashCode>
       <FileName>ChessPieces\IChessPiece.cs</FileName>
     </TypeIdentifier>
   </Interface>
