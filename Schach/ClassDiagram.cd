@@ -3,7 +3,7 @@
   <Class Name="Chess.Board" Collapsed="true">
     <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AMC3CAT7ASAgAAIAYAwQg/2+oAEAxP+/IAACwP8fIAA=</HashCode>
+      <HashCode>AMK3CAT7ASAgAAIAYAwQg/2+oAEAxP+/IAACwP8fIAA=</HashCode>
       <FileName>Board.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

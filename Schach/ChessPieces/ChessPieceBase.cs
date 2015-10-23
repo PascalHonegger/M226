@@ -53,7 +53,7 @@ namespace Chess.ChessPieces
 
 		public IChessPiece CloneChessPiece()
 		{
-			return Clone() as ChessPieceBase;
+			return Clone() as IChessPiece;
 		}
 
 		public virtual bool IsBlack()
@@ -71,7 +71,7 @@ namespace Chess.ChessPieces
 
 		public object Clone()
 		{
-			ChessPieceBase clonedChessPiece;
+			IChessPiece clonedChessPiece;
 
 			if (this is Pawn)
 			{

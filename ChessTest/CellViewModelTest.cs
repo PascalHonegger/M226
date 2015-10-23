@@ -12,8 +12,8 @@ namespace ChessTest
 	public class CellViewModelTest : TestBase
 	{
 		private Board _board;
-		private Mock<ChessPieceBase> _whiteChessPieceMock;
-		private Mock<ChessPieceBase> _blackChessPieceMock;
+		private Mock<IChessPiece> _whiteChessPieceMock;
+		private Mock<IChessPiece> _blackChessPieceMock;
 
 		[SetUp]
 		public async void DoSetUpAsync()
@@ -24,7 +24,7 @@ namespace ChessTest
 
 		public override void DoSetUp()
 		{
-			_blackChessPieceMock = new Mock<ChessPieceBase>();
+			_blackChessPieceMock = new Mock<IChessPiece>();
 			_blackChessPieceMock
 				.Setup(mock => mock.IsWhite())
 				.Returns(false);
@@ -32,7 +32,7 @@ namespace ChessTest
 				.Setup(mock => mock.IsBlack())
 				.Returns(true);
 
-			_whiteChessPieceMock = new Mock<ChessPieceBase>();
+			_whiteChessPieceMock = new Mock<IChessPiece>();
 			_whiteChessPieceMock
 				.Setup(mock => mock.IsWhite())
 				.Returns(true);
@@ -56,7 +56,7 @@ namespace ChessTest
 				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create(true)
 			};
 
-			var chessPieceMock = new Mock<ChessPieceBase>();
+			var chessPieceMock = new Mock<IChessPiece>();
 			chessPieceMock
 				.Setup(mock => mock.IsWhite())
 				.Returns(true);
@@ -102,7 +102,7 @@ namespace ChessTest
 				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(true)
 			};
 
-			var unitUnderTest = new Mock<ChessPieceBase>();
+			var unitUnderTest = new Mock<IChessPiece>();
 			unitUnderTest
 				.Setup(mock => mock.IsWhite())
 				.Returns(true);
@@ -139,7 +139,7 @@ namespace ChessTest
 				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create(true)
 			};
 
-			var unitUnderTest = new Mock<ChessPieceBase>();
+			var unitUnderTest = new Mock<IChessPiece>();
 			unitUnderTest
 				.Setup(mock => mock.IsWhite())
 				.Returns(true);
@@ -191,7 +191,7 @@ namespace ChessTest
 					.Create(true)
 			};
 
-			var chessPieceMock = new Mock<ChessPieceBase>();
+			var chessPieceMock = new Mock<IChessPiece>();
 			chessPieceMock
 				.Setup(mock => mock.IsWhite())
 				.Returns(true);
