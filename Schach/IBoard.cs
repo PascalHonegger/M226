@@ -20,6 +20,6 @@ namespace Chess
 		void AddToHistory(CellViewModel startModel, CellViewModel endModel);
 		Task CreateValues(bool hasDefaultValues = true);
 		Task CreateChessBoardWithTemplate(List<CellViewModel> cellList);
-		bool CalculateCheckmated();
+		bool CalculateKingUnderAttack();
 	}
 }

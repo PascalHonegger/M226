@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 
 namespace Chess
 {
@@ -18,6 +19,7 @@ namespace Chess
 		{
 			_board?.Dispose();
 			DataContext = null;
+			ComputerIsEnabledCheckBox.Visibility = Visibility.Hidden;
 			_board = new Board();
 			await _board.CreateValues();
 			DataContext = _board;

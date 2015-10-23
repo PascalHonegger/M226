@@ -30,19 +30,6 @@ namespace Chess
 
 		private CellViewModel SelectedCellViewModel { get; set; }
 
-		public bool WhiteTurn
-		{
-			get { return _whiteTurn; }
-			set
-			{
-				_whiteTurn = value;
-				OnPropertyChanged();
-				//TODO Track time for each Player
-
-				//TODO Give GUI-Feedback, that the turn counted and the other Color has to play
-			}
-		}
-
 		public CellViewModel A8 { get; set; }
 		public CellViewModel B8 { get; set; }
 		public CellViewModel C8 { get; set; }
@@ -113,8 +100,6 @@ namespace Chess
 
 		public ObservableCollection<HistoryViewModel> History { get; }
 
-		public List<CellViewModel> AllCells { get; }
-
 		public bool IsNotCheckmated
 		{
 			get { return _isNotCheckmated; }
@@ -125,15 +110,45 @@ namespace Chess
 			}
 		}
 
+		private List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
+		{
+			get
+			{
+				var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();
+
+				AllCells.ForEach(
+					cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+				AllCells.ForEach(
+					cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
+
+				return possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
+			}
+		}
+
+		public bool WhiteTurn
+		{
+			get { return _whiteTurn; }
+			set
+			{
+				_whiteTurn = value;
+				OnPropertyChanged();
+				//TODO Track time for each Player
+
+				//TODO Give GUI-Feedback, that the turn counted and the other Color has to play
+			}
+		}
+
+		public List<CellViewModel> AllCells { get; }
+
 		public async void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
 		{
 			ResetColors();
 
-			if (mouseButtonState.LeftButton == MouseButtonState.Pressed)
+			if (mouseButtonState.ChangedButton == MouseButton.Left)
 			{
 				await OnSelect(cellThatGotClicked);
 			}
-			else if (mouseButtonState.RightButton == MouseButtonState.Pressed)
+			else if (mouseButtonState.ChangedButton == MouseButton.Right)
 			{
 				// Mark CellViewModel's which can move here, just colorisation
 				foreach (var canMoveHere in cellThatGotClicked.CanMoveHere)
@@ -233,10 +248,10 @@ namespace Chess
 		}
 
 		/// <summary>
-		///     Calculated, wheter a player is checkmated or not
+		///     Calculates, wheter the King of the current Player is under attack
 		/// </summary>
 		/// <returns>True, when the current player is checkmated</returns>
-		public bool CalculateCheckmated()
+		public bool CalculateKingUnderAttack()
 		{
 			var checkedKing = AllCells
 				.Where(cell => cell.CurrentChessPiece is King)
@@ -262,9 +277,15 @@ namespace Chess
 
 			CellViewModel.MoveModel(tmpFrom, tmpTo);
 
+			foreach (var cell in tmpBoard.AllCells)
+			{
+				cell.CanEatHere.Clear();
+				cell.CanMoveHere.Clear();
+			}
+
 			await tmpBoard.CalculatePossibleSteps(true);
 
-			return !tmpBoard.CalculateCheckmated();
+			return !tmpBoard.CalculateKingUnderAttack();
 		}
 
 		public void AddToGraveYard(CellViewModel cellViewModel)
@@ -305,8 +326,6 @@ namespace Chess
 			History.Add(historyViewModel);
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		public async Task CreateValues(bool hasDefaultValues = true)
 		{
 			if (hasDefaultValues)
@@ -320,11 +339,19 @@ namespace Chess
 			}
 		}
 
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		private async Task<IBoard> CloneBoard()
 		{
 			IBoard cloneBoard = new Board();
 
-			var cellList = new List<CellViewModel>(6)
+			var cellList = new List<CellViewModel>(64)
 			{
 				A8.CloneCellViewModel(),
 				B8.CloneCellViewModel(),
@@ -442,32 +469,20 @@ namespace Chess
 
 			IsNotCheckmated = AllPossibleSteps.Any();
 
-			if (!WhiteTurn)
+			if (ComputerIsEnabled && !WhiteTurn)
 			{
 				await DoRandomStep();
 			}
 		}
 
-		private List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
-		{
-			get
-			{
-				var possibleSteps = new List<KeyValuePair<CellViewModel, Path.Path>>();
-
-				AllCells.ForEach(
-				cell => cell.CanMoveHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
-				AllCells.ForEach(
-					cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
-
-				return possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
-			}
-		}
+		public bool ComputerIsEnabled { get; set; }
 
 		private async Task DoRandomStep()
 		{
 			if (!IsNotCheckmated)
 			{
-				return;}
+				return;
+			}
 			var random = new Random();
 
 			var values = AllPossibleSteps;
@@ -867,12 +882,6 @@ namespace Chess
 		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
 		}
 
 		private void Dispose(bool disposing)
