@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Chess.Board" Collapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+    <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AMC3CAT7ASAgAAIAYAwQg/2+oAEAxP+/IAACwP8fIAA=</HashCode>
+      <HashCode>AMA3CAT7AAAAAAIAAAgAgv0+AAAAwP8/AAAAwP8fAAA=</HashCode>
       <FileName>Board.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -58,7 +58,7 @@
       <FileName>ChessPieces\Rook.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chess.Path.Path" Collapsed="true">
+  <Class Name="Chess.Path.Path">
     <Position X="2.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIECAAAAAASABAAgAAAECAAAAAAAIAAAAAAAAAAIJA=</HashCode>
@@ -66,7 +66,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Chess.Path.PathFactory" Collapsed="true">
+  <Class Name="Chess.Path.PathFactory">
     <Position X="5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAwAAAAAAAAAAAAAEAAACAAAAAAAAA=</HashCode>
@@ -100,7 +100,7 @@
     <Position X="2.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cells\NativeMethods.cs</FileName>
+      <FileName>Cells\ToBitMapSourceExtension.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chess.MainWindow" Collapsed="true">

@@ -13,28 +13,28 @@ namespace Chess.ChessPieces
 				: Resources.BlackQueen.ToBitmapSource();
 
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.Top).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.Left).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.Bottom).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.Right).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.TopLeft).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.TopRight).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.BottomLeft).SetIsRecursive(true).Create(isWhite));
 			PathList.Add(
-				new PathFactory().AddToPath
+				PathFactory.AddToPath
 					(Movement.Direction.BottomRight).SetIsRecursive(true).Create(isWhite));
 		}
 	}

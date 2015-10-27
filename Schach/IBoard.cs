@@ -9,19 +9,17 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-	public interface IBoard// : ICloneable
+	public interface IBoard : IDisposable
 	{
-		ObservableCollection<IChessPiece> GraveYard { get; }
-		ObservableCollection<HistoryViewModel> History { get; }
 		List<CellViewModel> AllCells { get; }
-		bool IsNotCheckmated { get; }
-		event PropertyChangedEventHandler PropertyChanged;
-		Task CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
+		bool WhiteTurn { get; set; }
+		void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
 		Task CalculatePossibleSteps(bool ignoreValidateMovement = false);
 		Task<bool> ValidateMovement(CellViewModel from, CellViewModel to);
 		void AddToGraveYard(CellViewModel cellViewModel);
 		void AddToHistory(CellViewModel startModel, CellViewModel endModel);
-		bool CalculateCheckmated();
 		Task CreateValues(bool hasDefaultValues = true);
+		Task CreateChessBoardWithTemplate(List<CellViewModel> cellList);
+		bool CalculateKingUnderAttack();
 	}
 }

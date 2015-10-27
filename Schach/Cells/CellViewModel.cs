@@ -83,11 +83,6 @@ namespace Chess.Cells
 		{
 			var newCellViewModel = new CellViewModel(CurrentChessPiece, Board);
 
-			newCellViewModel.CanEatHere.Clear();
-			newCellViewModel.CanMoveHere.Clear();
-			newCellViewModel.Movements.Clear();
-
-
 			newCellViewModel.CanEatHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
 			newCellViewModel.CanMoveHere.AddRange(CanEatHere.Select(path => path.ClonePath()));
 
@@ -203,7 +198,6 @@ namespace Chess.Cells
 			// Startmodel and Endmodel aren't the same color
 			// Startmodel was able to find a path to the Endmodel
 			// Start and Endmodel are not the same
-
 			startModel.Board.AddToHistory(startModel, endModel);
 
 			endModel.MoveToGraveyard();

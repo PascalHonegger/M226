@@ -20,7 +20,7 @@ namespace ChessTest
 
 		public override void DoSetUp()
 		{
-			_blackChessPieceMock = new Mock<ChessPieceBase>();
+			_blackChessPieceMock = new Mock<IChessPiece>();
 			_blackChessPieceMock
 				.Setup(mock => mock.IsWhite())
 				.Returns(false);
@@ -28,7 +28,7 @@ namespace ChessTest
 				.Setup(mock => mock.IsBlack())
 				.Returns(true);
 
-			_whiteChessPieceMock = new Mock<ChessPieceBase>();
+			_whiteChessPieceMock = new Mock<IChessPiece>();
 			_whiteChessPieceMock
 				.Setup(mock => mock.IsWhite())
 				.Returns(true);
@@ -38,8 +38,8 @@ namespace ChessTest
 		}
 
 		private Board _board;
-		private Mock<ChessPieceBase> _whiteChessPieceMock;
-		private Mock<ChessPieceBase> _blackChessPieceMock;
+		private Mock<IChessPiece> _whiteChessPieceMock;
+		private Mock<IChessPiece> _blackChessPieceMock;
 
 		public override void DoTearDown()
 		{

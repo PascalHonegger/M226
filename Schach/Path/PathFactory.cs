@@ -1,10 +1,11 @@
-﻿using Chess.Cells;
+﻿using System.Linq;
+using Chess.Cells;
 
 namespace Chess.Path
 {
 	public class PathFactory
 	{
-		private readonly Path _movementList;
+		private Path _movementList;
 
 		public PathFactory()
 		{
@@ -32,7 +33,11 @@ namespace Chess.Path
 
 			_movementList.IsWhite = isWhite;
 
-			return _movementList;
+			var result = _movementList;
+
+			_movementList = new Path();
+
+			return result;
 		}
 	}
 }
