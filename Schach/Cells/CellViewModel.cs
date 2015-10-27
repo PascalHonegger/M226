@@ -8,8 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Chess.Annotations;
 using Chess.ChessPieces;
-using Chess.Properties;
-using NUnit.Framework;
 
 namespace Chess.Cells
 {

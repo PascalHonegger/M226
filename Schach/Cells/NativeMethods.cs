@@ -10,7 +10,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Chess.Cells
 {
-	public static class ToBitMapSourceExtension
+	public static class NativeMethods
 	{
 		public static BitmapSource ToBitmapSource(this Bitmap source)
 		{
