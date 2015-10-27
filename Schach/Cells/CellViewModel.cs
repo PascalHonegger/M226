@@ -173,6 +173,12 @@ namespace Chess.Cells
 
 		#region Movement
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startModel"></param>
+		/// <param name="endModel"></param>
+		/// <returns></returns>
 		public static bool MoveModel(CellViewModel startModel, CellViewModel endModel)
 		{
 			// No Chesspiece to move or one of the ViewModel's is empty

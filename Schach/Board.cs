@@ -98,7 +98,6 @@ namespace Chess
 		public ObservableCollection<IChessPiece> GraveYard
 			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
 
-		public ObservableCollection<HistoryViewModel> History { get; }
 		public async Task StartRound()
 		{
 			WhiteTurn = true;
@@ -131,6 +130,19 @@ namespace Chess
 			}
 		}
 
+		/// <summary>
+		/// If True the Black player will try to select a random turn, therefor simulating a Computer
+		/// </summary>
+		public bool ComputerIsEnabled { get; set; }
+
+		/// <summary>
+		/// List with the old Turns. May be used with the GUI and the "En Passant"
+		/// </summary>
+		public ObservableCollection<HistoryViewModel> History { get; }
+
+		/// <summary>
+		/// Determins which players turn it is
+		/// </summary>
 		public bool WhiteTurn
 		{
 			get { return _whiteTurn; }
@@ -144,30 +156,55 @@ namespace Chess
 			}
 		}
 
+		/// <summary>
+		/// List with all Cells
+		/// </summary>
 		public List<CellViewModel> AllCells { get; }
 
+		/// <summary>
+		/// Method that gets called when a player clicks on a CellViewModel.
+		/// </summary>
+		/// <param name="mouseButtonState">Only checks wheter the Left or Right mousebutton is the ChangedButton</param>
+		/// <param name="cellThatGotClicked">CellViewModel, that got clicked. Either selects or moves a Cell</param>
 		public async void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked)
 		{
 			ResetColors();
 
-			if (mouseButtonState.ChangedButton == MouseButton.Left)
+			switch (mouseButtonState.ChangedButton)
 			{
-				await OnSelect(cellThatGotClicked);
-			}
-			else if (mouseButtonState.ChangedButton == MouseButton.Right)
-			{
-				// Mark CellViewModel's which can move here, just colorisation
-				foreach (var canMoveHere in cellThatGotClicked.CanMoveHere)
-				{
-					canMoveHere.StartCell.Bgc = CellViewModel.CanMoveHereColor;
-				}
-				foreach (var canEathere in cellThatGotClicked.CanEatHere)
-				{
-					canEathere.StartCell.Bgc = CellViewModel.CanEatHereColor;
-				}
+				case MouseButton.Left:
+					await OnSelect(cellThatGotClicked);
+					break;
+				case MouseButton.Right:
+					// Mark CellViewModel's which can move here, just colorisation
+					foreach (var canMoveHere in cellThatGotClicked.CanMoveHere)
+					{
+						canMoveHere.StartCell.Bgc = CellViewModel.CanMoveHereColor;
+					}
+					foreach (var canEathere in cellThatGotClicked.CanEatHere)
+					{
+						canEathere.StartCell.Bgc = CellViewModel.CanEatHereColor;
+					}
+					break;
+				case MouseButton.Middle:
+					break;
+				case MouseButton.XButton1:
+					break;
+				case MouseButton.XButton2:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 		}
 
+		/// <summary>
+		///     Calculates all possible steps by calling the MarkPaths method on all Cells with a ChessPiece
+		/// </summary>
+		/// <param name="ignoreValidateMovement">
+		///     If true, the ValidateMovement methode doesn't get called. That means, that a turn
+		///     could cause illegal moves to be marked as legal
+		/// </param>
+		/// <returns></returns>
 		public async Task CalculatePossibleSteps(bool ignoreValidateMovement = false)
 		{
 			foreach (var cell in AllCells.Where(cell => cell.CurrentChessPiece != null))
@@ -176,6 +213,12 @@ namespace Chess
 			}
 		}
 
+		/// <summary>
+		///     Create a chessboard based on an already existing cellList. The cells inside of the cellList have to be ordered like
+		///     this: A8 - B8 - C8 ... A7 - B7
+		/// </summary>
+		/// <param name="cellList">The sorted list the new ChessBoard is based on</param>
+		/// <returns></returns>
 		public async Task CreateChessBoardWithTemplate(List<CellViewModel> cellList)
 		{
 			A8 = cellList[0];
@@ -259,10 +302,7 @@ namespace Chess
 		/// <returns>True, when the current player is checkmated</returns>
 		public bool CalculateKingUnderAttack()
 		{
-			var checkedKing = AllCells
-				.Where(cell => cell.CurrentChessPiece is King)
-				.FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn);
-
+			var checkedKing = AllCells.Where(cell => cell.CurrentChessPiece is King).FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn);
 			return checkedKing != null && checkedKing.CanEatHere.Any();
 		}
 
@@ -294,42 +334,44 @@ namespace Chess
 			return !tmpBoard.CalculateKingUnderAttack();
 		}
 
+		/// <summary>
+		///     Add a new Element to the GraveYard
+		/// </summary>
+		/// <param name="cellViewModel">The Cell that will be added to the GraveYard</param>
 		public void AddToGraveYard(CellViewModel cellViewModel)
 		{
 			if (cellViewModel?.CurrentChessPiece == null)
 			{
 				return;
 			}
-			if (cellViewModel.CurrentChessPiece.IsWhite())
-			{
-				GraveYard.Add(cellViewModel.CurrentChessPiece);
-			}
-			else
-			{
-				GraveYard.Add(cellViewModel.CurrentChessPiece);
-			}
+			GraveYard.Add(cellViewModel.CurrentChessPiece);
 		}
 
-		public void AddToHistory(CellViewModel startModel, CellViewModel endModel)
+		/// <summary>
+		///     Add a new Element to the History
+		/// </summary>
+		/// <param name="startModel">The StartCell, which was selected first</param>
+		/// <param name="endModel">The EndCell, which was moved / eaten to</param>
+		private void AddToHistory(CellViewModel startModel, CellViewModel endModel)
 		{
 			if (startModel == null || endModel == null)
 			{
 				return;
 			}
-			/*
-			var from = new CellViewModel(startModel.CurrentChessPiece, startModel.Board);
 
-			var to = new CellViewModel(endModel.CurrentChessPiece, endModel.Board);
-			*/
 			var historyViewModel = new HistoryViewModel
 			{
-				FromCell = startModel,
-				ToCell = endModel
+				FromCell = startModel, ToCell = endModel
 			};
 
 			History.Add(historyViewModel);
 		}
 
+		/// <summary>
+		///     Creates a normal chessboard either with or without the normal chesspieces
+		/// </summary>
+		/// <param name="hasDefaultValues">If false an empty Board gets initiated</param>
+		/// <returns></returns>
 		public async Task CreateValues(bool hasDefaultValues = true)
 		{
 			if (hasDefaultValues)
@@ -356,70 +398,7 @@ namespace Chess
 
 			var cellList = new List<CellViewModel>(64)
 			{
-				A8.CloneCellViewModel(),
-				B8.CloneCellViewModel(),
-				C8.CloneCellViewModel(),
-				D8.CloneCellViewModel(),
-				E8.CloneCellViewModel(),
-				F8.CloneCellViewModel(),
-				G8.CloneCellViewModel(),
-				H8.CloneCellViewModel(),
-				A7.CloneCellViewModel(),
-				B7.CloneCellViewModel(),
-				C7.CloneCellViewModel(),
-				D7.CloneCellViewModel(),
-				E7.CloneCellViewModel(),
-				F7.CloneCellViewModel(),
-				G7.CloneCellViewModel(),
-				H7.CloneCellViewModel(),
-				A6.CloneCellViewModel(),
-				B6.CloneCellViewModel(),
-				C6.CloneCellViewModel(),
-				D6.CloneCellViewModel(),
-				E6.CloneCellViewModel(),
-				F6.CloneCellViewModel(),
-				G6.CloneCellViewModel(),
-				H6.CloneCellViewModel(),
-				A5.CloneCellViewModel(),
-				B5.CloneCellViewModel(),
-				C5.CloneCellViewModel(),
-				D5.CloneCellViewModel(),
-				E5.CloneCellViewModel(),
-				F5.CloneCellViewModel(),
-				G5.CloneCellViewModel(),
-				H5.CloneCellViewModel(),
-				A4.CloneCellViewModel(),
-				B4.CloneCellViewModel(),
-				C4.CloneCellViewModel(),
-				D4.CloneCellViewModel(),
-				E4.CloneCellViewModel(),
-				F4.CloneCellViewModel(),
-				G4.CloneCellViewModel(),
-				H4.CloneCellViewModel(),
-				A3.CloneCellViewModel(),
-				B3.CloneCellViewModel(),
-				C3.CloneCellViewModel(),
-				D3.CloneCellViewModel(),
-				E3.CloneCellViewModel(),
-				F3.CloneCellViewModel(),
-				G3.CloneCellViewModel(),
-				H3.CloneCellViewModel(),
-				A2.CloneCellViewModel(),
-				B2.CloneCellViewModel(),
-				C2.CloneCellViewModel(),
-				D2.CloneCellViewModel(),
-				E2.CloneCellViewModel(),
-				F2.CloneCellViewModel(),
-				G2.CloneCellViewModel(),
-				H2.CloneCellViewModel(),
-				A1.CloneCellViewModel(),
-				B1.CloneCellViewModel(),
-				C1.CloneCellViewModel(),
-				D1.CloneCellViewModel(),
-				E1.CloneCellViewModel(),
-				F1.CloneCellViewModel(),
-				G1.CloneCellViewModel(),
-				H1.CloneCellViewModel()
+				A8.CloneCellViewModel(), B8.CloneCellViewModel(), C8.CloneCellViewModel(), D8.CloneCellViewModel(), E8.CloneCellViewModel(), F8.CloneCellViewModel(), G8.CloneCellViewModel(), H8.CloneCellViewModel(), A7.CloneCellViewModel(), B7.CloneCellViewModel(), C7.CloneCellViewModel(), D7.CloneCellViewModel(), E7.CloneCellViewModel(), F7.CloneCellViewModel(), G7.CloneCellViewModel(), H7.CloneCellViewModel(), A6.CloneCellViewModel(), B6.CloneCellViewModel(), C6.CloneCellViewModel(), D6.CloneCellViewModel(), E6.CloneCellViewModel(), F6.CloneCellViewModel(), G6.CloneCellViewModel(), H6.CloneCellViewModel(), A5.CloneCellViewModel(), B5.CloneCellViewModel(), C5.CloneCellViewModel(), D5.CloneCellViewModel(), E5.CloneCellViewModel(), F5.CloneCellViewModel(), G5.CloneCellViewModel(), H5.CloneCellViewModel(), A4.CloneCellViewModel(), B4.CloneCellViewModel(), C4.CloneCellViewModel(), D4.CloneCellViewModel(), E4.CloneCellViewModel(), F4.CloneCellViewModel(), G4.CloneCellViewModel(), H4.CloneCellViewModel(), A3.CloneCellViewModel(), B3.CloneCellViewModel(), C3.CloneCellViewModel(), D3.CloneCellViewModel(), E3.CloneCellViewModel(), F3.CloneCellViewModel(), G3.CloneCellViewModel(), H3.CloneCellViewModel(), A2.CloneCellViewModel(), B2.CloneCellViewModel(), C2.CloneCellViewModel(), D2.CloneCellViewModel(), E2.CloneCellViewModel(), F2.CloneCellViewModel(), G2.CloneCellViewModel(), H2.CloneCellViewModel(), A1.CloneCellViewModel(), B1.CloneCellViewModel(), C1.CloneCellViewModel(), D1.CloneCellViewModel(), E1.CloneCellViewModel(), F1.CloneCellViewModel(), G1.CloneCellViewModel(), H1.CloneCellViewModel()
 			};
 
 			cloneBoard.WhiteTurn = WhiteTurn;
@@ -479,8 +458,6 @@ namespace Chess
 			}
 		}
 
-		public bool ComputerIsEnabled { get; set; }
-
 		private async Task DoRandomStep()
 		{
 			if (!IsNotCheckmated)
@@ -502,9 +479,7 @@ namespace Chess
 
 		private void MarkCheck()
 		{
-			foreach (var kingCell in AllCells
-				.Where(cell => cell.CurrentChessPiece is King)
-				.Where(kingCell => kingCell.CanEatHere.Any()))
+			foreach (var kingCell in AllCells.Where(cell => cell.CurrentChessPiece is King).Where(kingCell => kingCell.CanEatHere.Any()))
 			{
 				kingCell.Bgc = CellViewModel.IsCheckmateColor;
 			}
