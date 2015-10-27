@@ -198,8 +198,6 @@ namespace Chess.Cells
 			// Startmodel and Endmodel aren't the same color
 			// Startmodel was able to find a path to the Endmodel
 			// Start and Endmodel are not the same
-			startModel.Board.AddToHistory(startModel, endModel);
-
 			endModel.MoveToGraveyard();
 			endModel.CurrentChessPiece = startModel.CurrentChessPiece;
 			endModel.CurrentChessPiece.DidMove = true;
@@ -216,6 +214,11 @@ namespace Chess.Cells
 			var pawn = CurrentChessPiece as Pawn;
 			if (pawn != null)
 			{
+				if (Board.History.LastOrDefault()?.ToCell.CurrentChessPiece is Pawn)
+				{
+					int i = 0;
+					//TODO En Passént
+				}
 				foreach (var path in pawn.PathList.Select(p => p.ClonePath()))
 				{
 					path.StartCell = ignoreValidateMovement ? CloneCellViewModel() : this;

@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 
 namespace Chess.Cells
 {
 	public class HistoryViewModel
 	{
-		public BitmapSource FromImage { get; set; }
-		public BitmapSource ToImage { get; set; }
-		public string FromText { get; set; }
-		public string ToText { get; set; }
+		public CellViewModel FromCell { get; set; }
+		public CellViewModel ToCell { get; set; }
+
+		public BitmapSource FromImage => FromCell.Image;
+
+		public BitmapSource ToImage => ToCell.Image;
+
+		public string FromText => FromCell.Name;
+
+		public string ToText => ToCell.Name;
 	}
 }

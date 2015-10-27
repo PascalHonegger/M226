@@ -12,7 +12,7 @@ namespace Chess
 	public interface IBoard : IDisposable
 	{
 		List<CellViewModel> AllCells { get; }
-		bool WhiteTurn { get; set; }
+		bool WhiteTurn { set; }
 		void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
 		Task CalculatePossibleSteps(bool ignoreValidateMovement = false);
 		Task<bool> ValidateMovement(CellViewModel from, CellViewModel to);
@@ -21,5 +21,6 @@ namespace Chess
 		Task CreateValues(bool hasDefaultValues = true);
 		Task CreateChessBoardWithTemplate(List<CellViewModel> cellList);
 		bool CalculateKingUnderAttack();
+		ObservableCollection<HistoryViewModel> History { get; }
 	}
 }

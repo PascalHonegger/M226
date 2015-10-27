@@ -310,17 +310,15 @@ namespace Chess
 			{
 				return;
 			}
-
+			/*
 			var from = new CellViewModel(startModel.CurrentChessPiece, startModel.Board);
 
 			var to = new CellViewModel(endModel.CurrentChessPiece, endModel.Board);
-
+			*/
 			var historyViewModel = new HistoryViewModel
 			{
-				FromImage = from.Image,
-				ToImage = to.Image,
-				FromText = startModel.Name,
-				ToText = endModel.Name
+				FromCell = startModel,
+				ToCell = endModel
 			};
 
 			History.Add(historyViewModel);
@@ -438,6 +436,7 @@ namespace Chess
 			// NextTurn, when the ViewModel moved to the newly selected ViewModel
 			if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
 			{
+				AddToHistory(SelectedCellViewModel, cellThatGotClicked);
 				await NextTurn();
 				SelectedCellViewModel = null;
 			}
