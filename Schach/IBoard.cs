@@ -9,7 +9,7 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
-	public interface IBoard : IDisposable
+	public interface IBoard
 	{
 		/// <summary>
 		/// List with all Cells
@@ -77,5 +77,6 @@ namespace Chess
 		Task StartRound();
 
 		List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps { get; }
+		bool ComputerIsEnabled { get; set; }
 	}
 }

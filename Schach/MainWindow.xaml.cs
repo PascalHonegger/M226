@@ -13,16 +13,18 @@ namespace Chess
 		public MainWindow()
 		{
 			InitializeComponent();
+			DataContext = _board = new Board();
 		}
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			_board?.Dispose();
-			DataContext = null;
 			ComputerIsEnabledCheckBox.Visibility = Visibility.Hidden;
-			_board = new Board();
+			_board = new Board
+			{
+				ComputerIsEnabled = _board.ComputerIsEnabled
+			};
 			await _board.CreateValues();
-			await _board.NextTurn();
+			await _board.StartRound();
 			DataContext = _board;
 		}
 	}
