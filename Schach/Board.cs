@@ -98,13 +98,6 @@ namespace Chess
 		public ObservableCollection<IChessPiece> GraveYard
 			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
 
-		public async Task StartRound()
-		{
-			WhiteTurn = true;
-			
-			await CalculatePossibleSteps();
-		}
-
 		public bool IsNotCheckmated
 		{
 			get { return _isNotCheckmated; }
@@ -113,6 +106,23 @@ namespace Chess
 				_isNotCheckmated = value;
 				OnPropertyChanged();
 			}
+		}
+
+		/// <summary>
+		///     If True the Black player will try to select a random turn, therefor simulating a Computer
+		/// </summary>
+		public bool ComputerIsEnabled { get; set; }
+
+		/// <summary>
+		///     List with the old Turns. May be used with the GUI and the "En Passant"
+		/// </summary>
+		public ObservableCollection<HistoryViewModel> History { get; }
+
+		public async Task StartRound()
+		{
+			WhiteTurn = true;
+
+			await CalculatePossibleSteps();
 		}
 
 		public List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
@@ -131,17 +141,7 @@ namespace Chess
 		}
 
 		/// <summary>
-		/// If True the Black player will try to select a random turn, therefor simulating a Computer
-		/// </summary>
-		public bool ComputerIsEnabled { get; set; }
-
-		/// <summary>
-		/// List with the old Turns. May be used with the GUI and the "En Passant"
-		/// </summary>
-		public ObservableCollection<HistoryViewModel> History { get; }
-
-		/// <summary>
-		/// Determins which players turn it is
+		///     Determins which players turn it is
 		/// </summary>
 		public bool WhiteTurn
 		{
@@ -157,12 +157,12 @@ namespace Chess
 		}
 
 		/// <summary>
-		/// List with all Cells
+		///     List with all Cells
 		/// </summary>
 		public List<CellViewModel> AllCells { get; }
 
 		/// <summary>
-		/// Method that gets called when a player clicks on a CellViewModel.
+		///     Method that gets called when a player clicks on a CellViewModel.
 		/// </summary>
 		/// <param name="mouseButtonState">Only checks wheter the Left or Right mousebutton is the ChangedButton</param>
 		/// <param name="cellThatGotClicked">CellViewModel, that got clicked. Either selects or moves a Cell</param>
@@ -173,7 +173,7 @@ namespace Chess
 			switch (mouseButtonState.ChangedButton)
 			{
 				case MouseButton.Left:
-					await OnSelect(cellThatGotClicked);
+					await SelectCellViewModel(cellThatGotClicked);
 					break;
 				case MouseButton.Right:
 					// Mark CellViewModel's which can move here, just colorisation
@@ -302,7 +302,9 @@ namespace Chess
 		/// <returns>True, when the current player is checkmated</returns>
 		public bool CalculateKingUnderAttack()
 		{
-			var checkedKing = AllCells.Where(cell => cell.CurrentChessPiece is King).FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn);
+			var checkedKing =
+				AllCells.Where(cell => cell.CurrentChessPiece is King)
+					.FirstOrDefault(kingCell => kingCell.CurrentChessPiece.IsWhite() == WhiteTurn);
 			return checkedKing != null && checkedKing.CanEatHere.Any();
 		}
 
@@ -348,26 +350,6 @@ namespace Chess
 		}
 
 		/// <summary>
-		///     Add a new Element to the History
-		/// </summary>
-		/// <param name="startModel">The StartCell, which was selected first</param>
-		/// <param name="endModel">The EndCell, which was moved / eaten to</param>
-		private void AddToHistory(CellViewModel startModel, CellViewModel endModel)
-		{
-			if (startModel == null || endModel == null)
-			{
-				return;
-			}
-
-			var historyViewModel = new HistoryViewModel
-			{
-				FromCell = startModel, ToCell = endModel
-			};
-
-			History.Add(historyViewModel);
-		}
-
-		/// <summary>
 		///     Creates a normal chessboard either with or without the normal chesspieces
 		/// </summary>
 		/// <param name="hasDefaultValues">If false an empty Board gets initiated</param>
@@ -388,52 +370,6 @@ namespace Chess
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private async Task<IBoard> CloneBoard()
-		{
-			IBoard cloneBoard = new Board();
-
-			var cellList = new List<CellViewModel>(64)
-			{
-				A8.CloneCellViewModel(), B8.CloneCellViewModel(), C8.CloneCellViewModel(), D8.CloneCellViewModel(), E8.CloneCellViewModel(), F8.CloneCellViewModel(), G8.CloneCellViewModel(), H8.CloneCellViewModel(), A7.CloneCellViewModel(), B7.CloneCellViewModel(), C7.CloneCellViewModel(), D7.CloneCellViewModel(), E7.CloneCellViewModel(), F7.CloneCellViewModel(), G7.CloneCellViewModel(), H7.CloneCellViewModel(), A6.CloneCellViewModel(), B6.CloneCellViewModel(), C6.CloneCellViewModel(), D6.CloneCellViewModel(), E6.CloneCellViewModel(), F6.CloneCellViewModel(), G6.CloneCellViewModel(), H6.CloneCellViewModel(), A5.CloneCellViewModel(), B5.CloneCellViewModel(), C5.CloneCellViewModel(), D5.CloneCellViewModel(), E5.CloneCellViewModel(), F5.CloneCellViewModel(), G5.CloneCellViewModel(), H5.CloneCellViewModel(), A4.CloneCellViewModel(), B4.CloneCellViewModel(), C4.CloneCellViewModel(), D4.CloneCellViewModel(), E4.CloneCellViewModel(), F4.CloneCellViewModel(), G4.CloneCellViewModel(), H4.CloneCellViewModel(), A3.CloneCellViewModel(), B3.CloneCellViewModel(), C3.CloneCellViewModel(), D3.CloneCellViewModel(), E3.CloneCellViewModel(), F3.CloneCellViewModel(), G3.CloneCellViewModel(), H3.CloneCellViewModel(), A2.CloneCellViewModel(), B2.CloneCellViewModel(), C2.CloneCellViewModel(), D2.CloneCellViewModel(), E2.CloneCellViewModel(), F2.CloneCellViewModel(), G2.CloneCellViewModel(), H2.CloneCellViewModel(), A1.CloneCellViewModel(), B1.CloneCellViewModel(), C1.CloneCellViewModel(), D1.CloneCellViewModel(), E1.CloneCellViewModel(), F1.CloneCellViewModel(), G1.CloneCellViewModel(), H1.CloneCellViewModel()
-			};
-
-			cloneBoard.WhiteTurn = WhiteTurn;
-
-			foreach (var cell in cellList)
-			{
-				cell.Board = cloneBoard;
-			}
-
-			await cloneBoard.CreateChessBoardWithTemplate(cellList);
-
-			return cloneBoard;
-		}
-
-		private async Task OnSelect(CellViewModel cellThatGotClicked)
-		{
-			ResetColors();
-
-			// NextTurn, when the ViewModel moved to the newly selected ViewModel
-			if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
-			{
-				AddToHistory(SelectedCellViewModel, cellThatGotClicked);
-				await NextTurn();
-				SelectedCellViewModel = null;
-			}
-			// Select ViewModel, if it's the players turn
-			else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
-			{
-				SelectedCellViewModel = cellThatGotClicked;
-				SelectedCellViewModel.StartColorize();
-			}
-			else
-			{
-				SelectedCellViewModel = null;
-			}
 		}
 
 		public async Task NextTurn()
@@ -458,6 +394,140 @@ namespace Chess
 			}
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		/// <summary>
+		///     Add a new Element to the History
+		/// </summary>
+		/// <param name="startModel">The StartCell, which was selected first</param>
+		/// <param name="endModel">The EndCell, which was moved / eaten to</param>
+		private void AddToHistory(CellViewModel startModel, CellViewModel endModel)
+		{
+			if (startModel == null || endModel == null)
+			{
+				return;
+			}
+
+			var historyViewModel = new HistoryViewModel
+			{
+				FromCell = startModel,
+				ToCell = endModel
+			};
+
+			History.Add(historyViewModel);
+		}
+
+		private async Task<IBoard> CloneBoard()
+		{
+			IBoard cloneBoard = new Board();
+
+			var cellList = new List<CellViewModel>(64)
+			{
+				A8.CloneCellViewModel(),
+				B8.CloneCellViewModel(),
+				C8.CloneCellViewModel(),
+				D8.CloneCellViewModel(),
+				E8.CloneCellViewModel(),
+				F8.CloneCellViewModel(),
+				G8.CloneCellViewModel(),
+				H8.CloneCellViewModel(),
+				A7.CloneCellViewModel(),
+				B7.CloneCellViewModel(),
+				C7.CloneCellViewModel(),
+				D7.CloneCellViewModel(),
+				E7.CloneCellViewModel(),
+				F7.CloneCellViewModel(),
+				G7.CloneCellViewModel(),
+				H7.CloneCellViewModel(),
+				A6.CloneCellViewModel(),
+				B6.CloneCellViewModel(),
+				C6.CloneCellViewModel(),
+				D6.CloneCellViewModel(),
+				E6.CloneCellViewModel(),
+				F6.CloneCellViewModel(),
+				G6.CloneCellViewModel(),
+				H6.CloneCellViewModel(),
+				A5.CloneCellViewModel(),
+				B5.CloneCellViewModel(),
+				C5.CloneCellViewModel(),
+				D5.CloneCellViewModel(),
+				E5.CloneCellViewModel(),
+				F5.CloneCellViewModel(),
+				G5.CloneCellViewModel(),
+				H5.CloneCellViewModel(),
+				A4.CloneCellViewModel(),
+				B4.CloneCellViewModel(),
+				C4.CloneCellViewModel(),
+				D4.CloneCellViewModel(),
+				E4.CloneCellViewModel(),
+				F4.CloneCellViewModel(),
+				G4.CloneCellViewModel(),
+				H4.CloneCellViewModel(),
+				A3.CloneCellViewModel(),
+				B3.CloneCellViewModel(),
+				C3.CloneCellViewModel(),
+				D3.CloneCellViewModel(),
+				E3.CloneCellViewModel(),
+				F3.CloneCellViewModel(),
+				G3.CloneCellViewModel(),
+				H3.CloneCellViewModel(),
+				A2.CloneCellViewModel(),
+				B2.CloneCellViewModel(),
+				C2.CloneCellViewModel(),
+				D2.CloneCellViewModel(),
+				E2.CloneCellViewModel(),
+				F2.CloneCellViewModel(),
+				G2.CloneCellViewModel(),
+				H2.CloneCellViewModel(),
+				A1.CloneCellViewModel(),
+				B1.CloneCellViewModel(),
+				C1.CloneCellViewModel(),
+				D1.CloneCellViewModel(),
+				E1.CloneCellViewModel(),
+				F1.CloneCellViewModel(),
+				G1.CloneCellViewModel(),
+				H1.CloneCellViewModel()
+			};
+
+			cloneBoard.WhiteTurn = WhiteTurn;
+
+			foreach (var cell in cellList)
+			{
+				cell.Board = cloneBoard;
+			}
+
+			await cloneBoard.CreateChessBoardWithTemplate(cellList);
+
+			return cloneBoard;
+		}
+
+		private async Task SelectCellViewModel(CellViewModel cellThatGotClicked)
+		{
+			// NextTurn, when the ViewModel moved to the newly selected ViewModel
+			if (CellViewModel.MoveModel(SelectedCellViewModel, cellThatGotClicked))
+			{
+				AddToHistory(SelectedCellViewModel, cellThatGotClicked);
+
+				// Reset CheckedKingColor
+				ResetColors(true);
+
+				await NextTurn();
+
+				SelectedCellViewModel = null;
+			}
+			// Select ViewModel, if it's the players turn
+			else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
+			{
+				SelectedCellViewModel = cellThatGotClicked;
+				SelectedCellViewModel.StartColorize();
+				MarkCheck();
+			}
+			else
+			{
+				SelectedCellViewModel = null;
+			}
+		}
+
 		private async Task DoRandomStep()
 		{
 			if (!IsNotCheckmated)
@@ -472,22 +542,28 @@ namespace Chess
 
 			SelectedCellViewModel = null;
 
-			await OnSelect(randomStep.Value.StartCell);
+			await SelectCellViewModel(randomStep.Value.StartCell);
 
-			await OnSelect(randomStep.Key);
+			await SelectCellViewModel(randomStep.Key);
 		}
 
 		private void MarkCheck()
 		{
-			foreach (var kingCell in AllCells.Where(cell => cell.CurrentChessPiece is King).Where(kingCell => kingCell.CanEatHere.Any()))
+			foreach (
+				var kingCell in AllCells.Where(cell => cell.CurrentChessPiece is King).Where(kingCell => kingCell.CanEatHere.Any()))
 			{
 				kingCell.Bgc = CellViewModel.IsCheckmateColor;
 			}
 		}
 
-		private void ResetColors()
+		private void ResetColors(bool resetCheckedKingColor = false)
 		{
-			foreach (var kvp in AllCells.Where(cellViewModel => !Equals(cellViewModel.Bgc, CellViewModel.NothingColor)))
+			foreach (
+				var kvp in
+					AllCells.Where(
+						cellViewModel =>
+							!Equals(cellViewModel.Bgc, CellViewModel.NothingColor) &&
+							resetCheckedKingColor == Equals(cellViewModel.Bgc, CellViewModel.IsCheckmateColor)))
 			{
 				kvp.Bgc = CellViewModel.NothingColor;
 			}

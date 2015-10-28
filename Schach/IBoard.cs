@@ -18,7 +18,8 @@ namespace Chess
 		/// <summary>
 		/// Determins which players turn it is
 		/// </summary>
-		bool WhiteTurn { set; }
+		bool WhiteTurn { get; set; }
+
 		/// <summary>
 		/// Method that gets called when a player clicks on a CellViewModel.
 		/// </summary>
@@ -41,6 +42,10 @@ namespace Chess
 		/// <param name="to"></param>
 		/// <returns>True, when the step doesn't put the own king into checkmate</returns>
 		Task<bool> ValidateMovement(CellViewModel from, CellViewModel to);
+		/// <summary>
+		/// Starts a new Turn. Calculates all possible steps, changes which players turn it is and clears the old possible steps
+		/// </summary>
+		/// <returns></returns>
 		Task NextTurn();
 
 		/// <summary>
