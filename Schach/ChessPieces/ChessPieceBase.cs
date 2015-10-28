@@ -14,7 +14,7 @@ namespace Chess.ChessPieces
 
 		private bool _didMove;
 
-		protected readonly PathFactory PathFactory = new PathFactory();
+		public static readonly PathFactory PathFactory = new PathFactory();
 
 		protected ChessPieceBase()
 		{
@@ -75,7 +75,7 @@ namespace Chess.ChessPieces
 
 			if (this is Pawn)
 			{
-				clonedChessPiece = new Pawn(IsWhite())
+				clonedChessPiece = new Pawn(IsWhite(), false)
 				{
 					DidMove = DidMove,
 					PathList = PathList.Select(path => path.ClonePath()).ToList(),
@@ -84,7 +84,7 @@ namespace Chess.ChessPieces
 			}
 			else if (this is King)
 			{
-				clonedChessPiece = new King(IsWhite())
+				clonedChessPiece = new King(IsWhite(), false)
 				{
 					DidMove = DidMove,
 					PathList = PathList.Select(path => path.ClonePath()).ToList(),
@@ -92,7 +92,7 @@ namespace Chess.ChessPieces
 			}
 			else if (this is Queen)
 			{
-				clonedChessPiece = new Queen(IsWhite())
+				clonedChessPiece = new Queen(IsWhite(), false)
 				{
 					DidMove = DidMove,
 					PathList = PathList.Select(path => path.ClonePath()).ToList(),
@@ -100,7 +100,7 @@ namespace Chess.ChessPieces
 			}
 			else if (this is Rook)
 			{
-				clonedChessPiece = new Rook(IsWhite())
+				clonedChessPiece = new Rook(IsWhite(), false)
 				{
 					DidMove = DidMove,
 					PathList = PathList.Select(path => path.ClonePath()).ToList(),
@@ -108,7 +108,7 @@ namespace Chess.ChessPieces
 			}
 			else if (this is Knight)
 			{
-				clonedChessPiece = new Knight(IsWhite())
+				clonedChessPiece = new Knight(IsWhite(), false)
 				{
 					DidMove = DidMove,
 					PathList = PathList.Select(path => path.ClonePath()).ToList(),
@@ -116,7 +116,7 @@ namespace Chess.ChessPieces
 			}
 			else if (this is Bishop)
 			{
-				clonedChessPiece = new Bishop(IsWhite())
+				clonedChessPiece = new Bishop(IsWhite(), false)
 				{
 					DidMove = DidMove,
 					PathList = PathList.Select(path => path.ClonePath()).ToList(),

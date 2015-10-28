@@ -6,11 +6,14 @@ namespace Chess.ChessPieces
 {
 	public sealed class King : ChessPieceBase
 	{
-		public King(bool isWhite) : base(isWhite)
+		public King(bool isWhite, bool hasTextures = true) : base(isWhite)
 		{
-			Texture = isWhite
-				? Resources.WhiteKing.ToBitmapSource()
-				: Resources.BlackKing.ToBitmapSource();
+			if (hasTextures)
+			{
+				Texture = isWhite
+					? Resources.WhiteKing.ToBitmapSource()
+					: Resources.BlackKing.ToBitmapSource();
+			}
 
 			PathList.Add(PathFactory.AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(isWhite));
 

@@ -6,11 +6,14 @@ namespace Chess.ChessPieces
 {
 	public sealed class Queen : ChessPieceBase
 	{
-		public Queen(bool isWhite) : base(isWhite)
+		public Queen(bool isWhite, bool hasTextures = true) : base(isWhite)
 		{
-			Texture = isWhite
-				? Resources.WhiteQueen.ToBitmapSource()
-				: Resources.BlackQueen.ToBitmapSource();
+			if (hasTextures)
+			{
+				Texture = isWhite
+					? Resources.WhiteQueen.ToBitmapSource()
+					: Resources.BlackQueen.ToBitmapSource();
+			}
 
 			PathList.Add(
 				PathFactory.AddToPath

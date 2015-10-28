@@ -2,7 +2,6 @@
 using Chess;
 using Chess.Cells;
 using Chess.ChessPieces;
-using Chess.Path;
 using Moq;
 using NUnit.Framework;
 
@@ -126,7 +125,7 @@ namespace ChessTest
 
 			// Act
 			var createdPathList =
-				new PathFactory().AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.TopLeft).Create(true);
+				ChessPieceBase.PathFactory.AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.TopLeft).Create(true);
 
 			// Assert
 			Assert.AreEqual(correctPathList, createdPathList,

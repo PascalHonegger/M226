@@ -140,7 +140,7 @@
     <Compile Include="Cells\HistoryControl.xaml.cs">
       <DependentUpon>HistoryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Cells\NativeMethods.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Cells\HistoryViewModel.cs" />
     <Compile Include="Cells\Movement.cs" />
     <Compile Include="ChessPieces\Bishop.cs" />

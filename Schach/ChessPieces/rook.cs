@@ -6,11 +6,14 @@ namespace Chess.ChessPieces
 {
 	public sealed class Rook : ChessPieceBase
 	{
-		public Rook(bool isWhite) : base(isWhite)
+		public Rook(bool isWhite, bool hasTextures = true) : base(isWhite)
 		{
-			Texture = isWhite
-				? Resources.WhiteRook.ToBitmapSource()
-				: Resources.BlackRook.ToBitmapSource();
+			if (hasTextures)
+			{
+				Texture = isWhite
+					? Resources.WhiteRook.ToBitmapSource()
+					: Resources.BlackRook.ToBitmapSource();
+			}
 
 			PathList.Add(
 				PathFactory.AddToPath

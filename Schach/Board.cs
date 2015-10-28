@@ -99,6 +99,12 @@ namespace Chess
 			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
 
 		public ObservableCollection<HistoryViewModel> History { get; }
+		public async Task StartRound()
+		{
+			WhiteTurn = true;
+			
+			await CalculatePossibleSteps();
+		}
 
 		public bool IsNotCheckmated
 		{
@@ -110,7 +116,7 @@ namespace Chess
 			}
 		}
 
-		private List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
+		public List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
 		{
 			get
 			{
@@ -329,7 +335,6 @@ namespace Chess
 			if (hasDefaultValues)
 			{
 				await CreateDefaultChessBoard();
-				await NextTurn();
 			}
 			else
 			{
@@ -444,7 +449,7 @@ namespace Chess
 			else if (cellThatGotClicked?.CurrentChessPiece != null && WhiteTurn == cellThatGotClicked.CurrentChessPiece.IsWhite())
 			{
 				SelectedCellViewModel = cellThatGotClicked;
-				SelectedCellViewModel?.StartColorize();
+				SelectedCellViewModel.StartColorize();
 			}
 			else
 			{
@@ -452,7 +457,7 @@ namespace Chess
 			}
 		}
 
-		private async Task NextTurn()
+		public async Task NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;
 

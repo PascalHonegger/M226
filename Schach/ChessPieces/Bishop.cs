@@ -6,11 +6,14 @@ namespace Chess.ChessPieces
 {
 	public sealed class Bishop : ChessPieceBase
 	{
-		public Bishop(bool isWhite) : base(isWhite)
+		public Bishop(bool isWhite, bool hasTextures = true) : base(isWhite)
 		{
-			Texture = isWhite
-				? Resources.WhiteBishop.ToBitmapSource()
-				: Resources.BlackBishop.ToBitmapSource();
+			if (hasTextures)
+			{
+				Texture = isWhite
+					? Resources.WhiteBishop.ToBitmapSource()
+					: Resources.BlackBishop.ToBitmapSource();
+			}
 
 			var path = PathFactory.AddToPath(Movement.Direction.TopLeft).SetIsRecursive(true).Create(isWhite);
 			PathList.Add(path);

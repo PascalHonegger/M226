@@ -19,12 +19,15 @@ namespace ChessTest
 		{
 		}
 
+		[SetUp]
+		public void OnSetup()
+		{
+			_board = new Board();
+		}
+
 		[Test]
 		public async void TestAllCellDictionairy()
 		{
-			//TODO Delete or make usefull
-			_board = new Board();
-
 			Assert.That(_board.AllCells, Is.Empty);
 
 			await _board.CreateValues();
@@ -35,7 +38,6 @@ namespace ChessTest
 		[Test]
 		public async void TestCellCreation()
 		{
-			_board = new Board();
 			await _board.CreateValues(false);
 
 			for (var number = 1; number <= 8; number++)
@@ -89,7 +91,6 @@ namespace ChessTest
 		[Test]
 		public async void TestCreateDefaultBoardFalse()
 		{
-			_board = new Board();
 			await _board.CreateValues(false);
 
 			Assert.That(_board.AllCells.Count, Is.EqualTo(64));
@@ -104,7 +105,6 @@ namespace ChessTest
 		public async void TestCreateDefaultBoardTrue()
 		{
 			//TODO Finish Test
-			_board = new Board();
 			await _board.CreateValues();
 
 			Assert.That(_board.AllCells.Count, Is.EqualTo(64));
@@ -112,6 +112,36 @@ namespace ChessTest
 			{
 				Assert.That(cell.CurrentChessPiece, Is.Null);
 			}
+		}
+
+		[Test]
+		public async void NextTurnChangesTurn()
+		{
+			await _board.CreateValues();
+			await _board.StartRound();
+			// White starts
+			Assert.That(_board.WhiteTurn, Is.True);
+			await _board.NextTurn();
+			Assert.That(_board.WhiteTurn, Is.False);
+			Assert.That(_board.AllPossibleSteps.Any());
+		}
+
+		[Test]
+		public async void ClickChangesSelection()
+		{
+			
+		}
+
+		[Test]
+		public async void ClickMovesModel()
+		{
+			
+		}
+
+		[Test]
+		public async void RightClickMarksColor()
+		{
+
 		}
 	}
 }

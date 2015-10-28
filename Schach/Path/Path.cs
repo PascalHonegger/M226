@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Chess.Cells;
+using Chess.ChessPieces;
 
 namespace Chess.Path
 {
@@ -74,16 +75,14 @@ namespace Chess.Path
 
 		public object Clone()
 		{
-			var factory = new PathFactory();
-
 			foreach (var direction in _path.Where(p => !p.Equals(Movement.Direction.Final)))
 			{
-				factory.AddToPath(direction);
+				ChessPieceBase.PathFactory.AddToPath(direction);
 			}
 
-			factory.SetIsRecursive(IsRecursive);
+			ChessPieceBase.PathFactory.SetIsRecursive(IsRecursive);
 
-			return factory.Create(IsWhite);
+			return ChessPieceBase.PathFactory.Create(IsWhite);
 		}
 
 		public Path ClonePath()

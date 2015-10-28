@@ -22,6 +22,7 @@ namespace Chess
 			ComputerIsEnabledCheckBox.Visibility = Visibility.Hidden;
 			_board = new Board();
 			await _board.CreateValues();
+			await _board.NextTurn();
 			DataContext = _board;
 		}
 	}

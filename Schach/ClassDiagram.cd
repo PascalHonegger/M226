@@ -3,7 +3,7 @@
   <Class Name="Chess.Board" Collapsed="true">
     <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AMK3CAT7QSAgAAIgYAwQg/2+oAEAxP+/AAACwP8fIAA=</HashCode>
+      <HashCode>AMK3CAT7QSAgAAIgYAwQg/++oAEAxP+/AAACwP8fIAA=</HashCode>
       <FileName>Board.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -96,11 +96,11 @@
       <FileName>Cells\Movement.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chess.Cells.NativeMethods" Collapsed="true">
+  <Class Name="Chess.NativeMethods" Collapsed="true">
     <Position X="2.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cells\NativeMethods.cs</FileName>
+      <FileName>NativeMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chess.MainWindow" Collapsed="true">

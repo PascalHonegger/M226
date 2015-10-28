@@ -7,12 +7,15 @@ namespace Chess.ChessPieces
 {
 	public sealed class Pawn : ChessPieceBase
 	{
-		public Pawn(bool isWhite) : base(isWhite)
+		public Pawn(bool isWhite, bool hasTextures = true) : base(isWhite)
 		{
-			Texture = isWhite
+			if (hasTextures)
+			{
+				Texture = isWhite
 				? Resources.WhitePawn.ToBitmapSource()
 				: Resources.BlackPawn.ToBitmapSource();
-				
+			}
+
 			if (IsBlack())
 			{
 				PathList.Add(
