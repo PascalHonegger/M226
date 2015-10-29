@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Chess.Cells;
-using Chess.Path;
+﻿using Chess.Cells;
 using Chess.Properties;
 
 namespace Chess.ChessPieces

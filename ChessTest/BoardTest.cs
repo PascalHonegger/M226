@@ -22,7 +22,10 @@ namespace ChessTest
 		[SetUp]
 		public void OnSetup()
 		{
-			_board = new Board();
+			_board = new Board
+			{
+				ComputerIsEnabled = false
+			};
 		}
 
 		[Test]
@@ -127,8 +130,11 @@ namespace ChessTest
 		}
 
 		[Test]
-		public async void ClickChangesSelection()
+		public async void ClickChangesSelectionAndColorizesPaths()
 		{
+			await _board.CreateValues();
+			await _board.StartRound();
+			//await _board.CellViewModelOnMouseDown(_mouseButtonMock.Object, _board.AllCells.First());
 			
 		}
 

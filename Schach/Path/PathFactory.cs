@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Chess.Cells;
+﻿using Chess.Cells;
 
 namespace Chess.Path
 {

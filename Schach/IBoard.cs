@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Chess.CellLinkStrategy;
 using Chess.Cells;
-using Chess.ChessPieces;
 
 namespace Chess
 {
@@ -16,6 +13,10 @@ namespace Chess
 		/// </summary>
 		List<CellViewModel> AllCells { get; }
 		/// <summary>
+		/// List with all CellLinkStrategies
+		/// </summary>
+		List<ICellLinkStrategy> CellLinkStrategyList { get; }
+		/// <summary>
 		/// Determins which players turn it is
 		/// </summary>
 		bool WhiteTurn { get; set; }
@@ -25,7 +26,8 @@ namespace Chess
 		/// </summary>
 		/// <param name="mouseButtonState">Only checks wheter the Left or Right mousebutton is the ChangedButton</param>
 		/// <param name="cellThatGotClicked">CellViewModel, that got clicked. Either selects or moves a Cell</param>
-		void CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
+		Task CellViewModelOnMouseDown(MouseButtonEventArgs mouseButtonState, CellViewModel cellThatGotClicked);
+		
 		/// <summary>
 		///     Calculates all possible steps by calling the MarkPaths method on all Cells with a ChessPiece
 		/// </summary>
@@ -77,6 +79,9 @@ namespace Chess
 		Task StartRound();
 
 		List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps { get; }
-		bool ComputerIsEnabled { get; set; }
+		/// <summary>
+		/// If true, the Computer will automatically take a move once the Black player has to move.
+		/// </summary>
+		bool ComputerIsEnabled { get; }
 	}
 }

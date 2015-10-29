@@ -1,5 +1,4 @@
 ﻿using Chess.Cells;
-using Chess.Path;
 using Chess.Properties;
 
 namespace Chess.ChessPieces

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Chess.Cells
 			CanMoveHere = new List<Path.Path>();
 		}
 
-		public Dictionary<Movement.Direction, CellViewModel> Movements { get; } =
+		public Dictionary<Movement.Direction, CellViewModel> Movements { get; private set; } =
 			new Dictionary<Movement.Direction, CellViewModel>();
 
 		public string Name { get; set; }
@@ -123,18 +124,9 @@ namespace Chess.Cells
 			return Name.GetHashCode();
 		}
 
-		public void CreateLink(CellViewModel top, CellViewModel topright, CellViewModel right, CellViewModel bottomright,
-			CellViewModel bottom, CellViewModel bottomleft, CellViewModel left, CellViewModel topleft)
+		public void CreateLink(Dictionary<Movement.Direction, CellViewModel> movements)
 		{
-			Movements.Add(Movement.Direction.Top, top);
-			Movements.Add(Movement.Direction.TopRight, topright);
-			Movements.Add(Movement.Direction.Right, right);
-			Movements.Add(Movement.Direction.BottomRight, bottomright);
-			Movements.Add(Movement.Direction.Bottom, bottom);
-			Movements.Add(Movement.Direction.BottomLeft, bottomleft);
-			Movements.Add(Movement.Direction.Left, left);
-			Movements.Add(Movement.Direction.TopLeft, topleft);
-			Movements.Add(Movement.Direction.Final, null);
+			Movements = movements;
 		}
 
 		[NotifyPropertyChangedInvocator]

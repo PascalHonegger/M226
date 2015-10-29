@@ -133,6 +133,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Board.cs" />
+    <Compile Include="CellLinkStrategy\DefaultCellLinkStrategy.cs" />
+    <Compile Include="CellLinkStrategy\ICellLinkStrategy.cs" />
     <Compile Include="Cells\CellControl.xaml.cs">
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
