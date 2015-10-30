@@ -410,7 +410,11 @@ namespace Chess
 
 			await SelectCellViewModel(randomStep.Value.StartCell);
 
+			await Task.Delay(500);
+
 			await SelectCellViewModel(randomStep.Key);
+
+			ResetColors();
 		}
 
 		private void MarkCheck()

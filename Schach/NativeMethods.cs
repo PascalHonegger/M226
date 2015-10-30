@@ -10,8 +10,16 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Chess
 {
+	/// <summary>
+	/// Here all Extensions Methods are stored
+	/// </summary>
 	public static class NativeMethods
 	{
+		/// <summary>
+		/// Transforms a Bitmap to a BitmapSource
+		/// </summary>
+		/// <param name="source">Bitmap to be transformed</param>
+		/// <returns>BitmapSource equivalent to the Bitmap-Input</returns>
 		public static BitmapSource ToBitmapSource(this Bitmap source)
 		{
 			using (var handle = new SafeHBitmapHandle(source))

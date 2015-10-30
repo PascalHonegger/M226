@@ -17,6 +17,7 @@ namespace Chess
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
+			DataContext = null;
 			ComputerIsEnabledCheckBox.Visibility = Visibility.Hidden;
 			_board = new Board
 			{
