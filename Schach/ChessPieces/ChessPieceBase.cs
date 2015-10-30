@@ -35,11 +35,11 @@ namespace Chess.ChessPieces
 				{
 					PathList.RemoveAll(
 						path =>
-							path.Equals(PathFactory.AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.Top).Create(true)));
+							path.Equals(PathFactory.AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.Top).Create()));
 					PathList.RemoveAll(
 						path =>
 							path.Equals(
-								PathFactory.AddToPath(Movement.Direction.Bottom).AddToPath(Movement.Direction.Bottom).Create(false)));
+								PathFactory.AddToPath(Movement.Direction.Bottom).AddToPath(Movement.Direction.Bottom).Create()));
 				}
 				_didMove = value;
 			}

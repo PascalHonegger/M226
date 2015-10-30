@@ -7,6 +7,9 @@ namespace Chess.Cells
 	/// </summary>
 	public partial class CellControl
 	{
+		/// <summary>
+		/// Standard constructor. InitializeComponent() gets called.
+		/// </summary>
 		public CellControl()
 		{
 			InitializeComponent();

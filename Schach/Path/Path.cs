@@ -18,8 +18,6 @@ namespace Chess.Path
 
 		public bool IsRecursive { get; set; }
 
-		public bool IsWhite { get; set; }
-
 		public CellViewModel StartCell { get; set; }
 
 		IEnumerator<Movement.Direction> IEnumerable<Movement.Direction>.GetEnumerator()
@@ -82,7 +80,7 @@ namespace Chess.Path
 
 			ChessPieceBase.PathFactory.SetIsRecursive(IsRecursive);
 
-			return ChessPieceBase.PathFactory.Create(IsWhite);
+			return ChessPieceBase.PathFactory.Create();
 		}
 
 		public Path ClonePath()

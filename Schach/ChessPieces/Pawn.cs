@@ -19,38 +19,38 @@ namespace Chess.ChessPieces
 				PathList.Add(
 					PathFactory.AddToPath
 						(Movement.Direction.Bottom).AddToPath
-						(Movement.Direction.Bottom).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.Bottom).SetIsRecursive(false).Create());
 
 				PathList.Add(
 					PathFactory.AddToPath
-						(Movement.Direction.Bottom).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.Bottom).SetIsRecursive(false).Create());
 
 				EatList.Add(
 					PathFactory.AddToPath
-						(Movement.Direction.BottomLeft).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.BottomLeft).SetIsRecursive(false).Create());
 
 				EatList.Add(
 					PathFactory.AddToPath
-						(Movement.Direction.BottomRight).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.BottomRight).SetIsRecursive(false).Create());
 			}
 			else
 			{
 				PathList.Add(
 					PathFactory.AddToPath
 						(Movement.Direction.Top).AddToPath
-						(Movement.Direction.Top).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.Top).SetIsRecursive(false).Create());
 
 				PathList.Add(
 					PathFactory.AddToPath
-						(Movement.Direction.Top).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.Top).SetIsRecursive(false).Create());
 
 				EatList.Add(
 					PathFactory.AddToPath
-						(Movement.Direction.TopLeft).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.TopLeft).SetIsRecursive(false).Create());
 
 				EatList.Add(
 					PathFactory.AddToPath
-						(Movement.Direction.TopRight).SetIsRecursive(false).Create(isWhite));
+						(Movement.Direction.TopRight).SetIsRecursive(false).Create());
 			}
 		}
 	}

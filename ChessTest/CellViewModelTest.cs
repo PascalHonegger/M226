@@ -51,9 +51,9 @@ namespace ChessTest
 			// Arrange
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(true),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(true),
-				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create(true)
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create()
 			};
 
 			var chessPieceMock = new Mock<IChessPiece>();
@@ -98,8 +98,8 @@ namespace ChessTest
 			// Arrange
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(true),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(true)
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create()
 			};
 
 			var unitUnderTest = new Mock<IChessPiece>();
@@ -135,8 +135,8 @@ namespace ChessTest
 		{
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(true),
-				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create(true)
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(true).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Left).SetIsRecursive(true).Create()
 			};
 
 			var unitUnderTest = new Mock<IChessPiece>();
@@ -180,15 +180,15 @@ namespace ChessTest
 		{
 			var pathList = new List<Path>
 			{
-				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(true),
-				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(true),
+				new PathFactory().AddToPath(Movement.Direction.Top).SetIsRecursive(false).Create(),
+				new PathFactory().AddToPath(Movement.Direction.Bottom).SetIsRecursive(false).Create(),
 				new PathFactory().AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Right)
 					.AddToPath(Movement.Direction.Top)
 					.SetIsRecursive(false)
-					.Create(true)
+					.Create()
 			};
 
 			var chessPieceMock = new Mock<IChessPiece>();

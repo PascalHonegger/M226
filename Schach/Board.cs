@@ -13,12 +13,18 @@ using Chess.ChessPieces;
 
 namespace Chess
 {
+	/// <summary>
+	/// The main Board. 
+	/// </summary>
 	public class Board : INotifyPropertyChanged, IBoard
 	{
 		private ObservableCollection<IChessPiece> _graveYard;
 		private bool _isNotCheckmated = true;
 		private bool _whiteTurn;
 
+		/// <summary>
+		/// Standard Constructor. Initializes AllCells, CellLinkStrategyList, History and GraveYard
+		/// </summary>
 		public Board()
 		{
 			AllCells = new List<CellViewModel>(64);
@@ -35,9 +41,15 @@ namespace Chess
 
 		private CellViewModel SelectedCellViewModel { get; set; }
 
+		/// <summary>
+		/// This is the place where dead ChessPieces go :(
+		/// </summary>
 		public ObservableCollection<IChessPiece> GraveYard
 			=> _graveYard ?? (_graveYard = new ObservableCollection<IChessPiece>());
 
+		/// <summary>
+		/// If False, the current player is CheckMated => Lost the game. Inverted because of the GUI-Binding
+		/// </summary>
 		public bool IsNotCheckmated
 		{
 			get { return _isNotCheckmated; }
@@ -124,6 +136,9 @@ namespace Chess
 		/// </summary>
 		public bool ComputerIsEnabled { get; set; } = true;
 
+		/// <summary>
+		/// Do the Initial step, start the Timer
+		/// </summary>
 		public async Task StartRound()
 		{
 			WhiteTurn = true;
@@ -131,6 +146,9 @@ namespace Chess
 			await CalculatePossibleSteps();
 		}
 
+		/// <summary>
+		/// All possilbe Steps. Used for calculating CheckMate and DoRandomStep
+		/// </summary>
 		public List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps
 		{
 			get
@@ -142,10 +160,13 @@ namespace Chess
 				AllCells.ForEach(
 					cell => cell.CanEatHere.ForEach(path => possibleSteps.Add(new KeyValuePair<CellViewModel, Path.Path>(cell, path))));
 
-				return possibleSteps.Where(kvp => kvp.Value.IsWhite == WhiteTurn).ToList();
+				return possibleSteps.Where(kvp => kvp.Value.StartCell.CurrentChessPiece?.IsWhite() == WhiteTurn).ToList();
 			}
 		}
 
+		/// <summary>
+		/// List with all CellLinkStrategies
+		/// </summary>
 		public List<ICellLinkStrategy> CellLinkStrategyList { get; }
 
 		/// <summary>
@@ -306,6 +327,10 @@ namespace Chess
 			}
 		}
 
+		/// <summary>
+		/// Starts a new Turn. Calculates all possible steps, changes which players turn it is and clears the old possible steps
+		/// </summary>
+		/// <returns></returns>
 		public async Task NextTurn()
 		{
 			WhiteTurn = !WhiteTurn;

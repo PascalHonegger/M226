@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -12,23 +11,55 @@ using Chess.ChessPieces;
 
 namespace Chess.Cells
 {
+	/// <summary>
+	/// The Logic behind a cell. Can calculate where to go, change color and move the own ChessPiece to a destination
+	/// </summary>
 	public class CellViewModel : INotifyPropertyChanged, ICloneable
 	{
+		/// <summary>
+		/// The cells this cell can move to have this color
+		/// </summary>
 		private static readonly SolidColorBrush CanMoveToColor = new SolidColorBrush(Color.FromArgb(205, 9, 140, 0));
+		/// <summary>
+		/// A CheckMated King has this color
+		/// </summary>
 		public static readonly SolidColorBrush IsCheckmateColor = new SolidColorBrush(Color.FromArgb(250, 255, 0, 0));
+		/// <summary>
+		/// The cells this cell can eat have this color
+		/// </summary>
 		private static readonly SolidColorBrush CanEatToColor = new SolidColorBrush(Color.FromArgb(205, 255, 101, 0));
+		/// <summary>
+		/// The cells that is selected has this color
+		/// </summary>
 		private static readonly SolidColorBrush HighlightedColor = new SolidColorBrush(Color.FromArgb(205, 91, 100, 113));
+		/// <summary>
+		/// The cells this cell can move to have this color
+		/// </summary>
 		public static readonly SolidColorBrush CanMoveHereColor = new SolidColorBrush(Color.FromArgb(205, 192, 255, 0));
+		/// <summary>
+		/// The cell that can eat this cell has this color
+		/// </summary>
 		public static readonly SolidColorBrush CanEatHereColor = new SolidColorBrush(Color.FromArgb(205, 255, 153, 0));
+		/// <summary>
+		/// Default Color every cell has if none of the other colors are applied.
+		/// </summary>
 		public static readonly SolidColorBrush NothingColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
+		/// <summary>
+		/// The board this CellViewModel belongs to
+		/// </summary>
 		public IBoard Board;
 
 		private SolidColorBrush _bgc;
 		private IChessPiece _currentChessPiece;
 		private BitmapSource _image;
 
-		public CellViewModel(IChessPiece currentChessChessPiece, IBoard board)
+		/// <summary>
+		/// The Constructor which sets the color to nothing and initializes the CanEatHere and CanMoveHere lists
+		/// </summary>
+		/// <param name="currentChessChessPiece">The Chesspiece, which will be on this CellViewModel</param>
+		/// <param name="board">The Board this CellViewModel is on</param>
+		public CellViewModel(IChessPiece currentChessChessPiece, [NotNull]IBoard board)
 		{
 			CurrentChessPiece = currentChessChessPiece;
 			Board = board;
@@ -40,8 +71,14 @@ namespace Chess.Cells
 		public Dictionary<Movement.Direction, CellViewModel> Movements { get; private set; } =
 			new Dictionary<Movement.Direction, CellViewModel>();
 
+		/// <summary>
+		/// The Name of this Cell, like 'A8' or 'D4'
+		/// </summary>
 		public string Name { get; set; }
 
+		/// <summary>
+		/// The ChessPiece that is on this Cell.
+		/// </summary>
 		public IChessPiece CurrentChessPiece
 		{
 			get { return _currentChessPiece; }
@@ -158,6 +195,10 @@ namespace Chess.Cells
 			}
 		}
 
+		/// <summary>
+		/// Casts the Clone() method to a CellViewModel.
+		/// </summary>
+		/// <returns></returns>
 		public CellViewModel CloneCellViewModel()
 		{
 			return Clone() as CellViewModel;
@@ -283,7 +324,7 @@ namespace Chess.Cells
 		{
 			if (CurrentChessPiece != null)
 			{
-				if (CurrentChessPiece.IsWhite() != path.IsWhite &&
+				if (CurrentChessPiece.IsWhite() != path.StartCell.CurrentChessPiece?.IsWhite() &&
 				    (ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanEatHere.Add(path);
@@ -305,7 +346,9 @@ namespace Chess.Cells
 				{
 					CanMoveHere.Add(path);
 				}
-				else if (CurrentChessPiece?.IsWhite() != path.IsWhite && (ignoreValidateMovement || await Board.ValidateMovement(path.StartCell, this)))
+				else if (CurrentChessPiece?.IsWhite() != path.StartCell.CurrentChessPiece?.IsWhite() 
+					&& (ignoreValidateMovement 
+					|| await Board.ValidateMovement(path.StartCell, this)))
 				{
 					CanEatHere.Add(path);
 				}

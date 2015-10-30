@@ -9,6 +9,9 @@ namespace Chess
 	{
 		private IBoard _board;
 
+		/// <summary>
+		/// Entry-Point of the Application
+		/// </summary>
 		public MainWindow()
 		{
 			InitializeComponent();

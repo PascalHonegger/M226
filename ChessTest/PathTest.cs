@@ -125,7 +125,7 @@ namespace ChessTest
 
 			// Act
 			var createdPathList =
-				ChessPieceBase.PathFactory.AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.TopLeft).Create(true);
+				ChessPieceBase.PathFactory.AddToPath(Movement.Direction.Top).AddToPath(Movement.Direction.TopLeft).Create();
 
 			// Assert
 			Assert.AreEqual(correctPathList, createdPathList,

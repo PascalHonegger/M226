@@ -14,16 +14,16 @@ namespace Chess.ChessPieces
 					: Resources.BlackBishop.ToBitmapSource();
 			}
 
-			var path = PathFactory.AddToPath(Movement.Direction.TopLeft).SetIsRecursive(true).Create(isWhite);
+			var path = PathFactory.AddToPath(Movement.Direction.TopLeft).SetIsRecursive(true).Create();
 			PathList.Add(path);
 
-			path = PathFactory.AddToPath(Movement.Direction.TopRight).SetIsRecursive(true).Create(isWhite);
+			path = PathFactory.AddToPath(Movement.Direction.TopRight).SetIsRecursive(true).Create();
 			PathList.Add(path);
 
-			path = PathFactory.AddToPath(Movement.Direction.BottomLeft).SetIsRecursive(true).Create(isWhite);
+			path = PathFactory.AddToPath(Movement.Direction.BottomLeft).SetIsRecursive(true).Create();
 			PathList.Add(path);
 
-			path = PathFactory.AddToPath(Movement.Direction.BottomRight).SetIsRecursive(true).Create(isWhite);
+			path = PathFactory.AddToPath(Movement.Direction.BottomRight).SetIsRecursive(true).Create();
 			PathList.Add(path);
 		}
 	}
