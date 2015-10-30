@@ -408,8 +408,6 @@ namespace Chess
 
 			var randomStep = values[random.Next(values.Count)];
 
-			SelectedCellViewModel = null;
-
 			await SelectCellViewModel(randomStep.Value.StartCell);
 
 			await SelectCellViewModel(randomStep.Key);

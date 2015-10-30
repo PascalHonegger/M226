@@ -23,12 +23,6 @@ namespace Chess.Path
 			return this;
 		}
 
-		public PathFactory AddStartCell(CellViewModel startCell)
-		{
-			_movementList.StartCell = startCell;
-			return this;
-		}
-
 		public Path Create(bool isWhite)
 		{
 			if (!_movementList.IsRecursive)
