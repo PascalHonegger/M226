@@ -10,9 +10,15 @@ namespace Chess.Path
 		private Path _movementList;
 
 		/// <summary>
+		/// A static Instance of the PathFactory
+		/// </summary>
+		public static PathFactory Instance { get; } = new PathFactory();
+
+
+		/// <summary>
 		/// Standard Constructor
 		/// </summary>
-		public PathFactory()
+		private PathFactory()
 		{
 			_movementList = new Path();
 		}

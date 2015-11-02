@@ -13,7 +13,10 @@ namespace Chess.ChessPieces
 
 		private bool _didMove;
 
-		public static readonly PathFactory PathFactory = new PathFactory();
+		/// <summary>
+		/// Forward to PathFactory.Instance. Makes the code more readable!
+		/// </summary>
+		public static PathFactory PathFactory => PathFactory.Instance;
 
 		protected ChessPieceBase()
 		{
