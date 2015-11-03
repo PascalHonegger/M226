@@ -6,6 +6,9 @@ using Chess.Cells;
 
 namespace Chess
 {
+	/// <summary>
+	/// The Interface for the Board
+	/// </summary>
 	public interface IBoard
 	{
 		/// <summary>
@@ -78,6 +81,9 @@ namespace Chess
 		/// </summary>
 		Task StartRound();
 
+		/// <summary>
+		/// A List with all possible Movements
+		/// </summary>
 		List<KeyValuePair<CellViewModel, Path.Path>> AllPossibleSteps { get; }
 		/// <summary>
 		/// If true, the Computer will automatically take a move once the Black player has to move.
